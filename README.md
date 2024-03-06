@@ -1,6 +1,8 @@
 # ReFair-App
 Web App for ReFAIR: Toward a Context-Aware Recommender for Fairness Requirements Engineering
 
+**Main Contributor**: Carmine Ferrara - <a href="https://github.com/CFerrara98">https://github.com/CFerrara98</a>
+
 <div style="text-align:center"><img src="images/approach.png" width="200%"/></div>
 
 ReFair is a novel Solution designed to assist Data Scientists and Software Engineers in building fair Machine Learning (ML) solutions. Its primary objective is to recommend potential sensitive features that could affect the fair behavior of an ML-intensive system during development.
