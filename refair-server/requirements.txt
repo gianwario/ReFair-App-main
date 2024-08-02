@@ -7,3 +7,6 @@ scipy
 xgboost
 transformers
 gensim
+openpyxl
+scikit-learn
+scikit-multilearn
