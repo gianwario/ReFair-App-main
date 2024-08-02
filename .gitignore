@@ -1,0 +1,5 @@
+refair-server/models/glove.6B.100d.txt
+refair-server/__pycache__/
+refair-server/env/
+# This is the name of my virtual environment -DG266
+refair-server/.venv/
