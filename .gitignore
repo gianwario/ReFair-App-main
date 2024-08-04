@@ -1,5 +1,17 @@
+#### VS Code Stuff
+refair-server/.vscode/
+
+#### GloVe 100d word embeddings
 refair-server/models/glove.6B.100d.txt
+
+#### Virtual environments, etc.
 refair-server/__pycache__/
 refair-server/env/
+refair-server/.pytest_cache/
+refair-server/.tox/
 # This is the name of my virtual environment -DG266
 refair-server/.venv/
+
+#### Coverage reports
+refair-server/.coverage
+refair-server/coverage.xml
