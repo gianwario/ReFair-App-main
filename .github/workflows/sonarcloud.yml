@@ -2,7 +2,7 @@ name: SonarCloud Scan
 on:
   push:
       branches:
-      - main-iges
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
