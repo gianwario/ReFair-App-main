@@ -1,0 +1,50 @@
+name: SonarCloud Scan
+on:
+  push:
+      branches:
+      - main-iges
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  sonarcloudScan1:
+    name: SonarCloudScan1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Kaggle
+        run: pip install kaggle
+        working-directory: ./refair-server
+
+      - name: Download glove.6B.100d.txt from Kaggle
+        run: kaggle datasets download -d danielwillgeorge/glove6b100dtxt -p ./downloads
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        working-directory: ./refair-server
+
+      - name: Unzip downloaded file
+        run: unzip ./downloads/glove6b100dtxt.zip -d ./models
+        working-directory: ./refair-server
+
+      - name: Install tox
+        run: pip install tox
+        working-directory: ./refair-server
+
+      - name: Run tox
+        run: tox -e py
+        working-directory: ./refair-server
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SERVER }}
+        with:
+          projectBaseDir: refair-server/
