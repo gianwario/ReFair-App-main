@@ -1,3 +1,4 @@
+import os
 import pytest
 from selenium import webdriver
 
@@ -10,3 +11,11 @@ def driver():
     yield driver
 
     driver.quit()
+
+
+@pytest.fixture
+def xlsx_file_with_bad_filename_and_one_user_story():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'bad_name', 'This file name should not be accepted.xlsx'
+    )
