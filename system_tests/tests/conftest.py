@@ -19,3 +19,11 @@ def xlsx_file_with_bad_filename_and_one_user_story():
         os.path.dirname(__file__),
         '..', 'data', 'bad_name', 'This file name should not be accepted.xlsx'
     )
+
+
+@pytest.fixture
+def txt_file():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'bad_extension', 'stories.txt'
+    )

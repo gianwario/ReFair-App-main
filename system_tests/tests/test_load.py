@@ -27,3 +27,26 @@ class TestLoad:
         except TimeoutException:
             assert False, "Alert with the message '" + \
                 expected_alert_message + "' did not appear."
+
+
+    def test_load_tc_2(self, driver, txt_file):
+        """
+        Uploads a .txt file and verifies that an alert with the message
+        'This type of file is not supported. Upload an xlsx file.' is displayed.
+        """
+        expected_alert_message = "This type of file is not supported. Upload an xlsx file."
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(txt_file)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."
