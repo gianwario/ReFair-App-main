@@ -50,3 +50,26 @@ class TestLoad:
         except TimeoutException:
             assert False, "Alert with the message '" + \
                 expected_alert_message + "' did not appear."
+
+
+    def test_load_tc_3(self, driver, xlsx_1sheet_0cols):
+        """
+        Uploads an Excel file with a single sheet and no columns, and verifies that an alert 
+        with the message 'No column \"User Story\" found' is displayed.
+        """
+        expected_alert_message = "No column \"User Story\" found"
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(xlsx_1sheet_0cols)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."

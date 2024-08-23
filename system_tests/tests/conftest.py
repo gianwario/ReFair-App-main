@@ -27,3 +27,11 @@ def txt_file():
         os.path.dirname(__file__),
         '..', 'data', 'bad_extension', 'stories.txt'
     )
+
+
+@pytest.fixture
+def xlsx_1sheet_0cols():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'xlsx_1sheet_0cols', 'stories.xlsx'
+    )
