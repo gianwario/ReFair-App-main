@@ -120,3 +120,27 @@ class TestLoad:
         for expected_story, row in zip(expected_stories, table_rows):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+    def test_load_tc_6(self, driver, load_tc_6_fixture):
+        """
+        Uploads an xlsx file named 'stories' containing one sheet. 
+        This sheet has a single column that is not labeled 'User Story' and 
+        contains four rows of data (not user stories).
+        Verifies that an alert with the message 'No column \"User Story\" found' is displayed.
+        """
+        expected_alert_message = "No column \"User Story\" found"
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(load_tc_6_fixture)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."
