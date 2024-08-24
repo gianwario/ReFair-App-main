@@ -35,3 +35,11 @@ def xlsx_1sheet_0cols():
         os.path.dirname(__file__),
         '..', 'data', 'xlsx_1sheet_0cols', 'stories.xlsx'
     )
+
+
+@pytest.fixture
+def xlsx_1sheet_2cols():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'xlsx_1sheet_2cols', 'stories.xlsx'
+    )
