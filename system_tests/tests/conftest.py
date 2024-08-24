@@ -14,32 +14,32 @@ def driver():
 
 
 @pytest.fixture
-def xlsx_file_with_bad_filename_and_one_user_story():
+def load_tc_1_fixture():
     return os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'bad_name', 'This file name should not be accepted.xlsx'
+        '..', 'data', '2.1.1.2.0.2.0.2.0.3.0', 'This file name should not be accepted.xlsx'
     )
 
 
 @pytest.fixture
-def txt_file():
+def load_tc_2_fixture():
     return os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'bad_extension', 'stories.txt'
+        '..', 'data', '1.2.0.0.0.0.0.0.0.0.0', 'stories.txt'
     )
 
 
 @pytest.fixture
-def xlsx_1sheet_0cols():
+def load_tc_3_fixture():
     return os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'xlsx_1sheet_0cols', 'stories.xlsx'
+        '..', 'data', '1.1.1.1.0.0.0.0.0.0.0', 'stories.xlsx'
     )
 
 
 @pytest.fixture
-def xlsx_1sheet_2cols():
+def load_tc_4_fixture():
     return os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'xlsx_1sheet_2cols', 'stories.xlsx'
+        '..', 'data', '1.1.1.3.0.2.0.2.0.3.0', 'stories.xlsx'
     )
