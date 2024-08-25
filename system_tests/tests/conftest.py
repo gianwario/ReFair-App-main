@@ -1,10 +1,12 @@
 import os
 import pytest
+import shutil
 from selenium import webdriver
 
 
 @pytest.fixture
 def driver():
+
     driver = webdriver.Firefox()
     driver.set_window_size(1920, 1080)
 
@@ -74,4 +76,17 @@ def load_tc_8_fixture():
     return os.path.join(
         os.path.dirname(__file__),
         '..', 'data', 'load_tc_8_(1.1.1.2.0.2.0.4.0.3.0.)', 'stories.xlsx'
+    )
+
+@pytest.fixture
+def analyze_tc_1_fixture():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'analyze_tc_1', 'stories.xlsx'
+    ), os.open(
+        os.path.join(
+            os.path.dirname(__file__),
+            '..', 'data', 'analyze_tc_1', 'oracle.json'
+        ),
+        os.O_RDONLY
     )
