@@ -83,3 +83,11 @@ def load_tc_9_fixture():
         os.path.dirname(__file__),
         '..', 'data', 'load_tc_9_(1.1.2.2.2.2.2.2.1.3.0.)', 'stories.xlsx'
     )
+
+
+@pytest.fixture
+def load_tc_10_fixture():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'load_tc_10_(1.1.1.2.0.2.0.2.0.1.0.)', 'stories.xlsx'
+    )

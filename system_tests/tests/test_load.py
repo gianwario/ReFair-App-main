@@ -218,3 +218,29 @@ class TestLoad:
         for expected_story, row in zip(expected_stories, table_rows):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+    def test_load_tc_10(self, driver, load_tc_10_fixture):
+        """
+        Uploads an xlsx file named 'stories' containing one sheet. 
+        This sheet has a single column labeled 'User Story' that contains 
+        only one row of data, a picture.
+        Verifies that an alert with the message 'The file could not be loaded because at least one 
+        non-textual element was found in the \"User Story\" column.' is displayed.
+        """
+        expected_alert_message = "The file could not be loaded because at least one " + \
+        "non-textual element was found in the \"User Story\" column."
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(load_tc_10_fixture)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."
