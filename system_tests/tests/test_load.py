@@ -785,3 +785,33 @@ class TestLoad:
         for expected_story, row in zip(expected_stories, table_rows):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+    def test_load_tc_28(self, driver, load_tc_28_fixture):
+        """
+        Uploads an xlsx file named 'stories' containing two sheets.
+        The first sheet has a single column labeled 'User Story' with 
+        100 user stories that match the expected regex pattern.
+        The second sheet also has a single column labeled 'User Story' with
+        three rows of data that match the expected regex pattern.
+        Verifies that all 100 user stories from the first sheet are correctly loaded,
+        while the data from the second sheet is not considered.
+        """
+        stories = pd.read_excel(load_tc_28_fixture)
+        expected_stories = stories['User Story'].tolist()
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(load_tc_28_fixture)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        table_rows = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+        )
+
+        assert len(table_rows) == 100, f"The table should have 100 rows - found {len(table_rows)} row(s)"
+
+        for expected_story, row in zip(expected_stories, table_rows):
+            story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
+            assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
