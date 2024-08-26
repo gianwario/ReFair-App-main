@@ -83,10 +83,7 @@ def analyze_tc_1_fixture():
     return os.path.join(
         os.path.dirname(__file__),
         '..', 'data', 'analyze_tc_1', 'stories.xlsx'
-    ), os.open(
-        os.path.join(
-            os.path.dirname(__file__),
-            '..', 'data', 'analyze_tc_1', 'oracle.json'
-        ),
-        os.O_RDONLY
-    )
+    ), os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'analyze_tc_1', 'oracle.json'
+    ),

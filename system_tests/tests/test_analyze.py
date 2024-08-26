@@ -30,7 +30,7 @@ class TestAnalyze:
             domain = driver.find_element(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/p[2]/').text
             sensitive_feature = driver.find_element(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/div[1]/table/tbody/tr/td[2]').text
 
-            with os.fdopen(oracle, 'r') as file:
+            with os.open(oracle, os.O_RDONLY) as file:
                 oracle_data = json.load(file)
 
                 assert domain == oracle_data['domain'], "Domain does not match the oracle"
@@ -40,8 +40,7 @@ class TestAnalyze:
             assert False, "Modal did not appear."
         except NoSuchElementException:
             assert False, "No matching with the oracle"
-        finally:
-            os.close(oracle)
+
 
 
 
