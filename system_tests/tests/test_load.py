@@ -295,3 +295,34 @@ class TestLoad:
         for expected_story, row in zip(expected_stories, table_rows):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+    def test_load_tc_13(self, driver, load_tc_13_fixture):
+        """
+        Uploads an xlsx file named 'stories' containing one sheet. 
+        This sheet has a single column labeled 'User Story' and 
+        one row of data that does not match the expected regex pattern.
+        Verifies that an alert with the message 
+        'The file was loaded successfully, but some user stories did not match 
+        the required format and were not included.' is displayed, 
+        and confirms that no user stories are loaded.
+        """
+        expected_alert_message = "The file was loaded successfully, but " + \
+            "some user stories did not match the required format and were not included."
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(load_tc_13_fixture)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."
+
+        table_rows = driver.find_elements(By.CSS_SELECTOR, "table tbody tr")
+        assert len(table_rows) == 0, f"The table should have 0 rows - found {len(table_rows)} row(s)"
