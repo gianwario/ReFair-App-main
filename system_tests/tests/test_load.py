@@ -741,3 +741,47 @@ class TestLoad:
         for expected_story, row in zip(expected_stories, table_rows):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+    def test_load_tc_27(self, driver, load_tc_27_fixture):
+        """
+        Uploads an xlsx file named 'stories' containing two sheets. 
+        The first sheet has a single column labeled 'User Story' and 100 user stories.
+        One row of data does not match the expected regex pattern.
+        The second sheet also has a single column labeled 'User Story' and
+        three rows of data that match the expected regex pattern.
+        Verifies that an alert with the message 
+        'The file was loaded successfully, but some user stories did not match 
+        the required format and were not included.' is displayed, 
+        and confirms that only the user stories matching the expected format are loaded
+        (only the first sheet's data is considered).
+        """
+        expected_alert_message = "The file was loaded successfully, but " + \
+            "some user stories did not match the required format and were not included."
+        stories = pd.read_excel(load_tc_27_fixture)
+        filtered_stories = stories[stories['User Story'].str.fullmatch(PATTERN)]
+        expected_stories = filtered_stories['User Story'].tolist()
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(load_tc_27_fixture)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."
+
+        table_rows = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+        )
+
+        assert len(table_rows) == 99, f"The table should have 99 rows - found {len(table_rows)} row(s)"
+
+        for expected_story, row in zip(expected_stories, table_rows):
+            story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
+            assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
