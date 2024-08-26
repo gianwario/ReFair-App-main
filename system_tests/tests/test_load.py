@@ -326,3 +326,29 @@ class TestLoad:
 
         table_rows = driver.find_elements(By.CSS_SELECTOR, "table tbody tr")
         assert len(table_rows) == 0, f"The table should have 0 rows - found {len(table_rows)} row(s)"
+
+    def test_load_tc_14(self, driver, load_tc_14_fixture):
+        """
+        Uploads an xlsx file named 'stories' containing one sheet. 
+        This sheet has a single column labeled 'User Story' and 
+        one well-written user story.
+        Verifies that the user story is correctly loaded.
+        """
+        stories = pd.read_excel(load_tc_14_fixture)
+        expected_stories = stories['User Story'].tolist()
+
+        driver.get("http://localhost:5173/")
+
+        file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
+        file_input.send_keys(load_tc_14_fixture)
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        table_rows = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+        )
+        assert len(table_rows) == 1, f"The table should have 1 row - found {len(table_rows)} row(s)"
+
+        for expected_story, row in zip(expected_stories, table_rows):
+            story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
+            assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
