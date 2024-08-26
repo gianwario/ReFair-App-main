@@ -1,9 +1,12 @@
 import os
 import json
+from pyexpat import features
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from system_tests.tests.conftest import driver
 
 
 class TestAnalyze:
@@ -16,25 +19,33 @@ class TestAnalyze:
 
         driver.get('http://localhost:5173/')
 
-        excel_path, oracle = analyze_tc_1_fixture
+        excel, oracle = analyze_tc_1_fixture
 
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
-        file_input.send_keys(excel_path)
+        file_input.send_keys(excel)
 
         driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
 
         try:
             WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn-secondary"))).click()
-            WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'modal-content')))
 
-            domain = driver.find_element(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/p[2]/').text
-            sensitive_feature = driver.find_element(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/div[1]/table/tbody/tr/td[2]').text
+            domain = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/p[2]'))).text.split(': ')[1]
+            table_body = driver.find_elements(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/div[1]/table/tbody')
+            task = features = []
 
-            with os.open(oracle, os.O_RDONLY) as file:
+            if table_body:
+                for row in table_body:
+                    for elements in row.find_elements(By.TAG_NAME, 'tr'):
+                        task.extend(elements.find_elements(By.TAG_NAME, 'td')[0].text)
+                        features.extend(elements.find_elements(By.TAG_NAME, 'td')[1].text)
+
+            sensitive_features = dict(zip(task, features))
+
+            with open(oracle, 'r') as file:
                 oracle_data = json.load(file)
 
                 assert domain == oracle_data['domain'], "Domain does not match the oracle"
-                assert sensitive_feature == oracle_data['sensitive_feature'], "Sensitive feature does not match the oracle"
+                assert sensitive_features == oracle_data['features'], "Sensitive feature does not match the oracle"
 
         except TimeoutException:
             assert False, "Modal did not appear."
