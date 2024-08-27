@@ -1,13 +1,9 @@
-import os
 import json
-from pyexpat import features
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from system_tests.tests.conftest import driver
-
 
 class TestAnalyze:
 
@@ -31,21 +27,17 @@ class TestAnalyze:
 
             domain = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/p[2]'))).text.split(': ')[1]
             table_body = driver.find_elements(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/div[1]/table/tbody')
-            task = features = []
+            features = {}
 
             if table_body:
                 for row in table_body:
-                    for elements in row.find_elements(By.TAG_NAME, 'tr'):
-                        task.extend(elements.find_elements(By.TAG_NAME, 'td')[0].text)
-                        features.extend(elements.find_elements(By.TAG_NAME, 'td')[1].text)
-
-            sensitive_features = dict(zip(task, features))
+                    features[row.find_elements(By.TAG_NAME, 'td')[0].text] = row.find_elements(By.TAG_NAME, 'td')[1].text.split(' - ')
 
             with open(oracle, 'r') as file:
                 oracle_data = json.load(file)
 
                 assert domain == oracle_data['domain'], "Domain does not match the oracle"
-                assert sensitive_features == oracle_data['features'], "Sensitive feature does not match the oracle"
+                assert features == oracle_data['features'], "Sensitive features does not match the oracle"
 
         except TimeoutException:
             assert False, "Modal did not appear."
