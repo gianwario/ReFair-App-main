@@ -5,6 +5,7 @@ from selenium import webdriver
 
 @pytest.fixture
 def driver():
+
     driver = webdriver.Firefox()
     driver.set_window_size(1920, 1080)
 
@@ -235,3 +236,15 @@ def load_tc_28_fixture():
         os.path.dirname(__file__),
         '..', 'data', 'load_tc_28_(1.1.2.2.2.2.2.3.2.3.3.)', 'stories.xlsx'
     )
+
+
+@pytest.fixture
+def analyze_tc_1_fixture():
+    return os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'analyze_tc_1', 'stories.xlsx'
+    ), os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'analyze_tc_1', 'oracle.json'
+    ),
+
