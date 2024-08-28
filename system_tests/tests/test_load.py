@@ -815,3 +815,23 @@ class TestLoad:
         for expected_story, row in zip(expected_stories, table_rows):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+    def test_load_tc_button(self, driver):
+        """
+        Clicks the Load button without selecting a file.
+        Verifies that an alert with the message 
+        'No file \"stories.xlsx\" loaded' is displayed.
+        """
+        expected_alert_message = "No file \"stories.xlsx\" loaded"
+        
+        driver.get("http://localhost:5173/")
+
+        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+
+        try:
+            alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
+            assert alert.text == expected_alert_message, f"Unexpected alert text: {alert.text}"
+            alert.accept()
+        except TimeoutException:
+            assert False, "Alert with the message '" + \
+                expected_alert_message + "' did not appear."
