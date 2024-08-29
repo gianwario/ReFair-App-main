@@ -15,17 +15,19 @@ def driver():
 
 
 @pytest.fixture
-def driver_with_options():
+def driver_with_options(request):
+
+    name_dir = request.param
 
     directory = os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'report_tc_1'
+        '..', 'data', name_dir
     )
 
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    if os.listdir(directory):
+    if os.listdir(directory) and directory + "report.json" not in os.listdir(directory):
         os.remove(os.path.join(directory, os.listdir(directory)[0]))
 
     options = Options()
@@ -272,6 +274,6 @@ def analyze_tc_1_fixture():
         '..', 'data', 'analyze_tc_1', 'stories.xlsx'
     ), os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'analyze_tc_1', 'oracle.json'
+        '..', 'data', 'analyze_tc_1', 'report.json'
     ),
 
