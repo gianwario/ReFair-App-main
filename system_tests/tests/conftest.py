@@ -1,12 +1,39 @@
 import os
 import pytest
+from selenium.webdriver.firefox.options import Options
 from selenium import webdriver
 
 
 @pytest.fixture
 def driver():
-
     driver = webdriver.Firefox()
+    driver.set_window_size(1920, 1080)
+
+    yield driver
+
+    driver.quit()
+
+
+@pytest.fixture
+def driver_with_options():
+
+    directory = os.path.join(
+        os.path.dirname(__file__),
+        '..', 'data', 'report_tc_1'
+    )
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    if os.listdir(directory):
+        os.remove(os.path.join(directory, os.listdir(directory)[0]))
+
+    options = Options()
+    options.set_preference("browser.download.folderList", 2)
+    options.set_preference("browser.download.dir", directory)
+    options.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/json")
+
+    driver = webdriver.Firefox(options=options)
     driver.set_window_size(1920, 1080)
 
     yield driver
