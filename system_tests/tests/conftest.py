@@ -274,6 +274,6 @@ def analyze_tc_1_fixture():
         '..', 'data', 'analyze_tc_1', 'stories.xlsx'
     ), os.path.join(
         os.path.dirname(__file__),
-        '..', 'data', 'analyze_tc_1', 'report.json'
+        '..', 'data', 'analyze_tc_1', 'oracle.json'
     ),
 
