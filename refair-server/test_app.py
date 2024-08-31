@@ -81,3 +81,101 @@ class TestLoadStories:
                 'Third user story.'
             ]
         }
+
+class TestAnalysis:
+    def test_analysis_with_get_request_not_allowed(self, client):
+        response = client.get(
+            path='/analyzeStory'
+        )
+        assert response.status_code == 200
+        # Check the raw bytes...
+        #assert response.data == b"Not Allowed"
+        # ...or check the decoded string. I'll keep this one.
+        assert response.data.decode() == 'Not Allowed'
+
+    def test_analysis_with_no_tasks_and_no_features(self, client, mocker):
+        mocker.patch('app.getDomain', return_value='ExampleDomain')
+        mocker.patch('app.getMLTask', return_value=[])
+        mocker.patch('app.feature_extraction', return_value={})
+
+        response = client.post(
+            path='/analyzeStory',
+            data={
+                'story': 'A user story related to ExampleDomain and no ML tasks.'
+            },
+            content_type='multipart/form-data'
+        )
+        assert response.status_code == 200
+        assert response.json == {
+            'domain': 'ExampleDomain',
+            'tasks': [],
+            'tasks_features': {},
+            'features_counts': {}
+        }
+
+    def test_analysis_with_tasks_and_features_appearing_one_time(self, client, mocker):
+        return_domain = 'ExampleDomain'
+        return_ml_tasks = ['Task_A', 'Task_B']
+        return_features = {
+            'Task_A': [
+                'Feature_1'
+            ],
+            'Task_B': [
+                'Feature_2'
+            ]
+        }
+        mocker.patch('app.getDomain', return_value=return_domain)
+        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.feature_extraction', return_value=return_features)
+
+        response = client.post(
+            path='/analyzeStory',
+            data={
+                'story': 'A user story that focuses on Task_A and Task_B in the context of ExampleDomain.'
+            },
+            content_type='multipart/form-data'
+        )
+        assert response.status_code == 200
+        assert response.json == {
+            'domain': return_domain,
+            'tasks': return_ml_tasks,
+            'tasks_features': return_features,
+            'features_counts': {
+                'Feature_1': 1,
+                'Feature_2': 1
+            }
+        }
+
+    def test_analysis_with_tasks_and_features_appearing_multiple_times(self, client, mocker):
+        return_domain = 'ExampleDomain'
+        return_ml_tasks = ['Task_A', 'Task_B']
+        return_features = {
+            'Task_A': [
+                'Feature_1',
+                'Feature_2'
+            ],
+            'Task_B': [
+                'Feature_2'
+            ]
+        }
+        mocker.patch('app.getDomain', return_value=return_domain)
+        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.feature_extraction', return_value=return_features)
+
+        response = client.post(
+            path='/analyzeStory',
+            data={
+                'story': 'A user story that focuses on Task_A and Task_B in the context of ExampleDomain.'
+            },
+            content_type='multipart/form-data'
+        )
+        assert response.status_code == 200
+        assert response.json == {
+            'domain': return_domain,
+            'tasks': return_ml_tasks,
+            'tasks_features': return_features,
+            'features_counts': {
+                'Feature_1': 1,
+                'Feature_2': 2
+            }
+        }
