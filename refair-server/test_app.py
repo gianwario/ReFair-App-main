@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 from io import BytesIO
 
@@ -178,4 +179,113 @@ class TestAnalysis:
                 'Feature_1': 1,
                 'Feature_2': 2
             }
+        }
+
+class TestReportStories:
+    def test_report_stories_with_get_request_not_allowed(self, client):
+        response = client.get(
+            path='/reportStories'
+        )
+        assert response.status_code == 200
+        assert response.data.decode() == 'Not Allowed'
+
+    def test_report_stories_with_empty_data(self, client):
+        response = client.post(
+            path='/reportStories', 
+            data={}
+        )
+        assert response.status_code == 400
+
+    def test_report_stories_with_single_user_story(self, client, mocker):
+        story = 'A user story that focuses on Task_A and Task_B in the context of ExampleDomain.'
+        return_domain = 'ExampleDomain'
+        return_ml_tasks = ['Task_A', 'Task_B']
+        return_features = {
+            'Task_A': [
+                'Feature_1',
+                'Feature_2'
+            ],
+            'Task_B': [
+                'Feature_2'
+            ]
+        }
+        mocker.patch('app.getDomain', return_value=return_domain)
+        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.feature_extraction', return_value=return_features)
+
+        response = client.post(
+            path='/reportStories',
+            data={
+                'stories': json.dumps([
+                    story
+                ])
+            }
+        )
+
+        # Convert response data to a JSON object
+        response_data = json.loads(response.get_data(as_text=True).replace("\'", "\""))
+
+        assert response.status_code == 200
+        assert response.content_type == 'application/json'
+        assert response.headers['Content-Disposition'] == 'attachment;filename=zones.geojson'
+        assert len(response_data) == 1
+        assert response_data[0] == {
+            'story': story,
+            'domain': return_domain,
+            'tasks': return_ml_tasks,
+            'features': return_features
+        }
+
+    def test_report_stories_with_two_user_stories(self, client, mocker):
+        stories = [
+            'A user story that focuses on Task_A and Task_B in the context of ExampleDomain_1.',
+            'A user story that focuses on Task_C in the context of ExampleDomain_2.'
+        ]
+        return_domain = ['ExampleDomain_1', 'ExampleDomain_2']
+        return_ml_tasks = [['Task_A', 'Task_B'], ['Task_C']]
+        return_features = [
+            {
+                'Task_A': [
+                    'Feature_1',
+                    'Feature_2'
+                ],
+                'Task_B': [
+                    'Feature_2'
+                ]
+            },
+            {
+                'Task_C': [
+                    'Feature_3'
+                ]
+            }
+        ]
+        mocker.patch('app.getDomain', side_effect=return_domain)
+        mocker.patch('app.getMLTask', side_effect=return_ml_tasks)
+        mocker.patch('app.feature_extraction', side_effect=return_features)
+
+        response = client.post(
+            path='/reportStories',
+            data={
+                'stories': json.dumps(stories)
+            }
+        )
+
+        # Convert response data to a JSON object
+        response_data = json.loads(response.get_data(as_text=True).replace("\'", "\""))
+
+        assert response.status_code == 200
+        assert response.content_type == 'application/json'
+        assert response.headers['Content-Disposition'] == 'attachment;filename=zones.geojson'
+        assert len(response_data) == 2
+        assert response_data[0] == {
+            'story': stories[0],
+            'domain': return_domain[0],
+            'tasks': return_ml_tasks[0],
+            'features': return_features[0]
+        }
+        assert response_data[1] == {
+            'story': stories[1],
+            'domain': return_domain[1],
+            'tasks': return_ml_tasks[1],
+            'features': return_features[1]
         }
