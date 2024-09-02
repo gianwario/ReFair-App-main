@@ -289,3 +289,55 @@ class TestReportStories:
             'tasks': return_ml_tasks[1],
             'features': return_features[1]
         }
+
+class TestReportStory:
+    def test_report_story_with_get_request_not_allowed(self, client):
+        response = client.get(
+            path='/reportStory'
+        )
+        assert response.status_code == 200
+        assert response.data.decode() == 'Not Allowed'
+
+    def test_report_story_with_empty_data(self, client):
+        response = client.post(
+            path='/reportStory', 
+            data={}
+        )
+        assert response.status_code == 400
+
+    def test_report_story_with_user_story(self, client, mocker):
+        story = 'A user story that focuses on Task_A and Task_B in the context of ExampleDomain.'
+        return_domain = 'ExampleDomain'
+        return_ml_tasks = ['Task_A', 'Task_B']
+        return_features = {
+            'Task_A': [
+                'Feature_1',
+                'Feature_2'
+            ],
+            'Task_B': [
+                'Feature_2'
+            ]
+        }
+        mocker.patch('app.getDomain', return_value=return_domain)
+        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.feature_extraction', return_value=return_features)
+
+        response = client.post(
+            path='/reportStory',
+            data={
+                'story': json.dumps(story)
+            }
+        )
+
+        # Convert response data to a JSON object
+        response_data = json.loads(response.get_data(as_text=True).replace("\'", "\""))
+
+        assert response.status_code == 200
+        assert response.content_type == 'application/json'
+        assert response.headers['Content-Disposition'] == 'attachment;filename=zones.geojson'
+        assert response_data == {
+            'story': story,
+            'domain': return_domain,
+            'tasks': return_ml_tasks,
+            'features': return_features
+        }
