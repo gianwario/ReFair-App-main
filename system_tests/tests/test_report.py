@@ -53,7 +53,7 @@ class TestReport:
     @pytest.mark.parametrize('driver_with_options', ['report_tc_1'], indirect=True)
     def test_report_tc_1(self, driver_with_options, analyze_tc_1_fixture):
         """
-        Upload a well-formed Excel file and check if the downloaded file .json is equal to the oracle
+        Upload a well-formed Excel file and check if all the downloaded file .json is equal to the oracle
         """
 
         driver_with_options.get('http://localhost:5173/')
@@ -134,3 +134,21 @@ class TestReport:
             assert False, "Modal did not appear."
         except NoSuchElementException:
             assert False, "No element was found in the page."
+
+
+    def test_report_tc3(self, driver):
+        """
+        Check if the report button is disabled with no file loaded
+        """
+
+        driver.get('http://localhost:5173/')
+
+        try:
+            assert "disabled" in driver.find_element(By.ID, "report").get_attribute("class"), "The report button is not disabled"
+
+        except NoSuchElementException:
+            assert False, "No element was found in the page."
+
+
+
+
