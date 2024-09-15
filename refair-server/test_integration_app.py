@@ -147,3 +147,33 @@ class TestReportStories:
                 ]
             }
         }
+
+class TestReportStory:
+    def test_report_story_integration(self, client):
+        story = 'As a plant scientist, I want to use cluster analysis ' + \
+        'to group plants based on their genetic and morphological characteristics, ' + \
+        'so that I can better understand plant evolution and taxonomy.'
+
+        response = client.post(
+            path='/reportStory',
+            data={
+                'story': json.dumps(story)
+            }
+        )
+
+        # Convert response data to a JSON object
+        response_data = json.loads(response.get_data(as_text=True).replace("\'", "\""))
+
+        assert response.status_code == 200
+        assert response.content_type == 'application/json'
+        assert response.headers['Content-Disposition'] == 'attachment;filename=zones.geojson'
+        assert response_data == {
+            'story': story,
+            'domain': 'Plant Science',
+            'tasks': [
+                'clustering'
+            ],
+            'features': {
+                'clustering': [],
+            }
+        }
