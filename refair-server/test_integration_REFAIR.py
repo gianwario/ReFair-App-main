@@ -79,7 +79,9 @@ class TestGetMLTask:
 class TestRefair:
 
     def test_refair(self, capsys):
-        user_story = 'As a computer vision researcher, I want to use WordNet to identify synonyms and related terms in technical texts related to computer vision for better understanding.'
+        user_story = 'As a computer vision researcher, I want to use WordNet to identify ' + \
+        'synonyms and related terms in technical texts related to computer vision ' + \
+        'for better understanding.'
 
         refair(user_story)
 
