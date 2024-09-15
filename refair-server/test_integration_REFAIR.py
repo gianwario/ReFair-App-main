@@ -1,5 +1,5 @@
 import pytest
-from REFAIR import getDomain, getMLTask
+from REFAIR import getDomain, getMLTask, refair
 
 class TestGetDomain:
 
@@ -75,3 +75,19 @@ class TestGetMLTask:
         prediction = getMLTask(user_story, domain)
 
         assert prediction == ['sentiment analysis']
+
+class TestRefair:
+
+    def test_refair(self, capsys):
+        user_story = 'As a computer vision researcher, I want to use WordNet to identify synonyms and related terms in technical texts related to computer vision for better understanding.'
+
+        refair(user_story)
+
+        captured = capsys.readouterr()
+        assert "*** REFAIR started ***" in captured.out
+        assert "Domain identified: Computer Vision" in captured.out
+        assert "Machine Learning task identified: ['anomaly detection', 'clustering', 'representation learning']" in captured.out
+        assert "Domain: Computer Vision - Task: anomaly detection - Sensitive Features: ['age', 'gender', 'race', 'skin tone']" in captured.out
+        assert "Domain: Computer Vision - Task: clustering - Sensitive Features: ['age', 'gender', 'geography', 'race']" in captured.out
+        assert "Domain: Computer Vision - Task: representation learning - Sensitive Features: ['age', 'gender', 'geography', 'race', 'skin color', 'skin tone']" in captured.out
+        assert "*** REFAIR ended ***" in captured.out
