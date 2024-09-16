@@ -6,6 +6,7 @@ import openpyxl
 import json
 
 # Variabile globale per salvare il percorso del file selezionato e le user stories
+user_story_labels = []
 file_path = ""
 user_stories = []
 
@@ -26,7 +27,7 @@ def open_file():
         user_stories.clear()  # Cancella le user stories salvate
 
 def load_file():
-    global user_stories
+    global user_stories, user_story_labels
     if not file_path:
         # Se non è stato selezionato alcun file valido, mostra un messaggio di errore
         error_label = Label(root, text="Errore: Nessun file .xlsx selezionato!", fg="red")
@@ -53,6 +54,13 @@ def load_file():
     # Cancella eventuali user stories precedenti
     user_stories.clear()
     
+    # Rimuovi tutte le Label precedentemente create
+    for label in user_story_labels:
+        label.destroy()
+    
+    # Svuota la lista delle Label
+    user_story_labels.clear()
+    
     # Stampa ogni riga della colonna "User Story" in una label differente
     row_index = 3
     for cell in user_story_col[1:]:  # Salta l'intestazione
@@ -60,6 +68,9 @@ def load_file():
         user_story_label.grid(row=row_index, column=0, columnspan=2, padx=10, pady=2, sticky="w")
         row_index += 1
         user_stories.append(cell.value)  # Aggiungi la user story alla lista
+        
+        # Aggiungi la Label alla lista per poterla rimuovere in seguito
+        user_story_labels.append(user_story_label)
 
 def save_as_json():
     if not user_stories:
