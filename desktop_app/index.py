@@ -9,6 +9,7 @@ from PIL import Image, ImageTk
 
 from components.user_story_canvas import UserStoryCanvas
 from colors import COLORS 
+from domain_utils import getDomain
 
 # Variabili globali
 user_story_listbox = None
@@ -95,6 +96,12 @@ def save_as_json():
         with open(save_path, 'w') as json_file:
             json.dump(user_stories, json_file, indent=4)
         messagebox.showinfo(title="Congraturations!", message=f"File correctly saved in: {save_path}")
+
+def analyze(user_story):
+        # Chiama la funzione getDomain e aggiorna la label con il risultato
+        predicted_domain = getDomain(user_story)
+        #print(f"Predicted Domain: {predicted_domain}")
+        messagebox.showinfo(message=predicted_domain)
 
 def show_frame(frame):
     frame.tkraise()
@@ -217,9 +224,8 @@ save_button.grid(row=0, column=4, padx=10, pady=10)
 entry_us = ttk.Entry(entry_frame, width=100)
 entry_us.grid(row=0, column=0, padx=20)
 
-analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=lambda: print(entry_us.get()))
+analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=analyze(entry_us.get()), default=False)
 analyze_button.grid(row=0, column=1)
-
 
 ##USs title
 us_title_label = Label (main_content, text="User Stories", background=COLORS['background'], font=('Helvetica', 16))

@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import Scrollbar, Canvas, Frame, Label, Button
 
+from domain_utils import getDomain
+
 class UserStoryCanvas(Frame):
     def __init__(self, parent, user_stories, wrap_length=800, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -43,5 +45,8 @@ class UserStoryCanvas(Frame):
             separator = Frame(self.content_frame, height=1, bd=1, relief=tk.SUNKEN, bg="black")
             separator.pack(fill=tk.X, padx=5, pady=5)
 
-    def analyze(self, us):
-        print(f"Analyzing {us}")
+    def analyze(self, user_story):
+        # Chiama la funzione getDomain e aggiorna la label con il risultato
+        predicted_domain = getDomain(user_story)
+        #print(f"Predicted Domain: {predicted_domain}")
+        print("sono user_story_canvas.py")
