@@ -3,7 +3,6 @@
     <div class="row">
       <div>
         <h1>ReFair App</h1>
-
         <!-- Contenuto Capitolo 1 -->
         <div class="content">
           <!-- Il contenuto principale rimane lo stesso -->
@@ -129,9 +128,31 @@
 
     <!-- Capitoli di navigazione -->
     <div class="sidebar">
-      <button @click="scrollToChapter('chapter1')">CAPITOLO 1</button>
-      <button @click="scrollToChapter('chapter2')">CAPITOLO 2</button>
-      <button @click="scrollToChapter('chapter3')">CAPITOLO 3</button>
+      <div
+        class="indicator"
+        :style="{ transform: `translateY(${indicatorPosition}px)` }"
+      ></div>
+      <ChapterButton
+        btnClass="btn_chapter"
+        dataChapter="chapter1"
+        buttonText="CAPITOLO 1"
+        chapterId="chapter1"
+        @scrollToChapter="scrollToChapter"
+      />
+      <ChapterButton
+        btnClass="btn_chapter"
+        dataChapter="chapter2"
+        buttonText="CAPITOLO 2"
+        chapterId="chapter2"
+        @scrollToChapter="scrollToChapter"
+      />
+      <ChapterButton
+        btnClass="btn_chapter"
+        dataChapter="chapter3"
+        buttonText="CAPITOLO 3"
+        chapterId="chapter3"
+        @scrollToChapter="scrollToChapter"
+      />
     </div>
 
     <!-- analyze Story Modal -->
@@ -221,34 +242,19 @@
   </div>
 </template>
 
-<style>
-.container {
-  display: grid;
-  grid-template-columns: 1fr 200px; /* Colonna principale e colonna laterale */
-  width: 100%;
-  height: 100vh; /* Occupa tutta l'altezza della viewport */
-}
-
-.content {
-  padding: 20px; /* Spaziatura interna per il contenuto principale */
-  overflow-y: auto; /* Permette lo scroll se il contenuto è troppo lungo */
-}
-
-.sidebar {
-  background-color: #f8f9fa; /* Colore di sfondo per la barra laterale */
-  padding: 20px; /* Spaziatura interna per la barra laterale */
-  overflow-y: auto; /* Permette lo scroll se il contenuto è troppo lungo */
-}
-</style>
 <script>
 import axios from "axios";
-import dowloadjs from "downloadjs";
-
+import downloadjs from "downloadjs";
 import VueApexCharts from "vue-apexcharts";
+
+import ChapterButton from "./ChapterButton.vue";
 
 const server = "http://localhost:5001";
 
 export default {
+  components: {
+    ChapterButton,
+  },
   data() {
     return {
       activeAnalyzeStoryModal: false,
@@ -271,10 +277,12 @@ export default {
           data: [],
         },
       ],
+      activeButton: null, // Nuova proprietà per tracciare il pulsante attivo
+      indicatorPosition: 0, // Posizione della linea
     };
   },
   methods: {
-    handleStoriesUpload() {
+    handleStoriesUpload(event) {
       this.file = event.target.files[0];
     },
 
@@ -291,7 +299,7 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          dowloadjs(
+          downloadjs(
             ("" + res.data).replaceAll("'", '"'),
             "report.json",
             "application/json"
@@ -315,7 +323,7 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          dowloadjs(
+          downloadjs(
             ("" + res.data).replaceAll("'", '"'),
             "report-" + this.story + ".json",
             "application/json"
@@ -404,9 +412,34 @@ export default {
       this.activeAnalyzeStoryModal = !this.activeAnalyzeStoryModal;
       body.classList.remove("modal-open");
     },
+
+    //Scripts related to the chapters section
+
     scrollToChapter(chapterId) {
+      const button = this.$el.querySelector(`[data-chapter="${chapterId}"]`);
+      this.activeButton = button; // Updates the active button
+      this.updateIndicator(); // Update the indicator position
+
       document.getElementById(chapterId).scrollIntoView({ behavior: "smooth" });
     },
+
+    updateIndicator() {
+      if (!this.activeButton) return;
+      const buttonRect = this.activeButton.getBoundingClientRect();
+      const sidebarRect = this.$el
+        .querySelector(".sidebar")
+        .getBoundingClientRect();
+      const indicatorY = buttonRect.top - sidebarRect.top;
+
+      this.indicatorPosition = indicatorY; // Updates the position of the line
+    },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.activeButton = this.$el.querySelector(".btn_chapter"); // Initializes the first button as active
+      this.updateIndicator(); // Sets up the starting position of the indicator
+    });
   },
 };
 
