@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import Scrollbar, Canvas, Frame, Label, Button
 
 class UserStoryCanvas(Frame):
-    def __init__(self, parent, user_stories, wrap_length=600, *args, **kwargs):
+    def __init__(self, parent, user_stories, wrap_length=800, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         
         # Inizializza il Canvas e lo Scrollbar

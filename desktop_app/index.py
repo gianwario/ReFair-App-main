@@ -97,33 +97,86 @@ def save_as_json():
 def analyze(us):
     print(f"Analyzing {us}")
 
+def show_frame(frame):
+    frame.tkraise()
+
+# Funzioni che saranno chiamate quando si clicca sui pulsanti della sidebar
+def show_main_content():
+    show_frame(main_content)
+    main_content.pack(fill=BOTH, expand=True)
+    refair_info.pack_forget()
+    refair_suggestions.pack_forget()
+    
+
+def show_refair_info():
+    show_frame(refair_info)
+    refair_info.pack(fill=BOTH, expand=True)
+    main_content.pack_forget()
+    refair_suggestions.pack_forget()
+
+def show_refair_suggestions():
+    show_frame(refair_suggestions)
+    refair_suggestions.pack(fill=BOTH, expand=True)
+    refair_info.pack_forget()
+    main_content.pack_forget()
+
+# Finestra principale
 root = Tk()
 root.title("ReFair desktop app")
-root.geometry("1100x600")   #window dimensions
+root.geometry("1250x600")  # Dimensioni della finestra
 root.iconbitmap('desktop_app/icons/right_arrow_icon.ico')
 
+# Sidebar
 sidebar = Frame(root, background='red', width=200)
-sidebar.pack(fill=Y, side=LEFT)  
+sidebar.pack(fill=Y, side=LEFT)
 
-main_content = Frame(root, background='yellow')
-main_content.pack(expand=True, fill=BOTH)  
+# Frame contenitore principale per i contenuti
+content_frame = Frame(root)
+content_frame.pack(expand=True, fill=BOTH, side=LEFT)
 
-# Select File Button 
-button = ttk.Button(main_content, text="Select file", command=open_file)
-button.grid(row=0, column=0, padx=10, pady=20)
+# Main content area
+main_content = Frame(content_frame, background='yellow')
+main_content.pack(fill=BOTH, expand=True)
 
-# Label that shows the name of the file opened
+# Frame per refair_info
+refair_info = Frame(content_frame, background='lightblue')
+
+
+# Frame per refair_suggestions
+refair_suggestions = Frame(content_frame, background='lightgreen')
+
+# Contenuto della sidebar
+main_button = Button(sidebar, text="Main Content", command=show_main_content)
+main_button.pack(fill=X, pady=10)
+
+info_button = Button(sidebar, text="ReFair Info", command=show_refair_info)
+info_button.pack(fill=X, pady=10)
+
+suggestions_button = Button(sidebar, text="ReFair Suggestions", command=show_refair_suggestions)
+suggestions_button.pack(fill=X, pady=10)
+
+# Contenuto del frame main_content
+select_file_button = ttk.Button(main_content, text="Select file", command=open_file)
+select_file_button.grid(row=0, column=0, padx=10, pady=20)
+
 file_name_label = Label(main_content, text="")
-file_name_label.grid(row=0, column=1, padx=10, pady=20)  
-#column=1 creates a prolem since main_content.grid_columnconfigure(1, weight=0)
-#In order to resolve that we might create a frame in which to put button and text
+file_name_label.grid(row=0, column=1, padx=10, pady=20)
 
-# Load Button
 load_button = Button(main_content, text="Load", command=load_file)
 load_button.grid(row=1, column=0, padx=10, pady=10)
 
-# Download all Button
 save_button = Button(main_content, text="Download all", command=save_as_json)
 save_button.grid(row=2, column=0, padx=10, pady=10)
+
+# Contenuto del frame refair_info
+info_label = Label(refair_info, text="This is the ReFair Info tab", font=('Helvetica', 18))
+info_label.pack(pady=20)
+
+# Contenuto del frame refair_suggestions
+suggestions_label = Label(refair_suggestions, text="This is the ReFair Suggestions tab", font=('Helvetica', 18))
+suggestions_label.pack(pady=20)
+
+# Mostra il main_content all'avvio
+show_frame(main_content)
 
 root.mainloop()  # Necessario per rendere la finestra visibile
