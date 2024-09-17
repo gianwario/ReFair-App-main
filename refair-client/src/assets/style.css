@@ -180,3 +180,38 @@
   border-radius: 2px;
   margin-top: -15px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: var(--vt-c-blue-dark-2);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.pagination button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 16px;
+}
+
+.pagination input[type="number"] {
+  width: 50px;
+  text-align: center;
+  margin: 0 10px;
+  padding: 10px 5px;
+  font-size: 16px;
+}

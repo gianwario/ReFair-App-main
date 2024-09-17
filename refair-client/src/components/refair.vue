@@ -93,7 +93,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(story, index) in stories" :key="index">
+                <tr v-for="(story, index) in paginatedStories" :key="index">
                   <td>{{ story }}</td>
                   <td>
                     <div>
@@ -103,9 +103,9 @@
                         @click="toggleAnalyzeStoryModal(story)"
                       >
                         <span class="button__text">Analyze</span>
-                        <span class="button__icon"
-                          ><ion-icon name="analytics-outline"></ion-icon
-                        ></span>
+                        <span class="button__icon">
+                          <ion-icon name="analytics-outline"></ion-icon>
+                        </span>
                       </button>
                     </div>
                   </td>
@@ -114,6 +114,40 @@
             </table>
           </div>
 
+          <!-- Controlli di Paginazione -->
+          <div v-if="fileLoaded" class="pagination">
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+            >
+              Previous
+            </button>
+
+            <!-- Input per inserire il numero di pagina -->
+            <input
+              type="number"
+              v-model.number="currentPageInput"
+              @change="changePage(currentPageInput)"
+              :min="1"
+              :max="totalPages"
+            />
+
+            <!-- Mostra le pagine -->
+            <span v-if="currentPage > 2">1,</span>
+            <span v-if="currentPage > 3">...,</span>
+            <span v-if="currentPage > 1">{{ currentPage - 1 }},</span>
+            <span>{{ currentPage }},</span>
+            <span v-if="currentPage < totalPages">{{ currentPage + 1 }},</span>
+            <span v-if="currentPage < totalPages - 2">...,</span>
+            <span v-if="currentPage < totalPages - 1">{{ totalPages }}</span>
+
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+            >
+              Next
+            </button>
+          </div>
           <!-- Contenuto Capitolo 3 -->
           <div id="chapter3">
             <h2>CAPITOLO 3</h2>
@@ -279,6 +313,10 @@ export default {
       ],
       activeButton: null, // Nuova proprietà per tracciare il pulsante attivo
       indicatorPosition: 0, // Posizione della linea
+      currentPage: 1, // Pagina corrente
+      storiesPerPage: 30, // Numero di user stories per pagina
+      fileLoaded: false, // Variabile per tracciare se un file è stato caricato
+      currentPageInput: 1, // Variabile per tracciare l'input dell'utente per il numero di pagina
     };
   },
   methods: {
@@ -348,14 +386,18 @@ export default {
           if (typeof res.data.stories === "undefined") {
             alert(res.data.motivation);
             this.stories = [];
+            this.fileLoaded = false; // Imposta false se il caricamento fallisce
           } else {
             const reportBtn = document.querySelector("#report");
             reportBtn.classList.remove("disabled");
             this.stories = res.data.stories;
+            this.currentPage = 1; // Resetta la pagina corrente dopo il caricamento
+            this.fileLoaded = true; // Imposta true se il caricamento ha successo
           }
         })
         .catch(() => {
           this.stories = [];
+          this.fileLoaded = false; // Imposta false se il caricamento fallisce
         });
     },
 
@@ -407,18 +449,19 @@ export default {
       }
     },
 
-    closeAnalyzeStoryModal() {
-      const body = document.querySelector("body");
-      this.activeAnalyzeStoryModal = !this.activeAnalyzeStoryModal;
-      body.classList.remove("modal-open");
+    // Pagination
+    changePage(page) {
+      if (page > 0 && page <= this.totalPages) {
+        this.currentPage = page;
+        this.currentPageInput = page; // Aggiorna l'input della pagina corrente
+      }
     },
 
-    //Scripts related to the chapters section
-
+    // Capitoli
     scrollToChapter(chapterId) {
       const button = this.$el.querySelector(`[data-chapter="${chapterId}"]`);
-      this.activeButton = button; // Updates the active button
-      this.updateIndicator(); // Update the indicator position
+      this.activeButton = button; // Aggiorna il pulsante attivo
+      this.updateIndicator(); // Aggiorna la posizione dell'indicatore
 
       document.getElementById(chapterId).scrollIntoView({ behavior: "smooth" });
     },
@@ -431,19 +474,34 @@ export default {
         .getBoundingClientRect();
       const indicatorY = buttonRect.top - sidebarRect.top;
 
-      this.indicatorPosition = indicatorY; // Updates the position of the line
+      this.indicatorPosition = indicatorY; // Aggiorna la posizione della linea
+    },
+
+    closeAnalyzeStoryModal() {
+      const body = document.querySelector("body");
+      this.activeAnalyzeStoryModal = !this.activeAnalyzeStoryModal;
+      body.classList.remove("modal-open");
     },
   },
-
+  computed: {
+    totalPages() {
+      return Math.ceil(this.stories.length / this.storiesPerPage);
+    },
+    paginatedStories() {
+      const start = (this.currentPage - 1) * this.storiesPerPage;
+      const end = start + this.storiesPerPage;
+      return this.stories.slice(start, end);
+    },
+  },
   mounted() {
     this.$nextTick(() => {
-      this.activeButton = this.$el.querySelector(".btn_chapter"); // Initializes the first button as active
-      this.updateIndicator(); // Sets up the starting position of the indicator
+      this.activeButton = this.$el.querySelector(".btn_chapter"); // Inizializza il primo pulsante come attivo
+      this.updateIndicator(); // Imposta la posizione iniziale dell'indicatore
     });
   },
 };
 
-//Function needed to show the loaded file name
+// Function needed to show the loaded file name
 function handleStoriesUpload(event) {
   const fileInput = event.target;
   const fileNameElement = document.getElementById("file-name");
