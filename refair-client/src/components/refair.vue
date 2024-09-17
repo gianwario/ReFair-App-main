@@ -1,116 +1,139 @@
 <template>
-  <div class="container" style="width: 100%; height: 100%">
-    <v-layout justify-center align-center>
-      <div class="row">
-        <div>
-          <h1>ReFair App</h1>
+  <div class="container">
+    <div class="row">
+      <div>
+        <h1>ReFair App</h1>
 
-          <hr />
+        <!-- Contenuto Capitolo 1 -->
+        <div class="content">
+          <!-- Il contenuto principale rimane lo stesso -->
 
-          <div class="alert alert-info fade show" role="alert">
-            <strong>Info!</strong> To properly run the <b>ReFair</b> analysis,
-            you should upload an xlsx file called "stories.xlsx".
-            <hr />
-            The spreadhsheet must contain only a single column called 'User
-            Story' with all user stories to be analysed.
-            <ul>
-              <li>
-                The <strong> Load </strong> Button allows you to upload the user
-                stories spreadsheet;
-              </li>
-              <li>
-                The <strong> Report </strong> Button allows you to download a
-                structured JSON report with the user stories analysed by ReFair;
-              </li>
-              <li>
-                After the stories uploading, the
-                <strong> Analyze </strong> Button allows you to visualize the
-                ReFair analysis with respect to a single user story.
-              </li>
-            </ul>
+          <div id="chapter1">
+            <h2>CAPITOLO 1</h2>
+            <div class="alert alert-info fade show" role="alert">
+              <strong>Info!</strong> To properly run the <b>ReFair</b> analysis,
+              you should upload an xlsx file called "stories.xlsx".
+              <hr />
+              The spreadsheet must contain only a single column called 'User
+              Story' with all user stories to be analysed.
+              <ul>
+                <li>
+                  The <strong> Load </strong> Button allows you to upload the
+                  user stories spreadsheet;
+                </li>
+                <li>
+                  The <strong> Report </strong> Button allows you to download a
+                  structured JSON report with the user stories analysed by
+                  ReFair;
+                </li>
+                <li>
+                  After the stories uploading, the
+                  <strong> Analyze </strong> Button allows you to visualize the
+                  ReFair analysis with respect to a single user story.
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="btn-toolbar mb-3 justify-content-between"
+              role="toolbar"
+              aria-label="Toolbar with button groups"
+            >
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="file"
+                  class="form-control"
+                  @change="handleStoriesUpload($event)"
+                />
+                <!---->
+                <button type="button" class="button select">
+                  <label for="file" class="button__text"> Select file </label>
+                  <span class="button__icon"
+                    ><ion-icon name="document-attach-outline"></ion-icon
+                  ></span>
+                </button>
+                <!---->
+                <span id="file-name" class="file-name">No file Selected</span>
+              </div>
+              <div>
+                <button
+                  v-on:click="submitFile()"
+                  type="button"
+                  class="button load"
+                  style="margin-right: 20px"
+                >
+                  <span class="button__text">Load</span>
+                  <span class="button__icon"
+                    ><ion-icon name="cloud-upload-outline"></ion-icon
+                  ></span>
+                </button>
+                <button
+                  v-on:click="reportStories()"
+                  type="button"
+                  class="button report"
+                  id="report"
+                >
+                  <span class="button__text">Report</span>
+                  <span class="button__icon"
+                    ><ion-icon name="code-slash-outline"></ion-icon
+                  ></span>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div
-            class="btn-toolbar mb-3 justify-content-between"
-            role="toolbar"
-            aria-label="Toolbar with button groups"
-          >
-            <div class="file-upload">
-              <input
-                type="file"
-                id="file"
-                class="form-control"
-                @change="handleStoriesUpload($event)"
-              />
-              <!---->
-              <button type="button" class="button select">
-                <label for="file" class="button__text"> Select file </label>
-                <span class="button__icon"
-                  ><ion-icon name="document-attach-outline"></ion-icon
-                ></span>
-              </button>
-              <!---->
-              <span id="file-name" class="file-name">No file Selected</span>
-            </div>
-            <div>
-              <button
-                v-on:click="submitFile()"
-                type="button"
-                class="button load"
-                style="margin-right: 20px"
-              >
-                <span class="button__text">Load</span>
-                <span class="button__icon"
-                  ><ion-icon name="cloud-upload-outline"></ion-icon
-                ></span>
-              </button>
-              <button
-                v-on:click="reportStories()"
-                type="button"
-                class="button report"
-                id="report"
-              >
-                <span class="button__text">Report</span>
-                <span class="button__icon"
-                  ><ion-icon name="code-slash-outline"></ion-icon
-                ></span>
-              </button>
-            </div>
+          <!-- Contenuto Capitolo 2 -->
+          <div id="chapter2">
+            <h2>CAPITOLO 2</h2>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">User Stories</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(story, index) in stories" :key="index">
+                  <td>{{ story }}</td>
+                  <td>
+                    <div>
+                      <button
+                        type="button"
+                        class="button analyze"
+                        @click="toggleAnalyzeStoryModal(story)"
+                      >
+                        <span class="button__text">Analyze</span>
+                        <span class="button__icon"
+                          ><ion-icon name="analytics-outline"></ion-icon
+                        ></span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <hr />
 
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">User Stories</th>
-
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(story, index) in stories" :key="index">
-                <td>{{ story }}</td>
-
-                <td>
-                  <div>
-                    <button
-                      type="button"
-                      class="button analyze"
-                      @click="toggleAnalyzeStoryModal(story)"
-                    >
-                      <span class="button__text">Analyze</span>
-                      <span class="button__icon"
-                        ><ion-icon name="analytics-outline"></ion-icon
-                      ></span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- Contenuto Capitolo 3 -->
+          <div id="chapter3">
+            <h2>CAPITOLO 3</h2>
+            <p>
+              In this section, you'll find detailed information about the
+              analysis and reports generated by ReFair.
+            </p>
+          </div>
         </div>
       </div>
-    </v-layout>
+    </div>
+
+    <!-- Capitoli di navigazione -->
+    <div class="sidebar">
+      <button @click="scrollToChapter('chapter1')">CAPITOLO 1</button>
+      <button @click="scrollToChapter('chapter2')">CAPITOLO 2</button>
+      <button @click="scrollToChapter('chapter3')">CAPITOLO 3</button>
+    </div>
+
     <!-- analyze Story Modal -->
     <div
       ref="analyzeStoryModal"
@@ -162,7 +185,6 @@
                 <thead>
                   <tr>
                     <th scope="col">Task</th>
-
                     <th scope="col">Sensitive Features</th>
                   </tr>
                 </thead>
@@ -199,6 +221,25 @@
   </div>
 </template>
 
+<style>
+.container {
+  display: grid;
+  grid-template-columns: 1fr 200px; /* Colonna principale e colonna laterale */
+  width: 100%;
+  height: 100vh; /* Occupa tutta l'altezza della viewport */
+}
+
+.content {
+  padding: 20px; /* Spaziatura interna per il contenuto principale */
+  overflow-y: auto; /* Permette lo scroll se il contenuto è troppo lungo */
+}
+
+.sidebar {
+  background-color: #f8f9fa; /* Colore di sfondo per la barra laterale */
+  padding: 20px; /* Spaziatura interna per la barra laterale */
+  overflow-y: auto; /* Permette lo scroll se il contenuto è troppo lungo */
+}
+</style>
 <script>
 import axios from "axios";
 import dowloadjs from "downloadjs";
@@ -362,6 +403,9 @@ export default {
       const body = document.querySelector("body");
       this.activeAnalyzeStoryModal = !this.activeAnalyzeStoryModal;
       body.classList.remove("modal-open");
+    },
+    scrollToChapter(chapterId) {
+      document.getElementById(chapterId).scrollIntoView({ behavior: "smooth" });
     },
   },
 };
