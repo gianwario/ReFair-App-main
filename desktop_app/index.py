@@ -145,7 +145,7 @@ content_frame = Frame(root)
 content_frame.pack(expand=True, fill=BOTH, side=LEFT)
 
 # Main content area
-main_content = Frame(content_frame)
+main_content = Frame(content_frame, background='white')
 main_content.pack(fill=BOTH, expand=True)
 
 # Frame per refair_info
