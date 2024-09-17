@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 import os
 import openpyxl
 import json
@@ -19,6 +20,9 @@ scrollbar = None
 
 def open_file():
     global file_path
+    #Needed to delete the USs of the previous file that the model has to analyze when selecting a new file
+    user_stories.clear()
+
     # Apri la finestra di dialogo per selezionare un file
     file_path = filedialog.askopenfilename()
     
@@ -29,7 +33,7 @@ def open_file():
         file_name_label.config(text=f"{file_name}", fg="black")
     else:
         # Se non è un file .xlsx, mostra un messaggio di errore
-        file_name_label.config(text="Errore: Il file selezionato non è un file .xlsx", fg="red")
+        messagebox.showerror(title="Error", message="The file selected isn't a .xlsx file")
         file_path = ""
         user_stories.clear()  # Cancella le user stories salvate
 
@@ -38,8 +42,7 @@ def load_file():
 
     if not file_path:
         # Se non è stato selezionato alcun file valido, mostra un messaggio di errore
-        error_label = Label(main_content, text="Errore: Nessun file .xlsx selezionato!", fg="red")
-        error_label.grid(row=2, column=0, columnspan=2, padx=10, pady=5)
+        messagebox.showerror(title="Error", message="No .xlsx file selected")
         return
     
     # Carica il file .xlsx
@@ -55,8 +58,7 @@ def load_file():
     
     if user_story_col is None:
         # Se la colonna "User Story" non esiste, mostra un messaggio di errore
-        error_label = Label(main_content, text="Errore: Colonna 'User Story' non trovata!", fg="red")
-        error_label.grid(row=2, column=0, columnspan=2, padx=10, pady=5)
+        messagebox.showerror(title="Error", message="The 'User Story' column has not been found")
         return
 
     # Cancella eventuali user stories precedenti
@@ -82,8 +84,7 @@ def load_file():
 def save_as_json():
     if not user_stories:
         # Se non ci sono user stories caricate, mostra un messaggio di errore
-        error_label = Label(main_content, text="Errore: Nessuna User Story da salvare!", fg="red")
-        error_label.grid(row=2, column=0, columnspan=2, padx=10, pady=5)
+        messagebox.showerror(title="Error", message="There are no User Stories to download")
         return
     
     # Allows to save the JSON file with a specific name
@@ -93,11 +94,7 @@ def save_as_json():
         # Fills the JSON file with US
         with open(save_path, 'w') as json_file:
             json.dump(user_stories, json_file, indent=4)
-        success_label = Label(main_content, text=f"File salvato: {save_path}", fg="green")
-        success_label.grid(row=2, column=0, columnspan=2, padx=10, pady=5)
-
-def analyze(us):
-    print(f"Analyzing {us}")
+        messagebox.showinfo(title="Congraturations!", message=f"File correctly saved in: {save_path}")
 
 def show_frame(frame):
     frame.tkraise()
@@ -157,19 +154,19 @@ sidebar = Frame(root, width=200, background=COLORS['light_gray'])
 sidebar.pack(fill=Y, side=LEFT)
 
 # Frame contenitore principale per i contenuti
-content_frame = Frame(root)
-content_frame.pack(expand=True, fill=BOTH, side=LEFT)
+#content_frame = Frame(root)
+#content_frame.pack(expand=True, fill=BOTH, side=LEFT)
 
 # Main content area
-main_content = Frame(content_frame, background='white')
+main_content = Frame(root, background='white')
 main_content.pack(fill=BOTH, expand=True)
 
 # Frame per refair_info
-refair_info = Frame(content_frame, background='lightblue')
+refair_info = Frame(root, background='lightblue')
 
 
 # Frame per refair_suggestions
-refair_suggestions = Frame(content_frame, background='lightgreen')
+refair_suggestions = Frame(root, background='lightgreen')
 
 select_frame = Frame(main_content, background=COLORS['background'])
 select_frame.grid(row=0, column=0)
