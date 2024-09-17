@@ -4,8 +4,10 @@ from tkinter import filedialog
 import os
 import openpyxl
 import json
+from PIL import Image, ImageTk
 
 from components.user_story_canvas import UserStoryCanvas
+from colors import COLORS 
 
 # Variabili globali
 user_story_listbox = None
@@ -126,8 +128,16 @@ root.title("ReFair desktop app")
 root.geometry("1250x600")  # Dimensioni della finestra
 root.iconbitmap('desktop_app/icons/right_arrow_icon.ico')
 
+# Path all'icona (modifica il percorso se necessario)
+icon_right_arrow_path = "desktop_app/icons/right_arrow_icon.png"
+
+# Carica l'icona
+right_arrow_icon = Image.open(icon_right_arrow_path)
+right_arrow_icon = right_arrow_icon.resize((20, 20))
+right_arrow = ImageTk.PhotoImage(right_arrow_icon)
+
 # Sidebar
-sidebar = Frame(root, background='red', width=200)
+sidebar = Frame(root, width=200, background=COLORS['light_gray'])
 sidebar.pack(fill=Y, side=LEFT)
 
 # Frame contenitore principale per i contenuti
@@ -135,7 +145,7 @@ content_frame = Frame(root)
 content_frame.pack(expand=True, fill=BOTH, side=LEFT)
 
 # Main content area
-main_content = Frame(content_frame, background='yellow')
+main_content = Frame(content_frame)
 main_content.pack(fill=BOTH, expand=True)
 
 # Frame per refair_info
@@ -146,14 +156,20 @@ refair_info = Frame(content_frame, background='lightblue')
 refair_suggestions = Frame(content_frame, background='lightgreen')
 
 # Contenuto della sidebar
-main_button = Button(sidebar, text="Main Content", command=show_main_content)
-main_button.pack(fill=X, pady=10)
+main_button = Button(sidebar, text="Main Content", image=right_arrow, compound=LEFT, command=show_main_content,
+                     borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
+                        activebackground=COLORS['light_gray'])
+main_button.pack(fill=X, pady=20)
 
-info_button = Button(sidebar, text="ReFair Info", command=show_refair_info)
-info_button.pack(fill=X, pady=10)
+info_button = Button(sidebar, text="ReFair Info", image=right_arrow, compound=LEFT, command=show_refair_info, 
+                     borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
+                        activebackground=COLORS['light_gray'])
+info_button.pack(fill=X, pady=20)
 
-suggestions_button = Button(sidebar, text="ReFair Suggestions", command=show_refair_suggestions)
-suggestions_button.pack(fill=X, pady=10)
+suggestions_button = Button(sidebar, text="ReFair Suggestions", image=right_arrow, compound=LEFT, command=show_refair_suggestions,
+                            borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
+                        activebackground=COLORS['light_gray'])
+suggestions_button.pack(fill=X, pady=20)
 
 # Contenuto del frame main_content
 select_file_button = ttk.Button(main_content, text="Select file", command=open_file)
