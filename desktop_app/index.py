@@ -125,16 +125,32 @@ def show_refair_suggestions():
 # Finestra principale
 root = Tk()
 root.title("ReFair desktop app")
-root.geometry("1250x600")  # Dimensioni della finestra
+root.geometry("1100x600")  # Dimensioni della finestra
 root.iconbitmap('desktop_app/icons/right_arrow_icon.ico')
 
 # Path all'icona (modifica il percorso se necessario)
 icon_right_arrow_path = "desktop_app/icons/right_arrow_icon.png"
+document_attach_outline_path = "desktop_app/icons/document-attach-outline.png"
+cloud_download_outline_path = "desktop_app/icons/code-download-outline.png"
+cloud_upload_outline_path = "desktop_app/icons/cloud-upload-outline.png"
 
 # Carica l'icona
 right_arrow_icon = Image.open(icon_right_arrow_path)
 right_arrow_icon = right_arrow_icon.resize((20, 20))
 right_arrow = ImageTk.PhotoImage(right_arrow_icon)
+
+document_attach_outline_icon = Image.open(document_attach_outline_path)
+document_attach_outline_icon = document_attach_outline_icon.resize((20, 20))
+document_attach_outline = ImageTk.PhotoImage(document_attach_outline_icon)
+
+cloud_upload_outline_icon = Image.open(cloud_upload_outline_path)
+cloud_upload_outline_icon = cloud_upload_outline_icon.resize((20, 20))
+cloud_upload_outline = ImageTk.PhotoImage(cloud_upload_outline_icon)
+
+cloud_download_outline_icon = Image.open(cloud_download_outline_path)
+cloud_download_outline_icon = cloud_download_outline_icon.resize((20, 20))
+cloud_download_outline = ImageTk.PhotoImage(cloud_download_outline_icon)
+
 
 # Sidebar
 sidebar = Frame(root, width=200, background=COLORS['light_gray'])
@@ -155,34 +171,41 @@ refair_info = Frame(content_frame, background='lightblue')
 # Frame per refair_suggestions
 refair_suggestions = Frame(content_frame, background='lightgreen')
 
+select_frame = Frame(main_content, background=COLORS['background'])
+select_frame.grid(row=0, column=0)
+
 # Contenuto della sidebar
 main_button = Button(sidebar, text="Main Content", image=right_arrow, compound=LEFT, command=show_main_content,
                      borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
-                        activebackground=COLORS['light_gray'])
+                        activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
 main_button.pack(fill=X, pady=20)
 
 info_button = Button(sidebar, text="ReFair Info", image=right_arrow, compound=LEFT, command=show_refair_info, 
                      borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
-                        activebackground=COLORS['light_gray'])
+                        activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
 info_button.pack(fill=X, pady=20)
 
 suggestions_button = Button(sidebar, text="ReFair Suggestions", image=right_arrow, compound=LEFT, command=show_refair_suggestions,
                             borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
-                        activebackground=COLORS['light_gray'])
+                        activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
 suggestions_button.pack(fill=X, pady=20)
 
-# Contenuto del frame main_content
-select_file_button = ttk.Button(main_content, text="Select file", command=open_file)
+
+# Contenuto del frame select_frame del frame main_content
+select_file_button = ttk.Button(select_frame, text="Select file", image=document_attach_outline, compound=LEFT, command=open_file)
 select_file_button.grid(row=0, column=0, padx=10, pady=20)
 
-file_name_label = Label(main_content, text="")
+file_name_label = Label(select_frame, text="", background=COLORS['background'])
 file_name_label.grid(row=0, column=1, padx=10, pady=20)
 
-load_button = Button(main_content, text="Load", command=load_file)
-load_button.grid(row=1, column=0, padx=10, pady=10)
+space_label = Label(select_frame, text="", background=COLORS['background'])
+space_label.grid(row=0, column=2, padx=100)
 
-save_button = Button(main_content, text="Download all", command=save_as_json)
-save_button.grid(row=2, column=0, padx=10, pady=10)
+load_button = ttk.Button(select_frame, text="Load", image=cloud_upload_outline, compound=LEFT, command=load_file)
+load_button.grid(row=0, column=3, padx=10, pady=10)
+
+save_button = ttk.Button(select_frame, text="Download all", image=cloud_download_outline, compound=LEFT, command=save_as_json)
+save_button.grid(row=0, column=4, padx=10, pady=10)
 
 # Contenuto del frame refair_info
 info_label = Label(refair_info, text="This is the ReFair Info tab", font=('Helvetica', 18))
