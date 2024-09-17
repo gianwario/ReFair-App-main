@@ -224,9 +224,10 @@ save_button.grid(row=0, column=4, padx=10, pady=10)
 ##Entry_frame content
 entry_us = ttk.Entry(entry_frame, width=100)
 entry_us.grid(row=0, column=0, padx=20)
-us_test = entry_us.get()
+if entry_us.get!=" ":
+    us_test = entry_us.get()
 
-analyze_button = Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=analyze(us_test))
+analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=analyze(us_test))
 analyze_button.grid(row=0, column=1)
 
 ##USs title
