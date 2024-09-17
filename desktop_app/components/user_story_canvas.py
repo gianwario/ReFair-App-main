@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import Scrollbar, Canvas, Frame, Label, Button
+from tkinter import messagebox
 
-from domain_utils import getDomain
+from domain_utils import getDomain, getMLTask
+
+
 
 class UserStoryCanvas(Frame):
     def __init__(self, parent, user_stories, wrap_length=800, *args, **kwargs):
@@ -48,5 +51,5 @@ class UserStoryCanvas(Frame):
     def analyze(self, user_story):
         # Chiama la funzione getDomain e aggiorna la label con il risultato
         predicted_domain = getDomain(user_story)
-        #print(f"Predicted Domain: {predicted_domain}")
-        print("sono user_story_canvas.py")
+        predicted_task = getMLTask(user_story, predicted_domain)
+        messagebox.showinfo(title=predicted_domain, message=predicted_task)

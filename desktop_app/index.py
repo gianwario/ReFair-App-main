@@ -9,7 +9,7 @@ from PIL import Image, ImageTk
 
 from components.user_story_canvas import UserStoryCanvas
 from colors import COLORS 
-from domain_utils import getDomain
+from domain_utils import getDomain, getMLTask
 
 # Variabili globali
 user_story_listbox = None
@@ -18,6 +18,7 @@ file_path = ""
 user_stories = []
 canvas_frame = None
 scrollbar = None
+us_test = ""
 
 def open_file():
     global file_path
@@ -98,10 +99,10 @@ def save_as_json():
         messagebox.showinfo(title="Congraturations!", message=f"File correctly saved in: {save_path}")
 
 def analyze(user_story):
-        # Chiama la funzione getDomain e aggiorna la label con il risultato
-        predicted_domain = getDomain(user_story)
-        #print(f"Predicted Domain: {predicted_domain}")
-        messagebox.showinfo(message=predicted_domain)
+    # Chiama la funzione getDomain e aggiorna la label con il risultato
+    predicted_domain = getDomain(user_story)
+    predicted_task = getMLTask(user_story, predicted_domain)
+    messagebox.showinfo(title=predicted_domain, message=predicted_task)
 
 def show_frame(frame):
     frame.tkraise()
@@ -223,8 +224,9 @@ save_button.grid(row=0, column=4, padx=10, pady=10)
 ##Entry_frame content
 entry_us = ttk.Entry(entry_frame, width=100)
 entry_us.grid(row=0, column=0, padx=20)
+us_test = entry_us.get()
 
-analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=analyze(entry_us.get()), default=False)
+analyze_button = Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=analyze(us_test))
 analyze_button.grid(row=0, column=1)
 
 ##USs title
