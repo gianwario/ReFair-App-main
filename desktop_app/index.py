@@ -130,6 +130,7 @@ icon_right_arrow_path = "desktop_app/icons/right_arrow_icon.png"
 document_attach_outline_path = "desktop_app/icons/document-attach-outline.png"
 cloud_download_outline_path = "desktop_app/icons/code-download-outline.png"
 cloud_upload_outline_path = "desktop_app/icons/cloud-upload-outline.png"
+analytics_outline_path = "desktop_app/icons/analytics-outline.png"
 
 # Carica l'icona
 right_arrow_icon = Image.open(icon_right_arrow_path)
@@ -148,6 +149,9 @@ cloud_download_outline_icon = Image.open(cloud_download_outline_path)
 cloud_download_outline_icon = cloud_download_outline_icon.resize((20, 20))
 cloud_download_outline = ImageTk.PhotoImage(cloud_download_outline_icon)
 
+analytics_outline_icon = Image.open(analytics_outline_path)
+analytics_outline_icon = analytics_outline_icon.resize((20, 20))
+analytics_outline = ImageTk.PhotoImage(analytics_outline_icon)
 
 # Sidebar
 sidebar = Frame(root, width=200, background=COLORS['light_gray'])
@@ -161,17 +165,21 @@ sidebar.pack(fill=Y, side=LEFT)
 main_content = Frame(root, background='white')
 main_content.pack(fill=BOTH, expand=True)
 
+##SubFrames di Main Content
+select_frame = Frame(main_content, background=COLORS['background'])
+select_frame.grid(row=0, column=0)
+
+entry_frame = Frame(main_content, background=COLORS['background'])
+entry_frame.grid(row=1, column=0)
+
 # Frame per refair_info
 refair_info = Frame(root, background='lightblue')
-
 
 # Frame per refair_suggestions
 refair_suggestions = Frame(root, background='lightgreen')
 
-select_frame = Frame(main_content, background=COLORS['background'])
-select_frame.grid(row=0, column=0)
 
-# Contenuto della sidebar
+#Sidebar content
 main_button = Button(sidebar, text="Main Content", image=right_arrow, compound=LEFT, command=show_main_content,
                      borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
                         activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
@@ -188,7 +196,8 @@ suggestions_button = Button(sidebar, text="ReFair Suggestions", image=right_arro
 suggestions_button.pack(fill=X, pady=20)
 
 
-# Contenuto del frame select_frame del frame main_content
+#Main_content frame 
+##Select_frame content
 select_file_button = ttk.Button(select_frame, text="Select file", image=document_attach_outline, compound=LEFT, command=open_file)
 select_file_button.grid(row=0, column=0, padx=10, pady=20)
 
@@ -203,6 +212,18 @@ load_button.grid(row=0, column=3, padx=10, pady=10)
 
 save_button = ttk.Button(select_frame, text="Download all", image=cloud_download_outline, compound=LEFT, command=save_as_json)
 save_button.grid(row=0, column=4, padx=10, pady=10)
+
+##Entry_frame content
+entry_us = ttk.Entry(entry_frame, width=100)
+entry_us.grid(row=0, column=0, padx=20)
+
+analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=lambda: print(entry_us.get()))
+analyze_button.grid(row=0, column=1)
+
+
+##USs title
+us_title_label = Label (main_content, text="User Stories", background=COLORS['background'], font=('Helvetica', 16))
+us_title_label.grid(row=2, column=0)
 
 # Contenuto del frame refair_info
 info_label = Label(refair_info, text="This is the ReFair Info tab", font=('Helvetica', 18))
