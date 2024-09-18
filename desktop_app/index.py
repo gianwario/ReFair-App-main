@@ -168,6 +168,15 @@ analytics_outline_icon = Image.open(analytics_outline_path)
 analytics_outline_icon = analytics_outline_icon.resize((20, 20))
 analytics_outline = ImageTk.PhotoImage(analytics_outline_icon)
 
+# Crea uno stile personalizzato per il bottone
+style = ttk.Style()
+style.configure("Custom.TButton",
+                bordercolor="black",
+                borderwidth=2,
+                relief="solid",
+                padding=5,
+                background='black') 
+
 # Sidebar
 sidebar = Frame(root, width=200, background=COLORS['light_gray'])
 sidebar.pack(fill=Y, side=LEFT)
@@ -213,7 +222,7 @@ suggestions_button.pack(fill=X, pady=20)
 
 #Main_content frame 
 ##Select_frame content
-select_file_button = ttk.Button(select_frame, text="Select file", image=document_attach_outline, compound=LEFT, command=open_file)
+select_file_button = ttk.Button(select_frame, text="Select file", image=document_attach_outline, compound=LEFT, style="Custom.TButton", command=open_file)
 select_file_button.grid(row=0, column=0, padx=10, pady=20)
 
 file_name_label = Label(select_frame, text="", background=COLORS['background'])
@@ -222,10 +231,10 @@ file_name_label.grid(row=0, column=1, padx=10, pady=20)
 space_label = Label(select_frame, text="", background=COLORS['background'])
 space_label.grid(row=0, column=2, padx=100)
 
-load_button = ttk.Button(select_frame, text="Load", image=cloud_upload_outline, compound=LEFT, command=load_file)
+load_button = ttk.Button(select_frame, text="Load", image=cloud_upload_outline, compound=LEFT, style="Custom.TButton", command=load_file)
 load_button.grid(row=0, column=3, padx=10, pady=10)
 
-save_button = ttk.Button(select_frame, text="Download all", image=cloud_download_outline, compound=LEFT, command=save_as_json)
+save_button = ttk.Button(select_frame, text="Download all", image=cloud_download_outline, compound=LEFT, style="Custom.TButton", command=save_as_json)
 save_button.grid(row=0, column=4, padx=10, pady=10)
 
 ##Entry_frame content
