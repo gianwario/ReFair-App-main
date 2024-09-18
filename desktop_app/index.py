@@ -8,6 +8,7 @@ import json
 from PIL import Image, ImageTk
 
 from components.user_story_canvas import UserStoryCanvas
+from components.custom_messagebox import CustomMessageBox 
 from colors import COLORS 
 from domain_utils import getDomain, getMLTask, feature_extraction
 
@@ -102,7 +103,7 @@ def analyze(user_story):
     predicted_domain = getDomain(user_story)
     predicted_task = getMLTask(user_story, predicted_domain)
     results = feature_extraction(predicted_domain, predicted_task)
-    messagebox.showinfo(title=predicted_domain, message=results)
+    CustomMessageBox(root, predicted_domain, results)
 
 def validate_entry(*args):
     entry_content = entry_us.get()
