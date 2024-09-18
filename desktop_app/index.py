@@ -188,24 +188,24 @@ entry_frame = Frame(main_content, background=COLORS['background'])
 entry_frame.grid(row=1, column=0)
 
 # Frame per refair_info
-refair_info = Frame(root, background='lightblue')
+refair_info = Frame(root, background=COLORS['background'])
 
 # Frame per refair_suggestions
-refair_suggestions = Frame(root, background='lightgreen')
+refair_suggestions = Frame(root, background=COLORS['background'])
 
 
 #Sidebar content
-main_button = Button(sidebar, text="Main Content", image=right_arrow, compound=LEFT, command=show_main_content,
+main_button = Button(sidebar, text="ReFair App", image=right_arrow, compound=LEFT, command=show_main_content,
                      borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
                         activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
 main_button.pack(fill=X, pady=20)
 
-info_button = Button(sidebar, text="ReFair Info", image=right_arrow, compound=LEFT, command=show_refair_info, 
+info_button = Button(sidebar, text="ReFair in a nutshell", image=right_arrow, compound=LEFT, command=show_refair_info, 
                      borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
                         activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
 info_button.pack(fill=X, pady=20)
 
-suggestions_button = Button(sidebar, text="ReFair Suggestions", image=right_arrow, compound=LEFT, command=show_refair_suggestions,
+suggestions_button = Button(sidebar, text="How to use ReFair", image=right_arrow, compound=LEFT, command=show_refair_suggestions,
                             borderwidth=0, highlightthickness=0, relief=FLAT, padx=10, anchor='w', background=COLORS['light_gray'],
                         activebackground=COLORS['light_gray'], activeforeground=COLORS['background'])
 suggestions_button.pack(fill=X, pady=20)
@@ -233,7 +233,7 @@ save_button.grid(row=0, column=4, padx=10, pady=10)
 entry_us = ttk.Entry(entry_frame, width=100)
 entry_us.grid(row=0, column=0, padx=20)
 
-analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=lambda: analyze(entry_us.get()))
+analyze_button = ttk.Button(entry_frame, text="Insert single US", image=analytics_outline, compound=LEFT, command=lambda: analyze(entry_us.get()))
 analyze_button.grid(row=0, column=1)
 
 # Inizialmente disabilita il pulsante
@@ -248,13 +248,66 @@ entry_us_var.trace_add('write', validate_entry)
 us_title_label = Label (main_content, text="User Stories", background=COLORS['background'], font=('Helvetica', 16))
 us_title_label.grid(row=2, column=0)
 
-# Contenuto del frame refair_info
-info_label = Label(refair_info, text="This is the ReFair Info tab", font=('Helvetica', 18))
-info_label.pack(pady=20)
+
+# Titolo del frame
+info_frame_title = Label(refair_info, background=COLORS['background'], text="ReFair in a nutshell", font=('Helvetica', 18))
+info_frame_title.pack(pady=10)
+
+# Sezione "What is ReFair?"
+what_is_refair_title = Label(refair_info, background=COLORS['background'], text="What is ReFair?", font=('Helvetica', 16))
+what_is_refair_title.pack(pady=20)
+
+what_is_refair_content = Label(refair_info, background=COLORS['background'], wraplength=900, font=('Helvetica', 10), justify="left", text="ReFair is an innovative context-aware automated framework designed to support fairness requirements engineering. It utilizes natural language processing (NLP) and word embedding techniques to identify sensitive features in user stories (USs), alerting developers early on to potential concerns.")
+what_is_refair_content.pack(anchor="w", padx=10)
+
+# Sezione "Main functionalities"
+main_functionalities_title = Label(refair_info, background=COLORS['background'], text="Main functionalities", font=('Helvetica', 16))
+main_functionalities_title.pack(pady=20)
+
+main_functionalities_text = """ReFair is a model that consists of two main components:\n
+- Application Domain Classification. This component is responsible for classifying the most likely application domain of the US among the 34 domains available in the ontology; \n
+- Machine Learning Tasks Classification. This is responsible for classifying the ML tasks likely to be employed when implementing the US. The problem has been modeled as a multi-label classification task, as a US may be operationalized using multiple ML techniques; \n
+- Sensitive Features Recommendation. The application domain and ML tasks classified in the previous step are finally used to recommend sensitive features. ReFair exploits the base ontology to identify the sensitive features connected to both the application domain and ML tasks concerned with the classified domain. The intersection of those sensitive features represents the final outcome of the framework. In other terms the outcome comprises the set of sensitive features relevant when jointly considering the application domain and the learning tasks."""
+
+main_functionalities_content = Label(refair_info, background=COLORS['background'], wraplength=900, font=('Helvetica', 10), justify="left", text=main_functionalities_text)
+main_functionalities_content.pack(anchor="w", padx=10)
+
+# Sezione "Technical aspects"
+technical_aspects_title = Label(refair_info, background=COLORS['background'], text="Technical aspects", font=('Helvetica', 16))
+technical_aspects_title.pack(pady=20)
+
+technical_aspects_content = Label(refair_info, background=COLORS['background'], wraplength=900, font=('Helvetica', 10), justify="left", text="The framework has been designed to be conservative enough and identify all the potential ML tasks that may lead to unfairness. From a practical perspective, this choice may allow the users to receive a larger set of sensitive features, hence favoring recall over precision.")
+technical_aspects_content.pack(anchor="w", padx=10)
+
 
 # Contenuto del frame refair_suggestions
-suggestions_label = Label(refair_suggestions, text="This is the ReFair Suggestions tab", font=('Helvetica', 18))
-suggestions_label.pack(pady=20)
+usage_frame_title = Label(refair_suggestions, background=COLORS['background'], text="How to use ReFair", font=('Helvetica', 18))
+usage_frame_title.pack(pady=10)
+
+recommendation_title = Label(refair_suggestions, background=COLORS['background'], text="Recommendation", font=('Helvetica', 16))
+recommendation_title.pack(pady=20)
+
+recommendation_text = """To properly run the ReFair analysis, you should upload a file that meets specific conditions:\n
+- The file should be in xlsx format;\n
+- The spreadsheet can contain an arbitrary number of columns, but at least one column should be named "User Story" and should contain all the User Stories you want to be analyzed."""
+
+recommendation_content = Label(refair_suggestions, background=COLORS['background'], wraplength=900, font=('Helvetica', 10), justify="left", text=recommendation_text)
+recommendation_content.pack(anchor="w", padx=10)
+
+
+functionalities_title = Label(refair_suggestions, background=COLORS['background'], text="Web-app functionalities", font=('Helvetica', 16))
+functionalities_title.pack(pady=20)
+
+functionalities_text = """In detail:\n
+- The Select Button allows you to select a User Stories spreadsheet from your machine;\n
+- The Insert single US allows you to add a single US and analyze it; \n
+- The Load Button allows you to upload the User Stories spreadsheet;\n
+- The Download all Button allows you to download a structured JSON report containing the results for all the User Stories analyzed by ReFair;\n
+- The Analyze Button allows you to visualize the ReFair analysis for a single User Story;\n
+- The Download Button (in the pop-up window) allows you to download a structured JSON report containing the results of the single User Story analyzed by ReFair."""
+
+functionalities_content = Label(refair_suggestions, background=COLORS['background'], wraplength=900, font=('Helvetica', 10), justify="left", text=functionalities_text)
+functionalities_content.pack(anchor="w", padx=10)
 
 # Mostra il main_content all'avvio
 show_frame(main_content)
