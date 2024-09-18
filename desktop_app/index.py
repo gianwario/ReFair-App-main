@@ -88,15 +88,34 @@ def save_as_json():
         # Se non ci sono user stories caricate, mostra un messaggio di errore
         messagebox.showerror(title="Error", message="There are no User Stories to download")
         return
+
+    # Assumiamo che user_stories sia una lista di dizionari
+    all_data = []
+
+    for user_story in user_stories:
+        predicted_domain = getDomain(user_story)
+        predicted_task = getMLTask(user_story, predicted_domain)
+        results = feature_extraction(predicted_domain, predicted_task)
+        
+        # Organizza i dati per ogni User Story
+        data = {
+            "user_story": user_story,
+            "story_domain": predicted_domain,
+            "sensitive_features": results
+        }
+        all_data.append(data)
+
+    # Permette di salvare il file JSON con un nome specifico
+    file_path = filedialog.asksaveasfilename(defaultextension=".json",
+                                            filetypes=[("JSON files", "*.json"),
+                                                       ("All files", "*.*")])
     
-    # Allows to save the JSON file with a specific name
-    save_path = filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON files", "*.json")])
-    
-    if save_path:
-        # Fills the JSON file with US
-        with open(save_path, 'w') as json_file:
-            json.dump(user_stories, json_file, indent=4)
-        messagebox.showinfo(title="Congraturations!", message=f"File correctly saved in: {save_path}")
+    if file_path:
+        # Salva tutti i dati in un file JSON
+        with open(file_path, 'w') as json_file:
+            json.dump(all_data, json_file, indent=4)
+        messagebox.showinfo("Success", "Results have been downloaded successfully!")
+
 
 def analyze(user_story):
     # Chiama la funzione getDomain e aggiorna la label con il risultato
