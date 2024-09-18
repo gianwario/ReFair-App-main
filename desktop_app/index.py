@@ -233,7 +233,7 @@ save_button.grid(row=0, column=4, padx=10, pady=10)
 entry_us = ttk.Entry(entry_frame, width=100)
 entry_us.grid(row=0, column=0, padx=20)
 
-analyze_button = ttk.Button(entry_frame, text="Insert single US", image=analytics_outline, compound=LEFT, command=lambda: analyze(entry_us.get()))
+analyze_button = ttk.Button(entry_frame, text="Analyze", image=analytics_outline, compound=LEFT, command=lambda: analyze(entry_us.get()))
 analyze_button.grid(row=0, column=1)
 
 # Inizialmente disabilita il pulsante
@@ -300,7 +300,6 @@ functionalities_title.pack(pady=20)
 
 functionalities_text = """In detail:\n
 - The Select Button allows you to select a User Stories spreadsheet from your machine;\n
-- The Insert single US allows you to add a single US and analyze it; \n
 - The Load Button allows you to upload the User Stories spreadsheet;\n
 - The Download all Button allows you to download a structured JSON report containing the results for all the User Stories analyzed by ReFair;\n
 - The Analyze Button allows you to visualize the ReFair analysis for a single User Story;\n
