@@ -103,7 +103,7 @@ def analyze(user_story):
     predicted_domain = getDomain(user_story)
     predicted_task = getMLTask(user_story, predicted_domain)
     results = feature_extraction(predicted_domain, predicted_task)
-    CustomMessageBox(root, predicted_domain, results)
+    CustomMessageBox(root, predicted_domain, user_story, predicted_domain, results)
 
 def validate_entry(*args):
     entry_content = entry_us.get()
