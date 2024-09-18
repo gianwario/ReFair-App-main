@@ -74,7 +74,8 @@ def load_file():
     for cell in user_story_col[1:]:  # Salta l'intestazione
         user_stories.append(cell.value)
 
-    # Crea e posiziona il nuovo UserStoryCanvas
+    # Crea e posiziona la nuova lista custom UserStoryCanvas. 
+    # Ciò è necessario in quanto ogni elemento della lista è a sua volta composto da frame
     canvas_frame = UserStoryCanvas(main_content, user_stories)
     canvas_frame.grid(row=3, column=0, padx=10, pady=10, sticky='nsew')
 
@@ -122,11 +123,12 @@ def analyze(user_story):
     predicted_domain = getDomain(user_story)
     predicted_task = getMLTask(user_story, predicted_domain)
     results = feature_extraction(predicted_domain, predicted_task)
+    # Richiamo il custom component strutturato come una messagebox a cui passo tutti i dati necessari
     CustomMessageBox(root, predicted_domain, user_story, predicted_domain, results)
 
 def validate_entry(*args):
     entry_content = entry_us.get()
-    if entry_content.strip():  # Se non è vuoto o solo spazi
+    if entry_content.strip():  # Se non è vuoto o solo spazi. Serve per non far partire l'analyze all'avvio della desktop app
         analyze_button.config(state=NORMAL)
     else:
         analyze_button.config(state=DISABLED)

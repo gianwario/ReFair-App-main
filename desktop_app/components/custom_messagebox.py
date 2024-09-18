@@ -56,7 +56,7 @@ No sensitive features have been found"""
         download_button = ttk.Button(self.window, text="Download", command=lambda: self.download_results(user_story, domain, results))
         download_button.pack(side=tk.LEFT, padx=10, pady=10)
 
-        # Centra la finestra sullo schermo
+        # Centra il custom messagebox sullo schermo
         self.window.update_idletasks()
         width = self.window.winfo_width()
         height = self.window.winfo_height()

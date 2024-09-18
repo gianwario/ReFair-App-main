@@ -54,4 +54,5 @@ class UserStoryCanvas(Frame):
         predicted_domain = getDomain(user_story)
         predicted_task = getMLTask(user_story, predicted_domain)
         results = feature_extraction(predicted_domain, predicted_task)
+        # Richiamo il custom component strutturato come una messagebox a cui passo tutti i dati necessari
         CustomMessageBox(self, predicted_domain, user_story, predicted_domain, results)
