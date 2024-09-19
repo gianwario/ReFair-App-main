@@ -140,13 +140,21 @@
                   class="form-control"
                   @change="handleStoriesUpload($event)"
                 />
+
                 <!---->
-                <button type="button" class="button select">
-                  <label for="file" class="button__text"> Select file </label>
+
+                <SelectButton
+                  buttonType="button"
+                  labelFor="file"
+                  labelClass="button__text"
+                  labelText="Select file"
+                />
+
+                <!--<button type="button" class="button select">
                   <span class="button__icon"
-                    ><ion-icon name="document-attach-outline"></ion-icon
+                    ><label for="file" class="button__text"> Select file </label><ion-icon name="document-attach-outline"></ion-icon
                   ></span>
-                </button>
+                </button>-->
                 <!---->
                 <span id="file-name" class="file-name">No file selected</span>
               </div>
@@ -377,6 +385,7 @@ import VueApexCharts from "vue-apexcharts";
 import ChapterButton from "./ChapterButton.vue";
 import ChapterTitle from "./ChapterTitle.vue";
 import ParagraphTitle from "./ParagraphTitle.vue";
+import SelectButton from "./SelectButton.vue";
 
 const server = "http://localhost:5001";
 
@@ -385,6 +394,7 @@ export default {
     ChapterButton,
     ChapterTitle,
     ParagraphTitle,
+    SelectButton,
   },
   data() {
     return {
