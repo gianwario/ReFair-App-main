@@ -10,29 +10,123 @@
           <div id="chapter1">
             <ChapterTitle chapterTitle="ReFair in a nutshell" />
 
-            <div class="alert alert-info fade show" role="alert">
-              <strong>Info!</strong> To properly run the <b>ReFair</b> analysis,
-              you should upload an xlsx file called "stories.xlsx".
-              <hr />
-              The spreadsheet must contain only a single column called 'User
-              Story' with all user stories to be analysed.
+            <ParagraphTitle paragraphTitle="What is ReFair?" />
+
+            <div class="paragraph_content">
+              ReFair is an
+              <strong>innovative context-aware automated framework</strong>
+              designed to support fairness requirements engineering. It utilizes
+              natural language processing (NLP) and word embedding techniques to
+              identify sensitive features in user stories (USs), alerting
+              developers early on to potential concerns.
+            </div>
+
+            <ParagraphTitle paragraphTitle="Main functionalities" />
+
+            <div class="paragraph_content">
+              ReFair is a model that consists of two main components:
               <ul>
                 <li>
-                  The <strong> Load </strong> Button allows you to upload the
-                  user stories spreadsheet;
+                  <strong> Application Domain Classification. </strong> This
+                  component is responsible for classifying the most likely
+                  application domain of the US among the 34 domains available in
+                  the ontology;
                 </li>
                 <li>
-                  The <strong> Report </strong> Button allows you to download a
-                  structured JSON report with the user stories analysed by
-                  ReFair;
+                  <strong> Machine Learning Tasks Classification. </strong> This
+                  is responsible for classifying the ML tasks likely to be
+                  employed when imple menting the US. The problem has been
+                  modeled as a multi-label classification task, as a US may be
+                  operationalized using multiple ML techniques;
                 </li>
                 <li>
-                  After the stories uploading, the
-                  <strong> Analyze </strong> Button allows you to visualize the
-                  ReFair analysis with respect to a single user story.
+                  <strong> Sensitive Features Recommendation. </strong> The
+                  application domain and ML tasks classified in the previous
+                  step are finally used to recommend sensitive features. ReFair
+                  exploits the base ontology to identify the sensitive features
+                  connected to both the application domain and ML tasks
+                  concerned with the the classified domain. The intersection of
+                  those sensitive features represents the final outcome of the
+                  framework. In other terms the outcome comprises the set of
+                  sensitive features relevant when jointly con sidering the
+                  application domain and the learning tasks.
                 </li>
               </ul>
             </div>
+
+            <ParagraphTitle paragraphTitle="Technical aspects" />
+
+            <div class="paragraph_content">
+              The framework has been designed to be conservative enough and
+              identify all the potential ML tasks that may lead to unfairness.
+              From a practical perspective, this choice may allow the users to
+              receive a larger set of sensitive features, hence
+              <strong> favoring recall over precision</strong>.
+            </div>
+          </div>
+
+          <br /><br />
+          <!-- Contenuto Capitolo 2 -->
+          <div id="chapter2">
+            <ChapterTitle chapterTitle="How to use ReFair" />
+
+            <ParagraphTitle paragraphTitle="Recommendation" />
+
+            <div class="paragraph_content">
+              To properly run the ReFair analysis, you should upload a file that
+              meets specific conditions:
+              <ul>
+                <li>The file should be in <strong>xlsx format</strong>;</li>
+                <li>
+                  The spreadsheet can contain an arbitrary number of columns,
+                  but at least
+                  <strong>one column should be named "User Story"</strong> and
+                  should contain all the User Stories you want to be analyzed.
+                </li>
+              </ul>
+            </div>
+
+            <ParagraphTitle paragraphTitle="Web-app functionalities" />
+
+            <div class="paragraph_content">
+              In detail:
+              <ul>
+                <li>
+                  The <strong> Select </strong> Button allows you to select a
+                  User Stories spreadsheet from your machine;
+                </li>
+                <li>
+                  The <strong> Load </strong> Button allows you to upload the
+                  User Stories spreadsheet;
+                </li>
+                <li>
+                  The <strong> Download all </strong> Button allows you to
+                  download a structured JSON report containing the results for
+                  all the User Stories analyzed by ReFair;
+                </li>
+                <li>
+                  The
+                  <strong> Analyze </strong> Button allows you to visualize the
+                  ReFair analysis for a single User Story.
+                </li>
+                <li>
+                  The <strong> Download </strong> Button (in the pop-up window)
+                  allows you to download a structured JSON report containing the
+                  results of the single User Story analyzed by ReFair;
+                </li>
+                <li>
+                  The <strong> Close </strong> Button simply closes the pop-up
+                  window.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <br /><br />
+
+          <!-- Contenuto Capitolo 3 -->
+          <div id="chapter3">
+            <ChapterTitle chapterTitle="ReFair framework" />
 
             <div
               class="btn-toolbar mb-3 justify-content-between"
@@ -54,7 +148,7 @@
                   ></span>
                 </button>
                 <!---->
-                <span id="file-name" class="file-name">No file Selected</span>
+                <span id="file-name" class="file-name">No file selected</span>
               </div>
               <div>
                 <button
@@ -74,23 +168,20 @@
                   class="button report"
                   id="report"
                 >
-                  <span class="button__text">Report</span>
+                  <span class="button__text">Download all</span>
                   <span class="button__icon"
                     ><ion-icon name="code-slash-outline"></ion-icon
                   ></span>
                 </button>
               </div>
             </div>
-          </div>
-
-          <!-- Contenuto Capitolo 2 -->
-          <div id="chapter2">
-            <ChapterTitle chapterTitle="ReFair in a nutshell" />
 
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">User Stories</th>
+                  <th scope="col">
+                    <ParagraphTitle paragraphTitle="User Stories" />
+                  </th>
                   <th></th>
                 </tr>
               </thead>
@@ -114,50 +205,43 @@
                 </tr>
               </tbody>
             </table>
-          </div>
 
-          <!-- Controlli di Paginazione -->
-          <div v-if="fileLoaded" class="pagination">
-            <button
-              @click="changePage(currentPage - 1)"
-              :disabled="currentPage === 1"
-            >
-              Previous
-            </button>
+            <!-- Controlli di Paginazione -->
+            <div v-if="fileLoaded" class="pagination">
+              <button
+                @click="changePage(currentPage - 1)"
+                :disabled="currentPage === 1"
+              >
+                Previous
+              </button>
 
-            <!-- Input per inserire il numero di pagina -->
-            <input
-              type="number"
-              v-model.number="currentPageInput"
-              @change="changePage(currentPageInput)"
-              :min="1"
-              :max="totalPages"
-            />
+              <!-- Input per inserire il numero di pagina -->
+              <input
+                type="number"
+                v-model.number="currentPageInput"
+                @change="changePage(currentPageInput)"
+                :min="1"
+                :max="totalPages"
+              />
 
-            <!-- Mostra le pagine -->
-            <span v-if="currentPage > 2">1,</span>
-            <span v-if="currentPage > 3">...,</span>
-            <span v-if="currentPage > 1">{{ currentPage - 1 }},</span>
-            <span>{{ currentPage }},</span>
-            <span v-if="currentPage < totalPages">{{ currentPage + 1 }},</span>
-            <span v-if="currentPage < totalPages - 2">...,</span>
-            <span v-if="currentPage < totalPages - 1">{{ totalPages }}</span>
+              <!-- Mostra le pagine -->
+              <span v-if="currentPage > 2">1,</span>
+              <span v-if="currentPage > 3">...,</span>
+              <span v-if="currentPage > 1">{{ currentPage - 1 }},</span>
+              <span>{{ currentPage }},</span>
+              <span v-if="currentPage < totalPages"
+                >{{ currentPage + 1 }},</span
+              >
+              <span v-if="currentPage < totalPages - 2">...,</span>
+              <span v-if="currentPage < totalPages - 1">{{ totalPages }}</span>
 
-            <button
-              @click="changePage(currentPage + 1)"
-              :disabled="currentPage === totalPages"
-            >
-              Next
-            </button>
-          </div>
-          <!-- Contenuto Capitolo 3 -->
-          <div id="chapter3">
-            <ChapterTitle chapterTitle="ReFair in a nutshell" />
-
-            <p>
-              In this section, you'll find detailed information about the
-              analysis and reports generated by ReFair.
-            </p>
+              <button
+                @click="changePage(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -181,14 +265,14 @@
       <ChapterButton
         btnClass="btn_chapter"
         dataChapter="chapter2"
-        buttonText="CAPITOLO 2"
+        buttonText="How to use ReFair"
         chapterId="chapter2"
         @scrollToChapter="scrollToChapter"
       />
       <ChapterButton
         btnClass="btn_chapter"
         dataChapter="chapter3"
-        buttonText="CAPITOLO 3"
+        buttonText="ReFair framework"
         chapterId="chapter3"
         @scrollToChapter="scrollToChapter"
       />
@@ -220,17 +304,6 @@
                 <span class="button__text">Close</span>
                 <span class="button__icon"
                   ><ion-icon name="close-circle-outline"></ion-icon
-                ></span>
-              </button>
-              <button
-                v-on:click="reportStory()"
-                type="button"
-                class="button report"
-                id="report"
-              >
-                <span class="button__text">Report</span>
-                <span class="button__icon"
-                  ><ion-icon name="code-slash-outline"></ion-icon
                 ></span>
               </button>
             </div>
@@ -272,7 +345,19 @@
             </div>
             <div v-else class="pt-3 mx-4">No sensitive features suggested</div>
           </div>
-          <div class="modal-footer"></div>
+          <div class="modal-footer">
+            <button
+              v-on:click="reportStory()"
+              type="button"
+              class="button report"
+              id="report"
+            >
+              <span class="button__text">Download</span>
+              <span class="button__icon"
+                ><ion-icon name="code-slash-outline"></ion-icon
+              ></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -288,6 +373,7 @@ import VueApexCharts from "vue-apexcharts";
 
 import ChapterButton from "./ChapterButton.vue";
 import ChapterTitle from "./ChapterTitle.vue";
+import ParagraphTitle from "./ParagraphTitle.vue";
 
 const server = "http://localhost:5001";
 
@@ -295,6 +381,7 @@ export default {
   components: {
     ChapterButton,
     ChapterTitle,
+    ParagraphTitle,
   },
   data() {
     return {

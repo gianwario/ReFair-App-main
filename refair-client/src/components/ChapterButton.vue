@@ -32,7 +32,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Aggiungi qui i tuoi stili per il pulsante */
-</style>

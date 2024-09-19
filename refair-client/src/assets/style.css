@@ -48,6 +48,7 @@
 
 .report {
   background: var(--vt-c-red);
+  margin-right: 20px;
 }
 
 .report:hover {
@@ -190,13 +191,13 @@
   margin-bottom: 0px;
 }
 
-.chapter_title {
-  margin-left: -20px;
+.title {
+  margin-left: -22px;
   overflow: visible;
   max-width: fit-content;
 }
 
-.chapter_title:hover .tag {
+.title:hover .tag {
   color: var(--vt-c-blue);
   opacity: 1;
 }
@@ -210,6 +211,19 @@
 
 .chapter {
   display: inline-block;
+  color: var(--color-text);
+}
+
+.paragraph_content ul {
+  margin: 0px;
+}
+
+.paragraph_content {
+  margin-bottom: 15px;
+}
+
+.paragraph_content strong {
+  color: var(--vt-c-blue);
 }
 
 /**************** PAGINATION *************************/
