@@ -1,59 +1,67 @@
 <template>
-  <div class="container" style="width: auto; height: 100%">
-    <v-layout justify-center align-center>
-      <div class="row">
-        <div class="col-sm-10">
-          <h1>ReFair App</h1>
+  <div class="container">
+    <div class="row">
+      <div>
+        <h1>ReFair App</h1>
 
-          <hr />
-
-          <div class="alert alert-info fade show" role="alert">
-            <strong>Info!</strong> To properly run the <b>ReFair</b> analysis,
-            you should upload an xlsx file called "stories.xlsx".
-            <hr />
-            The spreadhsheet must contain only a single column called 'User
-            Story' with all user stories to be analysed.
-            <ul>
-              <li>
-                The <strong> Load </strong> Button allows you to upload the user
-                stories spreadsheet;
-              </li>
-              <li>
-                The <strong> Report </strong> Button allows you to download a
-                structured JSON report with the user stories analysed by ReFair;
-              </li>
-              <li>
-                After the stories uploading, the
-                <strong> Analyze </strong> Button allows you to visualize the
-                ReFair analysis with respect to a single user story.
-              </li>
-            </ul>
-          </div>
+        <!-- Contenuto Capitolo 1 -->
+        <div id="chapter1">
+          <ChapterTitle chapterTitle="ReFair framework" />
 
           <div
             class="btn-toolbar mb-3 justify-content-between"
             role="toolbar"
             aria-label="Toolbar with button groups"
           >
-            <div>
+            <!-- Upload Button-->
+            <div class="file-upload">
               <input
                 type="file"
+                id="file"
                 class="form-control"
                 @change="handleStoriesUpload($event)"
               />
+
+              <!---->
+
+              <SelectButton
+                buttonType="button"
+                labelFor="file"
+                labelClass="button__text"
+                labelText="Select file"
+              />
+
+              <!--<button type="button" class="button select">
+                  <span class="button__icon"
+                    ><label for="file" class="button__text"> Select file </label><ion-icon name="document-attach-outline"></ion-icon
+                  ></span>
+                </button>-->
+              <!---->
+              <span id="file-name" class="file-name">No file selected</span>
             </div>
-            <div class="btn-group" role="group">
-              <button v-on:click="submitFile()" class="btn btn-info btn-md">
-                Load
-              </button>
-              <button
-                v-on:click="reportStories()"
-                type="button"
-                class="btn btn-success btn-md disabled"
-                id="report"
-              >
-                Report
-              </button>
+
+            <!-- Load Button-->
+            <div>
+              <ButtonComponent
+                :clickHandler="submitFile"
+                buttonType="button"
+                buttonClass="button load"
+                buttonStyle="margin-right: 20px"
+                iconName="cloud-upload-outline"
+                labelClass="button__text"
+                labelText="Load"
+              />
+
+              <!-- Download all Button-->
+              <ButtonComponent
+                :clickHandler="reportStories"
+                buttonType="button"
+                buttonClass="button report"
+                buttonId="report"
+                iconName="cloud-download-outline"
+                labelClass="button__text"
+                labelText="Download all"
+              />
             </div>
           </div>
 
@@ -76,32 +84,288 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">User Stories</th>
-
+                <th scope="col">
+                  <ParagraphTitle paragraphTitle="User Stories" />
+                </th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(story, index) in stories" :key="index">
+              <tr v-for="(story, index) in paginatedStories" :key="index">
                 <td>{{ story }}</td>
-
                 <td>
-                  <div class="btn-group" role="group">
+                  <div>
+                    <!-- Analyze Button-->
                     <button
                       type="button"
-                      class="btn btn-secondary"
+                      class="button analyze"
                       @click="toggleAnalyzeStoryModal(story)"
                     >
-                      Analyze
+                      <ion-icon name="analytics-outline"></ion-icon>
+                      <label class="button__text">Analyze</label><i></i>
                     </button>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
+
+          <!-- Controlli di Paginazione -->
+          <div v-if="fileLoaded" class="pagination">
+            <!-- Previous Button-->
+            <ButtonComponent
+              :clickHandler="() => changePage(currentPage - 1)"
+              buttonType="button"
+              buttonClass="button previous"
+              :isDisabled="currentPage === 1"
+              iconName="chevron-back-outline"
+              labelClass="button_text"
+              labelText="Previous"
+            />
+
+            <!-- Input per inserire il numero di pagina -->
+            <input
+              type="number"
+              v-model.number="currentPageInput"
+              @change="changePage(currentPageInput)"
+              :min="1"
+              :max="totalPages"
+              class="input_number"
+            />
+
+            <!-- Mostra le pagine -->
+            <span v-if="currentPage > 2">
+              <label class="button_text page"> 1 </label>
+            </span>
+            <span v-if="currentPage > 3"
+              ><label class="button_text page"> ... </label></span
+            >
+            <span v-if="currentPage > 1">
+              <label class="button_text page">
+                {{ currentPage - 1 }}
+              </label></span
+            >
+            <span
+              ><label class="button_text current page">
+                {{ currentPage }}
+                <!-- Se modifico questo c'è un'indicazione visiva della pagina in cui sono -->
+              </label></span
+            >
+            <span v-if="currentPage < totalPages"
+              ><label class="button_text page">
+                {{ currentPage + 1 }}
+              </label></span
+            >
+            <span v-if="currentPage < totalPages - 2">
+              <label class="button_text page"> ... </label>
+            </span>
+            <span v-if="currentPage < totalPages - 1"
+              ><label class="button_text page">
+                {{ totalPages }}
+              </label></span
+            >
+
+            <!-- Next Button-->
+            <ButtonComponent
+              :clickHandler="() => changePage(currentPage + 1)"
+              buttonType="button"
+              buttonClass="button next"
+              :isDisabled="currentPage === totalPages"
+              iconName="chevron-forward-outline"
+              labelClass="button_text"
+              labelText="Next"
+            />
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <!-- Contenuto Capitolo 2 -->
+        <div class="content">
+          <!-- Il contenuto principale rimane lo stesso -->
+
+          <div id="chapter2">
+            <ChapterTitle chapterTitle="ReFair in a nutshell" />
+
+            <ParagraphTitle paragraphTitle="What is ReFair?" />
+
+            <div class="paragraph_content">
+              ReFair is an
+              <strong>innovative context-aware automated framework</strong>
+              designed to support fairness requirements engineering. It utilizes
+              natural language processing (NLP) and word embedding techniques to
+              identify sensitive features in user stories (USs), alerting
+              developers early on to potential concerns.
+            </div>
+
+            <ParagraphTitle paragraphTitle="Main functionalities" />
+
+            <div class="paragraph_content">
+              ReFair is a model that consists of two main components:
+              <ul>
+                <li>
+                  <strong> Application Domain Classification. </strong> This
+                  component is responsible for classifying the most likely
+                  application domain of the US among the 34 domains available in
+                  the ontology;
+                </li>
+                <li>
+                  <strong> Machine Learning Tasks Classification. </strong> This
+                  is responsible for classifying the ML tasks likely to be
+                  employed when imple menting the US. The problem has been
+                  modeled as a multi-label classification task, as a US may be
+                  operationalized using multiple ML techniques;
+                </li>
+                <li>
+                  <strong> Sensitive Features Recommendation. </strong> The
+                  application domain and ML tasks classified in the previous
+                  step are finally used to recommend sensitive features. ReFair
+                  exploits the base ontology to identify the sensitive features
+                  connected to both the application domain and ML tasks
+                  concerned with the the classified domain. The intersection of
+                  those sensitive features represents the final outcome of the
+                  framework. In other terms the outcome comprises the set of
+                  sensitive features relevant when jointly con sidering the
+                  application domain and the learning tasks.
+                </li>
+              </ul>
+            </div>
+
+            <ParagraphTitle paragraphTitle="Technical aspects" />
+
+            <div class="paragraph_content">
+              The framework has been designed to be conservative enough and
+              identify all the potential ML tasks that may lead to unfairness.
+              From a practical perspective, this choice may allow the users to
+              receive a larger set of sensitive features, hence
+              <strong> favoring recall over precision</strong>.
+            </div>
+          </div>
+
+          <br /><br />
+          <!-- Contenuto Capitolo 3 -->
+          <div id="chapter3">
+            <ChapterTitle chapterTitle="How to use ReFair" />
+
+            <ParagraphTitle paragraphTitle="Recommendation" />
+
+            <div class="paragraph_content">
+              To properly run the ReFair analysis, you should upload a file that
+              meets specific conditions:
+              <ul>
+                <li>The file should be in <strong>xlsx format</strong>;</li>
+                <li>
+                  The spreadsheet can contain an arbitrary number of columns,
+                  but at least
+                  <strong>one column should be named "User Story"</strong> and
+                  should contain all the User Stories you want to be analyzed.
+                </li>
+              </ul>
+            </div>
+
+            <ParagraphTitle paragraphTitle="Web-app functionalities" />
+
+            <div class="paragraph_content">
+              In detail:
+              <ul>
+                <li>
+                  The <strong> Select </strong> Button allows you to select a
+                  User Stories spreadsheet from your machine;
+                </li>
+                <li>
+                  The <strong> Load </strong> Button allows you to upload the
+                  User Stories spreadsheet;
+                </li>
+                <li>
+                  The <strong> Download all </strong> Button allows you to
+                  download a structured JSON report containing the results for
+                  all the User Stories analyzed by ReFair;
+                </li>
+                <li>
+                  The
+                  <strong> Analyze </strong> Button allows you to visualize the
+                  ReFair analysis for a single User Story.
+                </li>
+                <li>
+                  The <strong> Download </strong> Button (in the pop-up window)
+                  allows you to download a structured JSON report containing the
+                  results of the single User Story analyzed by ReFair;
+                </li>
+                <li>
+                  The <strong> Close </strong> Button simply closes the pop-up
+                  window.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <br /><br />
         </div>
       </div>
-    </v-layout>
+    </div>
+
+    <!-- Capitoli di navigazione -->
+
+    <div class="sidebar">
+      <p class="title_sidebar">ON THIS PAGE</p>
+      <div
+        class="indicator"
+        :style="{ transform: `translateY(${indicatorPosition}px)` }"
+      ></div>
+      <ChapterButton
+        btnClass="btn_chapter"
+        dataChapter="chapter1"
+        buttonText="ReFair framework"
+        chapterId="chapter1"
+        @scrollToChapter="scrollToChapter"
+      />
+      <ChapterButton
+        btnClass="btn_chapter"
+        dataChapter="chapter2"
+        buttonText="ReFair in a nutshell"
+        chapterId="chapter2"
+        @scrollToChapter="scrollToChapter"
+      />
+      <ChapterButton
+        btnClass="btn_chapter"
+        dataChapter="chapter3"
+        buttonText="How to use ReFair"
+        chapterId="chapter3"
+        @scrollToChapter="scrollToChapter"
+      />
+      <br /><br />
+      <!-- ReFair model Github link -->
+      <p class="title_sidebar">REFAIR REPOSITORY</p>
+      <SidebarLinkComponent
+        href="https://github.com/gianwario/ReFair-App"
+        iconName="logo-github"
+        linkText="ReFair repository"
+        customClass="sidebar_element model"
+      />
+
+      <br />
+      <!-- Collaborators Github links -->
+      <p class="title_sidebar">COLLABORATORS</p>
+      <SidebarLinkComponent
+        href="https://github.com/DG266"
+        iconName="logo-github"
+        linkText="Daniele Galloppo"
+        customClass="sidebar_element collaborators"
+      />
+      <SidebarLinkComponent
+        href="https://github.com/MarioPeluso"
+        iconName="logo-github"
+        linkText="Mario Peluso"
+        customClass="sidebar_element collaborators"
+      />
+      <SidebarLinkComponent
+        href="https://github.com/LucoMoro"
+        iconName="logo-github"
+        linkText="Luca Morelli"
+        customClass="sidebar_element collaborators"
+      />
+    </div>
+
     <!-- analyze Story Modal -->
     <div
       ref="analyzeStoryModal"
@@ -116,44 +380,44 @@
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Story Details</h5>
-            <div class="btn-group" role="group">
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-dismiss="modal"
-                @click="closeAnalyzeStoryModal"
-              >
-                Close
-              </button>
-              <button
-                v-on:click="reportStory()"
-                type="button"
-                class="btn btn-success btn-md"
-                id="report"
-              >
-                Report
-              </button>
+            <ParagraphTitle
+              paragraphTitle="Story Details"
+              style="margin-left: 15px"
+            />
+            <div>
+              <!-- Close Button-->
+              <ButtonComponent
+                buttonType="button"
+                buttonClass="button close"
+                :clickHandler="closeAnalyzeStoryModal"
+                buttonStyle="margin-right: 10px"
+                iconName="close-circle-outline"
+                labelClass="button__text"
+                labelText="Close"
+              />
             </div>
           </div>
           <div class="modal-body">
-            <p class="pt-3 mx-4"><b>User Story: </b> {{ story }}</p>
-            <p class="pt-3 mx-4"><b>Story Domain: </b> {{ story_domain }}</p>
+            <p class="pt-3 mx-4"><strong>User Story: </strong> {{ story }}</p>
+            <p class="pt-3 mx-4">
+              <strong>Story Domain: </strong> {{ story_domain }}
+            </p>
             <div class="pt-3 mx-4">
-              <b>Story Tasks</b>
+              <strong>Story Tasks</strong>
               <hr />
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Task</th>
-
-                    <th scope="col">Sensitive Features</th>
+                    <th scope="col"><strong>Task</strong></th>
+                    <th scope="col"><strong>Sensitive Features</strong></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(features, task) in story_tasks" :key="task">
                     <td>{{ task }}</td>
-                    <td>{{ features.toString().replaceAll(",", " - ") }}</td>
+                    <td>
+                      {{ features.toString().replaceAll(",", " - ") }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -170,31 +434,52 @@
                 type="bar"
                 :options="options"
                 :series="series"
+                style="color: #212223; background-color: white"
               ></apexchart>
             </div>
             <div v-else class="pt-3 mx-4">No sensitive features suggested</div>
           </div>
-          <div class="modal-footer"></div>
+          <div class="modal-footer">
+            <!-- Download Button-->
+            <ButtonComponent
+              buttonType="button"
+              buttonClass="button report"
+              buttonId="report"
+              :clickHandler="reportStory"
+              iconName="cloud-download-outline"
+              labelClass="button__text"
+              labelText="Download"
+            />
+          </div>
         </div>
       </div>
     </div>
-
     <div v-if="activeAnalyzeStoryModal" class="modal-backdrop fade show"></div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import dowloadjs from "downloadjs";
-import ButtonComponent from "./ButtonComponent.vue";
-
+import downloadjs from "downloadjs";
 import VueApexCharts from "vue-apexcharts";
+
+import ChapterButton from "./ChapterButton.vue";
+import ChapterTitle from "./ChapterTitle.vue";
+import ParagraphTitle from "./ParagraphTitle.vue";
+import SelectButton from "./SelectButton.vue";
+import ButtonComponent from "./ButtonComponent.vue";
+import SidebarLinkComponent from "./SidebarLinkComponent.vue";
 
 const server = "http://localhost:5001";
 
 export default {
   components: {
+    ChapterButton,
+    ChapterTitle,
+    ParagraphTitle,
+    SelectButton,
     ButtonComponent,
+    SidebarLinkComponent,
   },
   data() {
     return {
@@ -204,7 +489,6 @@ export default {
       story_tasks: [],
       stories: [],
       file: "",
-      inputStory: "",
       options: {
         chart: {
           id: "vuechart-example",
@@ -219,10 +503,16 @@ export default {
           data: [],
         },
       ],
+      activeButton: null, // Nuova proprietà per tracciare il pulsante attivo
+      indicatorPosition: 0, // Posizione della linea
+      currentPage: 1, // Pagina corrente
+      storiesPerPage: 30, // Numero di user stories per pagina
+      fileLoaded: false, // Variabile per tracciare se un file è stato caricato
+      currentPageInput: 1, // Variabile per tracciare l'input dell'utente per il numero di pagina
     };
   },
   methods: {
-    handleStoriesUpload() {
+    handleStoriesUpload(event) {
       this.file = event.target.files[0];
     },
 
@@ -239,7 +529,7 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          dowloadjs(
+          downloadjs(
             ("" + res.data).replaceAll("'", '"'),
             "report.json",
             "application/json"
@@ -263,7 +553,7 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          dowloadjs(
+          downloadjs(
             ("" + res.data).replaceAll("'", '"'),
             "report-" + this.story + ".json",
             "application/json"
@@ -288,21 +578,19 @@ export default {
           if (typeof res.data.stories === "undefined") {
             alert(res.data.motivation);
             this.stories = [];
+            this.fileLoaded = false; // Imposta false se il caricamento fallisce
           } else {
             const reportBtn = document.querySelector("#report");
             reportBtn.classList.remove("disabled");
             this.stories = res.data.stories;
+            this.currentPage = 1; // Resetta la pagina corrente dopo il caricamento
+            this.fileLoaded = true; // Imposta true se il caricamento ha successo
           }
         })
         .catch(() => {
           this.stories = [];
+          this.fileLoaded = false; // Imposta false se il caricamento fallisce
         });
-    },
-
-    analyzeSingleStory() {
-      if (this.inputStory) {
-        this.toggleAnalyzeStoryModal(this.inputStory);
-      }
     },
 
     toggleAnalyzeStoryModal(story) {
@@ -353,11 +641,74 @@ export default {
       }
     },
 
+    // Pagination
+    changePage(page) {
+      if (page > 0 && page <= this.totalPages) {
+        this.currentPage = page;
+        this.currentPageInput = page; // Aggiorna l'input della pagina corrente
+      }
+    },
+
+    // Capitoli
+    scrollToChapter(chapterId) {
+      const button = this.$el.querySelector(`[data-chapter="${chapterId}"]`);
+      this.activeButton = button; // Aggiorna il pulsante attivo
+      this.updateIndicator(); // Aggiorna la posizione dell'indicatore
+
+      document.getElementById(chapterId).scrollIntoView({ behavior: "smooth" });
+    },
+
+    updateIndicator() {
+      if (!this.activeButton) return;
+      const buttonRect = this.activeButton.getBoundingClientRect();
+      const sidebarRect = this.$el
+        .querySelector(".sidebar")
+        .getBoundingClientRect();
+      const indicatorY = buttonRect.top - sidebarRect.top;
+
+      this.indicatorPosition = indicatorY; // Aggiorna la posizione della linea
+    },
+
     closeAnalyzeStoryModal() {
       const body = document.querySelector("body");
       this.activeAnalyzeStoryModal = !this.activeAnalyzeStoryModal;
       body.classList.remove("modal-open");
     },
   },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.stories.length / this.storiesPerPage);
+    },
+    paginatedStories() {
+      const start = (this.currentPage - 1) * this.storiesPerPage;
+      const end = start + this.storiesPerPage;
+      return this.stories.slice(start, end);
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.activeButton = this.$el.querySelector(".btn_chapter"); // Inizializza il primo pulsante come attivo
+      this.updateIndicator(); // Imposta la posizione iniziale dell'indicatore
+    });
+  },
 };
+
+// Function needed to show the loaded file name
+function handleStoriesUpload(event) {
+  const fileInput = event.target;
+  const fileNameElement = document.getElementById("file-name");
+  const file = fileInput.files[0];
+
+  if (file) {
+    fileNameElement.textContent = file.name;
+  } else {
+    fileNameElement.textContent = "No file selected";
+  }
+}
+
+// Assicurati che il DOM sia caricato prima di aggiungere l'evento
+document.addEventListener("DOMContentLoaded", () => {
+  const fileInput = document.querySelector(".form-control");
+  fileInput.addEventListener("change", handleStoriesUpload);
+});
 </script>
