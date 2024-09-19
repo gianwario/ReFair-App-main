@@ -267,6 +267,7 @@
 .select {
   position: relative;
   background-color: var(--color-text);
+  color: var(--color-text);
   text-decoration: none;
   text-transform: uppercase;
   font-weight: 400;
@@ -340,7 +341,7 @@
   left: 80%;
 }
 
-/*@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   .table td {
     color: var(--vt-c-white);
   }
@@ -358,4 +359,38 @@
   .tag {
     color: var(--color-background);
   }
-}*/
+
+  /**** Button UI ****/
+  .select {
+    background-color: var(--color-text);
+    color: var(--color-text);
+  }
+
+  .select:hover {
+    /* TODO: Change based on the new color*/
+    background: var(--vt-c-blue);
+    box-shadow: 0 0 35px var(--vt-c-blue);
+    color: var(--vt-c-blue);
+  }
+
+  .select::before {
+    background-color: var(--color-background);
+  }
+
+  .select label {
+    color: var(--color-text);
+  }
+
+  .select:hover label {
+    /* TODO: Change based on the new color*/
+    color: var(--vt-c-blue);
+  }
+
+  .select i::before {
+    background-color: var(--color-background);
+  }
+
+  .select i::after {
+    background-color: var(--color-background);
+  }
+}

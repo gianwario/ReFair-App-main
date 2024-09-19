@@ -36,7 +36,7 @@
   --section-gap: 160px;
 }
 
-/*@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --color-background: #212223;
     --color-background-soft: #636465;
@@ -48,7 +48,7 @@
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-white-soft);
   }
-}*/
+}
 
 *,
 *::before,
