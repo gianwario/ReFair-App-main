@@ -250,7 +250,7 @@
                 </label></span
               >
               <span
-                ><label class="button_text page">
+                ><label class="button_text current page">
                   {{ currentPage }}
                   <!-- Se modifico questo c'è un'indicazione visiva della pagina in cui sono -->
                 </label></span
@@ -330,7 +330,7 @@
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Story Details</h5>
+            <ParagraphTitle paragraphTitle="Story Details" />
             <div>
               <!-- Close Button-->
               <ButtonComponent

@@ -244,6 +244,7 @@
 
 .pagination button:disabled:hover {
   color: grey;
+  box-shadow: none; /* This avoids the box-shadow if the button is disabled */
 }
 
 .pagination button:disabled:hover label {
@@ -285,6 +286,10 @@
   margin-left: 3px;
   margin-right: 3px;
   color: var(--color-text);
+}
+
+.current {
+  color: var(--color-secondary);
 }
 
 /************** Button UI *************/
@@ -365,7 +370,11 @@
   left: 80%;
 }
 
-/**** Table ************/
+/****** Pop up titles and style ****/
+
+.pop_up {
+  margin-left: 10px;
+}
 
 @media (prefers-color-scheme: dark) {
   /****** Tabella **********/
