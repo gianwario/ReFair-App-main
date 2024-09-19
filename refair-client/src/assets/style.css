@@ -161,6 +161,7 @@
   font-weight: 500;
   position: relative; /* Necessario per posizionare la linea accanto al pulsante */
   font-size: 1.1em;
+  color: var(--vt-c-divider-dark-1);
 }
 
 .btn_chapter:hover {
@@ -178,8 +179,40 @@
   /* To align button and indicator */
   margin-left: 25px;
   border-radius: 2px;
-  margin-top: -15px;
+  margin-top: -42px;
 }
+
+.title_sidebar {
+  color: var(--color-text);
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-left: 8px;
+  margin-bottom: 0px;
+}
+
+.chapter_title {
+  margin-left: -20px;
+  overflow: visible;
+  max-width: fit-content;
+}
+
+.chapter_title:hover .tag {
+  color: var(--vt-c-blue);
+  opacity: 1;
+}
+
+.tag {
+  display: inline-block;
+  color: white;
+  opacity: 0;
+  transition: opacity 1s ease, color 1s ease;
+}
+
+.chapter {
+  display: inline-block;
+}
+
+/**************** PAGINATION *************************/
 
 .pagination {
   display: flex;
