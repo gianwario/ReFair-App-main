@@ -61,6 +61,7 @@
                 iconName="cloud-download-outline"
                 labelClass="button__text"
                 labelText="Download all"
+                :disabled="!fileLoaded"
               />
             </div>
           </div>

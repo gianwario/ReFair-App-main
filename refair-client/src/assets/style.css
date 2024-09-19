@@ -297,6 +297,21 @@
   left: 80%;
 }
 
+.button:disabled {
+  background-color: grey;
+  color: grey;
+}
+
+.button:disabled:hover {
+  background-color: grey;
+  color: grey;
+  box-shadow: none;
+}
+
+.button:disabled label {
+  color: grey;
+}
+
 /****************** POP UP ****************************************/
 /****** Pop up titles and style ****/
 
