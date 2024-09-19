@@ -63,6 +63,7 @@
 
 .load {
   background: var(--vt-c-green);
+  margin-right: 20px;
 }
 
 .load:hover {
@@ -264,7 +265,7 @@
 }
 
 /************** Button UI *************/
-.select {
+.button {
   position: relative;
   background-color: var(--color-text);
   color: var(--color-text);
@@ -278,36 +279,36 @@
   align-items: center;
 }
 
-.select:hover {
+.button:hover {
   background: var(--vt-c-blue);
   box-shadow: 0 0 35px var(--vt-c-blue);
   color: var(--vt-c-blue);
 }
 
-.select:before {
+.button:before {
   content: "";
   position: absolute;
   inset: 2px;
   background-color: var(--vt-c-white);
 }
 
-.select label {
+.button label {
   position: relative;
   z-index: 1;
   color: var(--color-text);
 }
 
-.select:hover label {
+.button:hover label {
   color: var(--vt-c-blue);
 }
 
-.select i {
+.button i {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-.select i::before {
+.button i::before {
   content: "";
   position: absolute;
   top: 0;
@@ -319,12 +320,12 @@
   transition: 0.3s;
 }
 
-.select:hover i::before {
+.button:hover i::before {
   width: 20px;
   left: 20%;
 }
 
-.select i::after {
+.button i::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -336,7 +337,7 @@
   transition: 0.3s;
 }
 
-.select:hover i::after {
+.button:hover i::after {
   width: 20px;
   left: 80%;
 }
@@ -361,36 +362,36 @@
   }
 
   /**** Button UI ****/
-  .select {
+  .button {
     background-color: var(--color-text);
     color: var(--color-text);
   }
 
-  .select:hover {
+  .button:hover {
     /* TODO: Change based on the new color*/
     background: var(--vt-c-blue);
     box-shadow: 0 0 35px var(--vt-c-blue);
     color: var(--vt-c-blue);
   }
 
-  .select::before {
+  .button::before {
     background-color: var(--color-background);
   }
 
-  .select label {
+  .button label {
     color: var(--color-text);
   }
 
-  .select:hover label {
+  .button:hover label {
     /* TODO: Change based on the new color*/
     color: var(--vt-c-blue);
   }
 
-  .select i::before {
+  .button i::before {
     background-color: var(--color-background);
   }
 
-  .select i::after {
+  .button i::after {
     background-color: var(--color-background);
   }
 }
