@@ -3,11 +3,172 @@
     <div class="row">
       <div>
         <h1>ReFair App</h1>
+
         <!-- Contenuto Capitolo 1 -->
+        <div id="chapter1">
+          <ChapterTitle chapterTitle="ReFair framework" />
+
+          <div
+            class="btn-toolbar mb-3 justify-content-between"
+            role="toolbar"
+            aria-label="Toolbar with button groups"
+          >
+            <!-- Upload Button-->
+            <div class="file-upload">
+              <input
+                type="file"
+                id="file"
+                class="form-control"
+                @change="handleStoriesUpload($event)"
+              />
+
+              <!---->
+
+              <SelectButton
+                buttonType="button"
+                labelFor="file"
+                labelClass="button__text"
+                labelText="Select file"
+              />
+
+              <!--<button type="button" class="button select">
+                  <span class="button__icon"
+                    ><label for="file" class="button__text"> Select file </label><ion-icon name="document-attach-outline"></ion-icon
+                  ></span>
+                </button>-->
+              <!---->
+              <span id="file-name" class="file-name">No file selected</span>
+            </div>
+
+            <!-- Load Button-->
+            <div>
+              <ButtonComponent
+                :clickHandler="submitFile"
+                buttonType="button"
+                buttonClass="button load"
+                buttonStyle="margin-right: 20px"
+                iconName="cloud-upload-outline"
+                labelClass="button__text"
+                labelText="Load"
+              />
+
+              <!-- Download all Button-->
+              <ButtonComponent
+                :clickHandler="reportStories"
+                buttonType="button"
+                buttonClass="button report"
+                buttonId="report"
+                iconName="cloud-download-outline"
+                labelClass="button__text"
+                labelText="Download all"
+              />
+            </div>
+          </div>
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <ParagraphTitle paragraphTitle="User Stories" />
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(story, index) in paginatedStories" :key="index">
+                <td>{{ story }}</td>
+                <td>
+                  <div>
+                    <!-- Analyze Button-->
+                    <button
+                      type="button"
+                      class="button analyze"
+                      @click="toggleAnalyzeStoryModal(story)"
+                    >
+                      <ion-icon name="analytics-outline"></ion-icon>
+                      <label class="button__text">Analyze</label><i></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Controlli di Paginazione -->
+          <div v-if="fileLoaded" class="pagination">
+            <!-- Previous Button-->
+            <ButtonComponent
+              :clickHandler="() => changePage(currentPage - 1)"
+              buttonType="button"
+              buttonClass="button previous"
+              :isDisabled="currentPage === 1"
+              iconName="chevron-back-outline"
+              labelClass="button_text"
+              labelText="Previous"
+            />
+
+            <!-- Input per inserire il numero di pagina -->
+            <input
+              type="number"
+              v-model.number="currentPageInput"
+              @change="changePage(currentPageInput)"
+              :min="1"
+              :max="totalPages"
+              class="input_number"
+            />
+
+            <!-- Mostra le pagine -->
+            <span v-if="currentPage > 2">
+              <label class="button_text page"> 1 </label>
+            </span>
+            <span v-if="currentPage > 3"
+              ><label class="button_text page"> ... </label></span
+            >
+            <span v-if="currentPage > 1">
+              <label class="button_text page">
+                {{ currentPage - 1 }}
+              </label></span
+            >
+            <span
+              ><label class="button_text current page">
+                {{ currentPage }}
+                <!-- Se modifico questo c'è un'indicazione visiva della pagina in cui sono -->
+              </label></span
+            >
+            <span v-if="currentPage < totalPages"
+              ><label class="button_text page">
+                {{ currentPage + 1 }}
+              </label></span
+            >
+            <span v-if="currentPage < totalPages - 2">
+              <label class="button_text page"> ... </label>
+            </span>
+            <span v-if="currentPage < totalPages - 1"
+              ><label class="button_text page">
+                {{ totalPages }}
+              </label></span
+            >
+
+            <!-- Next Button-->
+            <ButtonComponent
+              :clickHandler="() => changePage(currentPage + 1)"
+              buttonType="button"
+              buttonClass="button next"
+              :isDisabled="currentPage === totalPages"
+              iconName="chevron-forward-outline"
+              labelClass="button_text"
+              labelText="Next"
+            />
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <!-- Contenuto Capitolo 2 -->
         <div class="content">
           <!-- Il contenuto principale rimane lo stesso -->
 
-          <div id="chapter1">
+          <div id="chapter2">
             <ChapterTitle chapterTitle="ReFair in a nutshell" />
 
             <ParagraphTitle paragraphTitle="What is ReFair?" />
@@ -66,8 +227,8 @@
           </div>
 
           <br /><br />
-          <!-- Contenuto Capitolo 2 -->
-          <div id="chapter2">
+          <!-- Contenuto Capitolo 3 -->
+          <div id="chapter3">
             <ChapterTitle chapterTitle="How to use ReFair" />
 
             <ParagraphTitle paragraphTitle="Recommendation" />
@@ -123,164 +284,6 @@
           </div>
 
           <br /><br />
-
-          <!-- Contenuto Capitolo 3 -->
-          <div id="chapter3">
-            <ChapterTitle chapterTitle="ReFair framework" />
-
-            <div
-              class="btn-toolbar mb-3 justify-content-between"
-              role="toolbar"
-              aria-label="Toolbar with button groups"
-            >
-              <!-- Upload Button-->
-              <div class="file-upload">
-                <input
-                  type="file"
-                  id="file"
-                  class="form-control"
-                  @change="handleStoriesUpload($event)"
-                />
-
-                <!---->
-
-                <SelectButton
-                  buttonType="button"
-                  labelFor="file"
-                  labelClass="button__text"
-                  labelText="Select file"
-                />
-
-                <!--<button type="button" class="button select">
-                  <span class="button__icon"
-                    ><label for="file" class="button__text"> Select file </label><ion-icon name="document-attach-outline"></ion-icon
-                  ></span>
-                </button>-->
-                <!---->
-                <span id="file-name" class="file-name">No file selected</span>
-              </div>
-
-              <!-- Load Button-->
-              <div>
-                <ButtonComponent
-                  :clickHandler="submitFile"
-                  buttonType="button"
-                  buttonClass="button load"
-                  buttonStyle="margin-right: 20px"
-                  iconName="cloud-upload-outline"
-                  labelClass="button__text"
-                  labelText="Load"
-                />
-
-                <!-- Download all Button-->
-                <ButtonComponent
-                  :clickHandler="reportStories"
-                  buttonType="button"
-                  buttonClass="button report"
-                  buttonId="report"
-                  iconName="cloud-download-outline"
-                  labelClass="button__text"
-                  labelText="Download all"
-                />
-              </div>
-            </div>
-
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <ParagraphTitle paragraphTitle="User Stories" />
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(story, index) in paginatedStories" :key="index">
-                  <td>{{ story }}</td>
-                  <td>
-                    <div>
-                      <!-- Analyze Button-->
-                      <button
-                        type="button"
-                        class="button analyze"
-                        @click="toggleAnalyzeStoryModal(story)"
-                      >
-                        <ion-icon name="analytics-outline"></ion-icon>
-                        <label class="button__text">Analyze</label><i></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <!-- Controlli di Paginazione -->
-            <div v-if="fileLoaded" class="pagination">
-              <!-- Previous Button-->
-              <ButtonComponent
-                :clickHandler="() => changePage(currentPage - 1)"
-                buttonType="button"
-                buttonClass="button previous"
-                :isDisabled="currentPage === 1"
-                iconName="chevron-back-outline"
-                labelClass="button_text"
-                labelText="Previous"
-              />
-
-              <!-- Input per inserire il numero di pagina -->
-              <input
-                type="number"
-                v-model.number="currentPageInput"
-                @change="changePage(currentPageInput)"
-                :min="1"
-                :max="totalPages"
-                class="input_number"
-              />
-
-              <!-- Mostra le pagine -->
-              <span v-if="currentPage > 2">
-                <label class="button_text page"> 1 </label>
-              </span>
-              <span v-if="currentPage > 3"
-                ><label class="button_text page"> ... </label></span
-              >
-              <span v-if="currentPage > 1">
-                <label class="button_text page">
-                  {{ currentPage - 1 }}
-                </label></span
-              >
-              <span
-                ><label class="button_text current page">
-                  {{ currentPage }}
-                  <!-- Se modifico questo c'è un'indicazione visiva della pagina in cui sono -->
-                </label></span
-              >
-              <span v-if="currentPage < totalPages"
-                ><label class="button_text page">
-                  {{ currentPage + 1 }}
-                </label></span
-              >
-              <span v-if="currentPage < totalPages - 2">
-                <label class="button_text page"> ... </label>
-              </span>
-              <span v-if="currentPage < totalPages - 1"
-                ><label class="button_text page">
-                  {{ totalPages }}
-                </label></span
-              >
-
-              <!-- Next Button-->
-              <ButtonComponent
-                :clickHandler="() => changePage(currentPage + 1)"
-                buttonType="button"
-                buttonClass="button next"
-                :isDisabled="currentPage === totalPages"
-                iconName="chevron-forward-outline"
-                labelClass="button_text"
-                labelText="Next"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -296,21 +299,21 @@
       <ChapterButton
         btnClass="btn_chapter"
         dataChapter="chapter1"
-        buttonText="ReFair in a nutshell"
+        buttonText="ReFair framework"
         chapterId="chapter1"
         @scrollToChapter="scrollToChapter"
       />
       <ChapterButton
         btnClass="btn_chapter"
         dataChapter="chapter2"
-        buttonText="How to use ReFair"
+        buttonText="ReFair in a nutshell"
         chapterId="chapter2"
         @scrollToChapter="scrollToChapter"
       />
       <ChapterButton
         btnClass="btn_chapter"
         dataChapter="chapter3"
-        buttonText="ReFair framework"
+        buttonText="How to use ReFair"
         chapterId="chapter3"
         @scrollToChapter="scrollToChapter"
       />
