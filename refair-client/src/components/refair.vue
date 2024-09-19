@@ -314,6 +314,37 @@
         chapterId="chapter3"
         @scrollToChapter="scrollToChapter"
       />
+      <br /><br />
+      <!-- ReFair model Github link -->
+      <p class="title_sidebar">REFAIR REPOSITORY</p>
+      <SidebarLinkComponent
+        href="https://github.com/gianwario/ReFair-App"
+        iconName="logo-github"
+        linkText="ReFair repository"
+        customClass="sidebar_element model"
+      />
+
+      <br />
+      <!-- Collaborators Github links -->
+      <p class="title_sidebar">COLLABORATORS</p>
+      <SidebarLinkComponent
+        href="https://github.com/DG266"
+        iconName="logo-github"
+        linkText="Daniele Galloppo"
+        customClass="sidebar_element collaborators"
+      />
+      <SidebarLinkComponent
+        href="https://github.com/MarioPeluso"
+        iconName="logo-github"
+        linkText="Mario Peluso"
+        customClass="sidebar_element collaborators"
+      />
+      <SidebarLinkComponent
+        href="https://github.com/LucoMoro"
+        iconName="logo-github"
+        linkText="Luca Morelli"
+        customClass="sidebar_element collaborators"
+      />
     </div>
 
     <!-- analyze Story Modal -->
@@ -413,6 +444,7 @@ import ChapterTitle from "./ChapterTitle.vue";
 import ParagraphTitle from "./ParagraphTitle.vue";
 import SelectButton from "./SelectButton.vue";
 import ButtonComponent from "./ButtonComponent.vue";
+import SidebarLinkComponent from "./SidebarLinkComponent.vue";
 
 const server = "http://localhost:5001";
 
@@ -423,6 +455,7 @@ export default {
     ParagraphTitle,
     SelectButton,
     ButtonComponent,
+    SidebarLinkComponent,
   },
   data() {
     return {
