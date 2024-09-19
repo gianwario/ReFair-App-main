@@ -65,6 +65,22 @@
             </div>
           </div>
 
+          <hr />
+          <!-- Single US and analyze button -->
+          <div class="entry_area">
+            <input v-model="inputStory" placeholder="" />
+            <div class="labelline">Enter an US</div>
+            <ButtonComponent
+              :clickHandler="analyzeSingleStory"
+              buttonType="button"
+              buttonClass="button analyze"
+              iconName="analytics-outline"
+              labelClass="button__text"
+              labelText="Analyze"
+              class="analyze"
+            />
+          </div>
+
           <table class="table table-hover">
             <thead>
               <tr>
@@ -473,6 +489,7 @@ export default {
       story_tasks: [],
       stories: [],
       file: "",
+      inputStory: "",
       options: {
         chart: {
           id: "vuechart-example",
@@ -575,6 +592,12 @@ export default {
           this.stories = [];
           this.fileLoaded = false; // Imposta false se il caricamento fallisce
         });
+    },
+
+    analyzeSingleStory() {
+      if (this.inputStory) {
+        this.toggleAnalyzeStoryModal(this.inputStory);
+      }
     },
 
     toggleAnalyzeStoryModal(story) {
