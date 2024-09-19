@@ -34,6 +34,10 @@
   --color-text: #505050;
 
   --section-gap: 160px;
+
+  --color-secondary: #5091cb;
+  --color-secondary-dark: #4882b6;
+  --color-secondary-light: #6c9bc4;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,6 +51,10 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-white-soft);
+
+    --color-secondary: #9e5eda;
+    --color-secondary-dark: #8e54c4;
+    --color-secondary-light: #a476cf;
   }
 }
 

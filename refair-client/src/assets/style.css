@@ -44,7 +44,7 @@
   height: 100%;
 }
 
-/* Report button */
+/* Report button 
 
 .report {
   background: var(--vt-c-red);
@@ -59,7 +59,7 @@
   background-color: var(--vt-c-red-dark-2);
 }
 
-/* Load button */
+ Load button 
 
 .load {
   background: var(--vt-c-green);
@@ -74,7 +74,7 @@
   background-color: var(--vt-c-green-dark-2);
 }
 
-/* Analyze button */
+ Analyze button 
 
 .analyze {
   background: var(--vt-c-indigo);
@@ -88,21 +88,21 @@
   background-color: var(--vt-c-indigo-dark-2);
 }
 
-/* Close Button */
+ Close Button 
 
 .close {
-  background: var(--vt-c-blue);
+  background: var(--color-secondary);
 }
 
 .close:hover {
-  background-color: var(--vt-c-blue-dark-1);
+  background-color: var(--color-secondary);
 }
 
 .close:active {
-  background-color: var(--vt-c-blue-dark-2);
+  background-color: var(--color-secondary);
 }
 
-/* Select Button */
+ Select Button 
 
 .select {
   background: var(--vt-c-sky);
@@ -114,12 +114,12 @@
 
 .select:active {
   background-color: var(--vt-c-sky-dark-2);
-}
+} 
 
 .button__icon {
   font-size: 1.5em;
   background-color: rgba(0, 0, 0, 0.08);
-}
+}*/
 
 .file-upload {
   position: relative;
@@ -167,7 +167,7 @@
 }
 
 .btn_chapter:hover {
-  color: var(--vt-c-blue-dark-2);
+  color: var(--color-secondary);
 }
 
 .indicator {
@@ -175,7 +175,7 @@
   left: -10px; /* Posiziona la linea a sinistra dei pulsanti */
   width: 5px;
   height: 20px; /* Altezza della linea */
-  background-color: var(--vt-c-blue-dark-2); /* Colore della linea */
+  background-color: var(--color-secondary); /* Colore della linea */
   transition: transform 0.1s ease; /* Animazione per il movimento della linea */
   z-index: 0; /* Assicura che la linea sia sotto i pulsanti */
   /* To align button and indicator */
@@ -199,7 +199,7 @@
 }
 
 .title:hover .tag {
-  color: var(--vt-c-blue);
+  color: var(--color-secondary);
   opacity: 1;
 }
 
@@ -224,7 +224,7 @@
 }
 
 .paragraph_content strong {
-  color: var(--vt-c-blue);
+  color: var(--color-secondary);
 }
 
 /**************** PAGINATION *************************/
@@ -277,7 +277,7 @@
 }
 
 .input_number:hover {
-  border: 2px solid var(--vt-c-blue);
+  border: 2px solid var(--color-secondary);
 }
 
 .page {
@@ -303,9 +303,9 @@
 }
 
 .button:hover {
-  background: var(--vt-c-blue);
-  box-shadow: 0 0 35px var(--vt-c-blue);
-  color: var(--vt-c-blue);
+  background: var(--color-secondary);
+  box-shadow: 0 0 35px var(--color-secondary);
+  color: var(--color-secondary);
 }
 
 .button:before {
@@ -322,7 +322,7 @@
 }
 
 .button:hover label {
-  color: var(--vt-c-blue);
+  color: var(--color-secondary);
 }
 
 .button i {
@@ -392,9 +392,9 @@
 
   .button:hover {
     /* TODO: Change based on the new color*/
-    background: var(--vt-c-blue);
-    box-shadow: 0 0 35px var(--vt-c-blue);
-    color: var(--vt-c-blue);
+    background: var(--color-secondary);
+    box-shadow: 0 0 35px var(--color-secondary);
+    color: var(--color-secondary);
   }
 
   .button::before {
@@ -405,10 +405,9 @@
     color: var(--color-text);
   }
 
-  .button:hover label {
-    /* TODO: Change based on the new color*/
-    color: var(--vt-c-blue);
-  }
+  /*.button:hover label {
+    color: var(--color-secondary);
+  }*/
 
   .button i::before {
     background-color: var(--color-background);
@@ -420,7 +419,7 @@
 
   /**************** Pagination ********************/
 
-  .input_number:hover {
+  /*.input_number:hover {
     border: 2px solid var(--vt-c-blue);
-  }
+  }*/
 }
