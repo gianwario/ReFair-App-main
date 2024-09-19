@@ -56,6 +56,7 @@
               </button>
             </div>
           </div>
+
           <hr />
           <!-- Single US and analyze button -->
           <div>
@@ -63,14 +64,14 @@
               v-model="inputStory"
               placeholder="Inserisci una User Story"
             />
-            <button
-              type="button"
-              class="button analyze"
-              @click="analyzeSingleStory"
-            >
-              <ion-icon name="analytics-outline"></ion-icon>
-              <label class="button__text">Analyze</label>
-            </button>
+            <ButtonComponent
+              :clickHandler="analyzeSingleStory"
+              buttonType="button"
+              buttonClass="button analyze"
+              iconName="analytics-outline"
+              labelClass="button__text"
+              labelText="Analyze"
+            />
           </div>
 
           <table class="table table-hover">
@@ -186,12 +187,16 @@
 <script>
 import axios from "axios";
 import dowloadjs from "downloadjs";
+import ButtonComponent from "./ButtonComponent.vue";
 
 import VueApexCharts from "vue-apexcharts";
 
 const server = "http://localhost:5001";
 
 export default {
+  components: {
+    ButtonComponent,
+  },
   data() {
     return {
       activeAnalyzeStoryModal: false,
