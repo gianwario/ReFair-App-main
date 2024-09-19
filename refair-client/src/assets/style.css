@@ -263,38 +263,41 @@
   font-size: 16px;
 }
 
+/************** Button UI *************/
 .select {
   position: relative;
-  background-color: white;
-  color: white;
+  background-color: var(--color-text);
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 1.5em;
-  letter-spacing: 0.1em;
   font-weight: 400;
-  padding: 10px 30px;
+  padding: 5px 15px;
   transition: 0.5s;
   border: none;
   border-radius: 2px;
+  align-items: center;
 }
 
 .select:hover {
-  letter-spacing: 0.25em;
-  background: #19ebff;
-  box-shadow: 0 0 35px #19ebff;
-  color: #19ebff;
+  background: var(--vt-c-blue);
+  box-shadow: 0 0 35px var(--vt-c-blue);
+  color: var(--vt-c-blue);
 }
 
 .select:before {
   content: "";
   position: absolute;
   inset: 2px;
-  background-color: var(--vt-c-black);
+  background-color: var(--vt-c-white);
 }
 
 .select label {
   position: relative;
   z-index: 1;
+  color: var(--color-text);
+}
+
+.select:hover label {
+  color: var(--vt-c-blue);
 }
 
 .select i {
@@ -310,9 +313,9 @@
   left: 80%;
   width: 10px;
   height: 4px;
-  background-color: var(--vt-c-black);
+  background-color: var(--vt-c-white);
   transform: translateX(-50%) skewX(325deg);
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 .select:hover i::before {
@@ -327,9 +330,9 @@
   left: 20%;
   width: 10px;
   height: 4px;
-  background-color: var(--vt-c-black);
+  background-color: var(--vt-c-white);
   transform: translateX(-50%) skewX(325deg);
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 .select:hover i::after {
@@ -337,7 +340,7 @@
   left: 80%;
 }
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   .table td {
     color: var(--vt-c-white);
   }
@@ -355,4 +358,4 @@
   .tag {
     color: var(--color-background);
   }
-}
+}*/

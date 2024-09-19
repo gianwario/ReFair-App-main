@@ -1,5 +1,6 @@
 <template>
   <button :type="buttonType" class="button select">
+    <ion-icon name="document-attach-outline"></ion-icon>
     <label :for="labelFor" :class="labelClass" class="button__text">{{
       labelText
     }}</label>
