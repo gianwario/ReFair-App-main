@@ -365,16 +365,29 @@
   left: 80%;
 }
 
+/**** Table ************/
+
 @media (prefers-color-scheme: dark) {
+  /****** Tabella **********/
   .table td {
-    color: var(--vt-c-white);
+    color: var(--color-text);
   }
 
+  .table tr:hover td {
+    color: var(--color-text);
+  }
+
+  .table tr:hover td {
+    background-color: var(--color-background-light);
+  }
+
+  /*** Pop up ****/
   .modal-content {
     background-color: var(--color-background);
     color: var(--vt-c-white);
   }
 
+  /**** Capitolo *****/
   .btn_chapter {
     background-color: var(--color-background);
     color: var(--color-background-mute);
@@ -391,7 +404,6 @@
   }
 
   .button:hover {
-    /* TODO: Change based on the new color*/
     background: var(--color-secondary);
     box-shadow: 0 0 35px var(--color-secondary);
     color: var(--color-secondary);
