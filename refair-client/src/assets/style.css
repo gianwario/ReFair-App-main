@@ -338,6 +338,47 @@ strong {
   color: var(--vt-c-divider-dark-1);
 }
 
+/********* US input ************/
+
+.entry_area {
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.entry_area input {
+  position: absolute;
+  width: 79%;
+  outline: none;
+  line-height: 40px;
+  border: 2px solid var(--color-secondary);
+  background-color: transparent;
+  transition: 0.2s ease;
+  color: var(--color-text);
+}
+
+.labelline {
+  position: absolute;
+  font-size: 1.2em;
+  color: var(--color-secondary);
+  padding: 0 25px;
+  margin: 0 20px;
+  background-color: var(--color-background);
+  height: 30px;
+  line-height: 30px;
+  transform: translate(-15px, -16px) scale(0.88);
+}
+
+input:focus {
+  color: var(--color-text);
+}
+
+.entry_area .analyze {
+  margin-left: 82%;
+}
+
 @media (prefers-color-scheme: dark) {
   /****** Tabella **********/
   .table td {
