@@ -343,6 +343,7 @@
                 type="bar"
                 :options="options"
                 :series="series"
+                style="color: #212223; background-color: white"
               ></apexchart>
             </div>
             <div v-else class="pt-3 mx-4">No sensitive features suggested</div>

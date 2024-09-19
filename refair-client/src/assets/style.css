@@ -204,7 +204,7 @@
 
 .tag {
   display: inline-block;
-  color: white;
+  color: var(--vt-c-white);
   opacity: 0;
   transition: opacity 1s ease, color 1s ease;
 }
@@ -266,5 +266,19 @@
 @media (prefers-color-scheme: dark) {
   .table td {
     color: var(--vt-c-white);
+  }
+
+  .modal-content {
+    background-color: var(--color-background);
+    color: var(--vt-c-white);
+  }
+
+  .btn_chapter {
+    background-color: var(--color-background);
+    color: var(--color-background-mute);
+  }
+
+  .tag {
+    color: var(--color-background);
   }
 }
