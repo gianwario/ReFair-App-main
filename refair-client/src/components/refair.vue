@@ -361,7 +361,10 @@
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <ParagraphTitle paragraphTitle="Story Details" />
+            <ParagraphTitle
+              paragraphTitle="Story Details"
+              style="margin-left: 15px"
+            />
             <div>
               <!-- Close Button-->
               <ButtonComponent
@@ -376,16 +379,18 @@
             </div>
           </div>
           <div class="modal-body">
-            <p class="pt-3 mx-4"><b>User Story: </b> {{ story }}</p>
-            <p class="pt-3 mx-4"><b>Story Domain: </b> {{ story_domain }}</p>
+            <p class="pt-3 mx-4"><strong>User Story: </strong> {{ story }}</p>
+            <p class="pt-3 mx-4">
+              <strong>Story Domain: </strong> {{ story_domain }}
+            </p>
             <div class="pt-3 mx-4">
-              <b>Story Tasks</b>
+              <strong>Story Tasks</strong>
               <hr />
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Sensitive Features</th>
+                    <th scope="col"><strong>Task</strong></th>
+                    <th scope="col"><strong>Sensitive Features</strong></th>
                   </tr>
                 </thead>
                 <tbody>

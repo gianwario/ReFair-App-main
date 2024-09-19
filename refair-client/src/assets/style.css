@@ -145,8 +145,10 @@
 
 .paragraph_content {
   margin-bottom: 15px;
+  margin-left: 15px;
 }
 
+/*** There we could leave just strong ***/
 .paragraph_content strong {
   color: var(--color-secondary);
 }
@@ -300,6 +302,10 @@
 
 .pop_up {
   margin-left: 10px;
+}
+
+strong {
+  color: var(--color-secondary);
 }
 
 /************************************ SIDEBAR **********************/
