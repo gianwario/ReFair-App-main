@@ -270,8 +270,8 @@
               In detail:
               <ul>
                 <li>
-                  The <strong> Select </strong> Button allows you to select a
-                  User Stories spreadsheet from your machine;
+                  The <strong> Select File </strong> Button allows you to select
+                  an User Stories spreadsheet from your machine;
                 </li>
                 <li>
                   The <strong> Load </strong> Button allows you to upload the
