@@ -234,17 +234,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-}
-
-.pagination button {
-  margin: 0 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: var(--vt-c-blue-dark-2);
-  color: white;
-  border: none;
-  border-radius: 5px;
+  margin-bottom: 40px;
 }
 
 .pagination button:disabled {
@@ -252,7 +242,15 @@
   cursor: not-allowed;
 }
 
-.pagination span {
+.pagination button:disabled:hover {
+  color: grey;
+}
+
+.pagination button:disabled:hover label {
+  color: grey;
+}
+
+.pagination .pagination span {
   font-size: 16px;
 }
 
@@ -262,6 +260,31 @@
   margin: 0 10px;
   padding: 10px 5px;
   font-size: 16px;
+}
+
+.next {
+  margin-left: 20px;
+}
+
+.previous {
+  margin-right: 10px;
+}
+
+.input_number {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-text);
+  color: var(--color-text);
+}
+
+.input_number:hover {
+  border: 2px solid var(--vt-c-blue);
+}
+
+.page {
+  font-size: 1.2em;
+  margin-left: 3px;
+  margin-right: 3px;
+  color: var(--color-text);
 }
 
 /************** Button UI *************/
@@ -393,5 +416,11 @@
 
   .button i::after {
     background-color: var(--color-background);
+  }
+
+  /**************** Pagination ********************/
+
+  .input_number:hover {
+    border: 2px solid var(--vt-c-blue);
   }
 }

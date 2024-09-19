@@ -6,6 +6,7 @@
     :data-dismiss="dataDismiss"
     @click="handleClick"
     :style="buttonStyle"
+    :disabled="isDisabled"
   >
     <ion-icon :name="iconName"></ion-icon>
     <label :class="labelClass">{{ labelText }}</label>
@@ -55,10 +56,15 @@ export default {
       type: String,
       required: true,
     },
+    isDisabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
-      if (this.clickHandler) {
+      if (!this.isDisabled && this.clickHandler) {
         this.clickHandler();
       }
     },

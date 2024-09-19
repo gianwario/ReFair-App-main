@@ -216,12 +216,16 @@
 
             <!-- Controlli di Paginazione -->
             <div v-if="fileLoaded" class="pagination">
-              <button
-                @click="changePage(currentPage - 1)"
-                :disabled="currentPage === 1"
-              >
-                Previous
-              </button>
+              <!-- Previous Button-->
+              <ButtonComponent
+                :clickHandler="() => changePage(currentPage - 1)"
+                buttonType="button"
+                buttonClass="button previous"
+                :isDisabled="currentPage === 1"
+                iconName="chevron-back-outline"
+                labelClass="button_text"
+                labelText="Previous"
+              />
 
               <!-- Input per inserire il numero di pagina -->
               <input
@@ -230,25 +234,51 @@
                 @change="changePage(currentPageInput)"
                 :min="1"
                 :max="totalPages"
+                class="input_number"
               />
 
               <!-- Mostra le pagine -->
-              <span v-if="currentPage > 2">1,</span>
-              <span v-if="currentPage > 3">...,</span>
-              <span v-if="currentPage > 1">{{ currentPage - 1 }},</span>
-              <span>{{ currentPage }},</span>
+              <span v-if="currentPage > 2">
+                <label class="button_text page"> 1 </label>
+              </span>
+              <span v-if="currentPage > 3"
+                ><label class="button_text page"> ... </label></span
+              >
+              <span v-if="currentPage > 1">
+                <label class="button_text page">
+                  {{ currentPage - 1 }}
+                </label></span
+              >
+              <span
+                ><label class="button_text page">
+                  {{ currentPage }}
+                  <!-- Se modifico questo c'è un'indicazione visiva della pagina in cui sono -->
+                </label></span
+              >
               <span v-if="currentPage < totalPages"
-                >{{ currentPage + 1 }},</span
+                ><label class="button_text page">
+                  {{ currentPage + 1 }}
+                </label></span
               >
-              <span v-if="currentPage < totalPages - 2">...,</span>
-              <span v-if="currentPage < totalPages - 1">{{ totalPages }}</span>
+              <span v-if="currentPage < totalPages - 2">
+                <label class="button_text page"> ... </label>
+              </span>
+              <span v-if="currentPage < totalPages - 1"
+                ><label class="button_text page">
+                  {{ totalPages }}
+                </label></span
+              >
 
-              <button
-                @click="changePage(currentPage + 1)"
-                :disabled="currentPage === totalPages"
-              >
-                Next
-              </button>
+              <!-- Next Button-->
+              <ButtonComponent
+                :clickHandler="() => changePage(currentPage + 1)"
+                buttonType="button"
+                buttonClass="button next"
+                :isDisabled="currentPage === totalPages"
+                iconName="chevron-forward-outline"
+                labelClass="button_text"
+                labelText="Next"
+              />
             </div>
           </div>
         </div>
