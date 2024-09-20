@@ -22,12 +22,12 @@ class TestReport:
         file_input = driver_with_options.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(excel)
 
-        driver_with_options.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver_with_options.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
-            WebDriverWait(driver_with_options, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn-secondary"))).click()
+            WebDriverWait(driver_with_options, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[1]/table/tbody/tr[1]/td[2]/div/button"))).click()
             time.sleep(2)
-            WebDriverWait(driver_with_options, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div/div[1]/div/button[2]"))).click()
+            WebDriverWait(driver_with_options, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[3]/div/div/div[3]/button"))).click()
 
             dowloaded_file = os.listdir(
                 os.path.join(
@@ -53,7 +53,7 @@ class TestReport:
     @pytest.mark.parametrize('driver_with_options', ['report_tc_1'], indirect=True)
     def test_report_tc_1(self, driver_with_options, analyze_tc_1_fixture):
         """
-        Upload a well-formed Excel file and check if all the downloaded file .json is equal to the oracle
+        Upload a well-formed Excel file and check if the downloaded file .json is equal to the oracle
         """
 
         driver_with_options.get('http://localhost:5173/')
@@ -63,7 +63,7 @@ class TestReport:
         file_input = driver_with_options.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(excel)
 
-        driver_with_options.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver_with_options.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             WebDriverWait(driver_with_options, 15).until(EC.element_to_be_clickable((By.ID, "report"))).click()
@@ -107,7 +107,7 @@ class TestReport:
         file_input = driver_with_options.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(excel)
 
-        driver_with_options.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver_with_options.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             WebDriverWait(driver_with_options, 15).until(EC.element_to_be_clickable((By.ID, "report"))).click()
@@ -144,7 +144,7 @@ class TestReport:
         driver.get('http://localhost:5173/')
 
         try:
-            assert "disabled" in driver.find_element(By.ID, "report").get_attribute("class"), "The report button is not disabled"
+            assert driver.find_element(By.ID, "report").is_enabled() is False, "The report button is not disabled"
 
         except NoSuchElementException:
             assert False, "No element was found in the page."
