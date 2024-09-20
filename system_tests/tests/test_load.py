@@ -1,8 +1,10 @@
+import time
 import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.keys import Keys
 
 PATTERN = r'^(?!\s*$).{1,1024}$'
 
@@ -20,7 +22,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_1_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -42,7 +44,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_2_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -64,7 +66,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_3_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -87,7 +89,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_4_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -112,7 +114,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_5_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -136,7 +138,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_6_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -148,7 +150,7 @@ class TestLoad:
 
     def test_load_tc_7(self, driver, load_tc_7_fixture):
         """
-        Uploads an xlsx file named 'stories' containing one sheet. 
+        Uploads a xlsx file named 'stories' containing one sheet.
         This sheet has a single column labeled 'User Story' but contains 
         no rows of data (zero user stories).
         Verifies that an alert with the message 'There are no user stories' is displayed.
@@ -160,7 +162,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_7_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -185,7 +187,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_8_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -210,7 +212,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_9_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -236,7 +238,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_10_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -262,7 +264,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_11_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -287,7 +289,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_12_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -315,7 +317,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_13_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -343,7 +345,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_14_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -356,7 +358,7 @@ class TestLoad:
 
     def test_load_tc_15(self, driver, load_tc_15_fixture):
         """
-        Uploads an xlsx file named 'stories' containing one sheet. 
+        Uploads a xlsx file named 'stories' containing one sheet.
         This sheet has a single column labeled 'User Story' and 100 user stories.
         One row of data does not match the expected regex pattern.
         Verifies that an alert with the message 
@@ -375,7 +377,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_15_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -410,15 +412,33 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_16_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
+        max_page = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input").get_attribute('max')
 
-        table_rows = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
-        )
+        table_rows = 0
 
-        assert len(table_rows) == 100, f"The table should have 100 rows - found {len(table_rows)} row(s)"
+        if int(max_page) > 1:
+            for page in range(0, int(max_page)):
+                table_rows += len(WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+                ))
+                driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(By.CSS_SELECTOR, ".next"))
+                time.sleep(1)
+                if page != int(max_page) - 1:
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".next"))).click()
+        else:
+            table_rows = WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+            )
 
-        for expected_story, row in zip(expected_stories, table_rows):
+        assert table_rows == 100, f"The table should have 100 rows - found {table_rows} row(s)"
+
+        input_number = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input")
+        input_number.send_keys(Keys.BACKSPACE)
+        input_number.send_keys('1')
+        input_number.send_keys(Keys.ENTER)
+
+        for expected_story, row in zip(expected_stories, driver.find_elements(By.CSS_SELECTOR, "table tbody tr")):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
 
@@ -441,7 +461,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_17_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -470,7 +490,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_18_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -503,7 +523,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_19_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -539,15 +559,33 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_20_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
+        max_page = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input").get_attribute('max')
 
-        table_rows = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
-        )
+        table_rows = 0
 
-        assert len(table_rows) == 100, f"The table should have 100 rows - found {len(table_rows)} row(s)"
+        if int(max_page) > 1:
+            for page in range(0, int(max_page)):
+                table_rows += len(WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+                ))
+                driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(By.CSS_SELECTOR, ".next"))
+                time.sleep(1)
+                if page != int(max_page) - 1:
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".next"))).click()
+        else:
+            table_rows = WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+            )
 
-        for expected_story, row in zip(expected_stories, table_rows):
+        assert table_rows == 100, f"The table should have 100 rows - found {table_rows} row(s)"
+
+        input_number = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input")
+        input_number.send_keys(Keys.BACKSPACE)
+        input_number.send_keys('1')
+        input_number.send_keys(Keys.ENTER)
+
+        for expected_story, row in zip(expected_stories, driver.find_elements(By.CSS_SELECTOR, "table tbody tr")):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
 
@@ -570,7 +608,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_21_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -599,7 +637,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_22_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -632,7 +670,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_23_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -668,15 +706,35 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_24_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
-        table_rows = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
-        )
+        max_page = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input").get_attribute(
+            'max')
 
-        assert len(table_rows) == 100, f"The table should have 100 rows - found {len(table_rows)} row(s)"
+        table_rows = 0
 
-        for expected_story, row in zip(expected_stories, table_rows):
+        if int(max_page) > 1:
+            for page in range(0, int(max_page)):
+                table_rows += len(WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+                ))
+                driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(By.CSS_SELECTOR, ".next"))
+                time.sleep(1)
+                if page != int(max_page) - 1:
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".next"))).click()
+        else:
+            table_rows = WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+            )
+
+        assert table_rows == 100, f"The table should have 100 rows - found {table_rows} row(s)"
+
+        input_number = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input")
+        input_number.send_keys(Keys.BACKSPACE)
+        input_number.send_keys('1')
+        input_number.send_keys(Keys.ENTER)
+
+        for expected_story, row in zip(expected_stories, driver.find_elements(By.CSS_SELECTOR, "table tbody tr")):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
 
@@ -700,7 +758,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_25_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -731,7 +789,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_26_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         table_rows = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
@@ -766,7 +824,7 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_27_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
@@ -804,15 +862,35 @@ class TestLoad:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(load_tc_28_fixture)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
-        table_rows = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
-        )
+        max_page = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input").get_attribute(
+            'max')
 
-        assert len(table_rows) == 100, f"The table should have 100 rows - found {len(table_rows)} row(s)"
+        table_rows = 0
 
-        for expected_story, row in zip(expected_stories, table_rows):
+        if int(max_page) > 1:
+            for page in range(0, int(max_page)):
+                table_rows += len(WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+                ))
+                driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(By.CSS_SELECTOR, ".next"))
+                time.sleep(1)
+                if page != int(max_page) - 1:
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".next"))).click()
+        else:
+            table_rows = WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+            )
+
+        assert table_rows == 100, f"The table should have 100 rows - found {table_rows} row(s)"
+
+        input_number = driver.find_element(By.CSS_SELECTOR, ".pagination").find_element(By.TAG_NAME, "input")
+        input_number.send_keys(Keys.BACKSPACE)
+        input_number.send_keys('1')
+        input_number.send_keys(Keys.ENTER)
+
+        for expected_story, row in zip(expected_stories, driver.find_elements(By.CSS_SELECTOR, "table tbody tr")):
             story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
             assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
 
@@ -826,7 +904,7 @@ class TestLoad:
         
         driver.get("http://localhost:5173/")
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
             alert = WebDriverWait(driver, 10).until(EC.alert_is_present())
