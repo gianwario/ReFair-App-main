@@ -8,7 +8,7 @@ PATTERN = r'^(?!\s*$).{1,1024}$'
 
 class Test_single_us:
 
-    def test_single_us_1(self, driver):
+    def single_us_tc_1(self, driver):
         """
         Insert a user story that does not match the expected regex pattern.
         Verifies that an alert with the message
@@ -32,7 +32,7 @@ class Test_single_us:
             assert False, "Alert with the message '" + \
                 expected_alert_message + "' did not appear."
 
-    def test_single_us_2(self, driver, analyze_tc_1_fixture):
+    def single_us_tc_2(self, driver, analyze_tc_1_fixture):
         """
         Insert a user story that match the expected pattern in the input text area and analyze it.
         Verifies if the result is equal to the oracle.
