@@ -438,9 +438,26 @@ class TestLoad:
         input_number.send_keys('1')
         input_number.send_keys(Keys.ENTER)
 
-        for expected_story, row in zip(expected_stories, driver.find_elements(By.CSS_SELECTOR, "table tbody tr")):
-            story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
-            assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+        #### TODO: Needs some cleaning.
+        stories_per_page = 30
+
+        for page in range(0, int(max_page)):
+            table_rows = WebDriverWait(driver, 10).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table tbody tr"))
+            )
+
+            start_idx = page * stories_per_page
+
+            for i, row in enumerate(table_rows):
+                story_in_row = row.find_element(By.CSS_SELECTOR, "td:nth-child(1)").text
+                expected_story = expected_stories[start_idx + i]
+                assert expected_story == story_in_row, f"Mismatch found: {expected_story} != {story_in_row}"
+
+            driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(By.CSS_SELECTOR, ".next"))
+            time.sleep(1)
+            if page != int(max_page) - 1:
+                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".next"))).click()
+        ####
 
     def test_load_tc_17(self, driver, load_tc_17_fixture):
         """
