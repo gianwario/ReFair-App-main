@@ -1,8 +1,7 @@
 <template>
   <span :class="customClass">
-    <a :href="safeHref" target="_blank">
-      <ion-icon :name="iconName"></ion-icon>
-      {{ linkText }}
+    <a :href="safeHref" target="_blank" rel="noopener noreferrer">
+      <ion-icon :name="iconName"></ion-icon> {{ linkText }}
     </a>
   </span>
 </template>
@@ -30,7 +29,15 @@ export default {
   },
   computed: {
     safeHref() {
-      return this.sidebarHref;
+      return this.isValidUrl(this.sidebarHref)
+        ? this.sidebarHref
+        : "javascript:void(0)";
+    },
+  },
+  methods: {
+    isValidUrl(url) {
+      const pattern = /^(https?:|mailto:)/i;
+      return pattern.test(url);
     },
   },
 };
