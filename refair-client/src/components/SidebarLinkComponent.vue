@@ -1,12 +1,15 @@
 <template>
   <span :class="customClass">
     <a :href="safeHref" target="_blank" rel="noopener noreferrer">
-      <ion-icon :name="iconName"></ion-icon> {{ linkText }}
+      <ion-icon :name="iconName"></ion-icon>
+      {{ linkText }}
     </a>
   </span>
 </template>
 
 <script>
+import DOMPurify from "dompurify";
+
 export default {
   name: "SidebarLinkComponent",
   props: {
@@ -29,15 +32,13 @@ export default {
   },
   computed: {
     safeHref() {
-      return this.isValidUrl(this.sidebarHref)
-        ? this.sidebarHref
-        : "javascript:void(0)";
+      return this.sanitizeUrl(this.sidebarHref);
     },
   },
   methods: {
-    isValidUrl(url) {
-      const pattern = /^(https?:|mailto:)/i;
-      return pattern.test(url);
+    sanitizeUrl(url) {
+      // Use DOMPurify to sanitize the URL
+      return DOMPurify.sanitize(url);
     },
   },
 };
