@@ -1,6 +1,6 @@
 <template>
   <span :class="customClass">
-    <a :href="sidebarHref" target="_blank">
+    <a :href="safeHref" target="_blank">
       <ion-icon :name="iconName"></ion-icon>
       {{ linkText }}
     </a>
@@ -28,9 +28,10 @@ export default {
       required: true,
     },
   },
+  computed: {
+    safeHref() {
+      return this.sidebarHref;
+    },
+  },
 };
 </script>
-
-<style scoped>
-/* Aggiungi qui i tuoi stili per il link della sidebar se necessario */
-</style>
