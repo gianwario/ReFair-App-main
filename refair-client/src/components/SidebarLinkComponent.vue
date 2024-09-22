@@ -1,6 +1,6 @@
 <template>
   <span :class="customClass">
-    <a :href="href" target="_blank">
+    <a :href="sidebarHref" target="_blank">
       <ion-icon :name="iconName"></ion-icon>
       {{ linkText }}
     </a>
@@ -11,7 +11,7 @@
 export default {
   name: "SidebarLinkComponent",
   props: {
-    href: {
+    sidebarHref: {
       type: String,
       required: true,
     },

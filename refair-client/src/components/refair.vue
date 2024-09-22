@@ -339,7 +339,7 @@
       <!-- ReFair model Github link -->
       <p class="title_sidebar">REFAIR REPOSITORY</p>
       <SidebarLinkComponent
-        href="https://github.com/gianwario/ReFair-App"
+        sidebarHref="https://github.com/gianwario/ReFair-App"
         iconName="logo-github"
         linkText="ReFair repository"
         customClass="sidebar_element model"
@@ -349,19 +349,19 @@
       <!-- Collaborators Github links -->
       <p class="title_sidebar">COLLABORATORS</p>
       <SidebarLinkComponent
-        href="https://github.com/DG266"
+        sidebarHref="https://github.com/DG266"
         iconName="logo-github"
         linkText="Daniele Galloppo"
         customClass="sidebar_element collaborators"
       />
       <SidebarLinkComponent
-        href="https://github.com/MarioPeluso"
+        sidebarHref="https://github.com/MarioPeluso"
         iconName="logo-github"
         linkText="Mario Peluso"
         customClass="sidebar_element collaborators"
       />
       <SidebarLinkComponent
-        href="https://github.com/LucoMoro"
+        sidebarHref="https://github.com/LucoMoro"
         iconName="logo-github"
         linkText="Luca Morelli"
         customClass="sidebar_element collaborators"
