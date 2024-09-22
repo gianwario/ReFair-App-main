@@ -27,8 +27,8 @@ def driver_with_options(request):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    if os.listdir(directory) and directory + "report.json" not in os.listdir(directory):
-        os.remove(os.path.join(directory, os.listdir(directory)[0]))
+    if os.listdir(directory) and "report.json" in os.listdir(directory):
+        os.remove(os.path.join(directory, "report.json"))
 
     options = Options()
     options.set_preference("browser.download.folderList", 2)

@@ -19,13 +19,13 @@ class TestAnalyze:
         file_input = driver.find_element(By.CSS_SELECTOR, ".form-control")
         file_input.send_keys(excel)
 
-        driver.find_element(By.CSS_SELECTOR, ".btn-info").click()
+        driver.find_element(By.CSS_SELECTOR, ".load").click()
 
         try:
-            WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn-secondary"))).click()
+            WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[1]/table/tbody/tr[1]/td[2]/div/button"))).click()
 
-            domain = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/p[2]'))).text.split(': ')[1]
-            table_body = driver.find_elements(By.XPATH, '/html/body/div/div/div[1]/div/div/div[2]/div[1]/table/tbody')
+            domain = driver.find_elements(By.CSS_SELECTOR, ".mx-4")[1].text.split(': ')[1]
+            table_body = driver.find_elements(By.XPATH, '/html/body/div/div/div[3]/div/div/div[2]/div[1]/table/tbody')
             features = {}
 
             if table_body:
