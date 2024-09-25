@@ -6,6 +6,8 @@ refair-server/models/glove.6B.100d.txt
 
 #### Virtual environments, etc.
 refair-server/__pycache__/
+desktop_app/__pycache__
+desktop_app/components/__pycache__
 refair-server/env/
 refair-server/.pytest_cache/
 refair-server/.tox/
