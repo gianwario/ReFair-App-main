@@ -1,5 +1,5 @@
 import pytest
-from REFAIR import getDomain, getMLTask, refair
+from REFAIR import get_domain, get_ml_task, refair
 
 class TestGetDomain:
 
@@ -8,7 +8,7 @@ class TestGetDomain:
         'to analyze patient data and identify the most important features ' + \
         'related to skin disease, so that I can better diagnose and treat patients.'
 
-        prediction = getDomain(user_story)
+        prediction = get_domain(user_story)
 
         assert prediction == 'Dermatology'
 
@@ -18,7 +18,7 @@ class TestGetDomain:
         'time, so that I can better understand and predict social network behavior ' + \
         'and evolution.'
 
-        prediction = getDomain(user_story)
+        prediction = get_domain(user_story)
 
         assert prediction == 'Social Networks'
 
@@ -27,7 +27,7 @@ class TestGetDomain:
         'analyze news data over time, so that we can identify trends and ' + \
         'patterns in news relevance and design better news recommendation systems.'
 
-        prediction = getDomain(user_story)
+        prediction = get_domain(user_story)
 
         assert prediction == 'News'
 
@@ -39,7 +39,7 @@ class TestGetMLTask:
         'so that I can better understand plant evolution and taxonomy.'
         domain = 'plant science'
 
-        prediction = getMLTask(user_story, domain)
+        prediction = get_ml_task(user_story, domain)
 
         assert prediction == ['clustering']
 
@@ -49,7 +49,7 @@ class TestGetMLTask:
         'that I can provide better healthcare services to patients.'
         domain = 'health'
 
-        prediction = getMLTask(user_story, domain)
+        prediction = get_ml_task(user_story, domain)
 
         assert prediction == ['classification', 'regression']
 
@@ -59,7 +59,7 @@ class TestGetMLTask:
         'and markets to improve the engagement and enjoyment of sports fans worldwide.'
         domain = 'sports'
 
-        prediction = getMLTask(user_story, domain)
+        prediction = get_ml_task(user_story, domain)
 
         assert prediction == []
 
@@ -72,7 +72,7 @@ class TestGetMLTask:
         'education and policy.'
         domain = 'linguistics'
 
-        prediction = getMLTask(user_story, domain)
+        prediction = get_ml_task(user_story, domain)
 
         assert prediction == ['sentiment analysis']
 

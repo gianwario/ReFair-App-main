@@ -3,8 +3,8 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 
 
-from REFAIR import getDomain
-from REFAIR import getMLTask
+from REFAIR import get_domain
+from REFAIR import get_ml_task
 from REFAIR import feature_extraction
 
 import pandas as pd
@@ -59,8 +59,8 @@ def analysis():
     
     if request.method == 'POST':
         story = request.form['story']  
-        domain = getDomain(story)
-        ml_tasks = getMLTask(story, domain)
+        domain = get_domain(story)
+        ml_tasks = get_ml_task(story, domain)
 
         tasks_features = feature_extraction(domain, ml_tasks)
 
@@ -93,8 +93,8 @@ def reportStories():
 
         
         for story in stories:
-            domain = getDomain(story)
-            ml_tasks = getMLTask(story, domain)
+            domain = get_domain(story)
+            ml_tasks = get_ml_task(story, domain)
 
             features = feature_extraction(domain, ml_tasks)
 
@@ -118,8 +118,8 @@ def reportStory():
         story = json.loads(request.form['story']) 
 
         
-        domain = getDomain(story)
-        ml_tasks = getMLTask(story, domain)
+        domain = get_domain(story)
+        ml_tasks = get_ml_task(story, domain)
 
         features = feature_extraction(domain, ml_tasks)
 
