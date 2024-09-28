@@ -1,0 +1,58 @@
+{
+    "story": "As an economist, I want to use decision trees to classify economic sectors based on their growth potential and risk profiles, aiding in portfolio diversification strategies for investment firms.",
+    "domain": "Economics",
+    "tasks": [
+        "anomaly detection",
+        "classification",
+        "clustering",
+        "data summarization",
+        "ranking",
+        "representation learning"
+    ],
+    "features": {
+        "anomaly detection": [
+            "age",
+            "gender",
+            "race",
+            "sex"
+        ],
+        "classification": [
+            "age",
+            "geography",
+            "race",
+            "sex",
+            "birthplace",
+            "disability",
+            "family size",
+            "gender"
+        ],
+        "clustering": [
+            "age",
+            "gender",
+            "geography",
+            "race",
+            "sex"
+        ],
+        "data summarization": [
+            "age",
+            "gender",
+            "geography",
+            "race",
+            "sex"
+        ],
+        "ranking": [
+            "age",
+            "gender",
+            "geography",
+            "race",
+            "sex"
+        ],
+        "representation learning": [
+            "age",
+            "gender",
+            "geography",
+            "race",
+            "sex"
+        ]
+    }
+}
