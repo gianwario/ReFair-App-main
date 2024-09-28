@@ -69,14 +69,17 @@ No sensitive features have been found"""
     def download_results(self, user_story, domain, results):
         file_path = filedialog.asksaveasfilename(defaultextension=".json",
                                                 filetypes=[("JSON files", "*.json"),
-                                                           ("All files", "*.*")])
+                                                            ("All files", "*.*")])
         if file_path:
-            # Include user_story and domain with results
+            # Organizza i dati per seguire la struttura richiesta
             data = {
-                "user_story": user_story,
-                "story_domain": domain,
-                "sensitive_features": results
+                "story": user_story,  # Cambia 'user_story' in 'story'
+                "domain": domain,  # Cambia 'story_domain' in 'domain'
+                "tasks": list(results.keys()),  # Aggiungi i task come lista
+                "features": results  # Cambia 'sensitive_features' in 'features'
             }
+
+            # Salva i dati nel file JSON
             with open(file_path, 'w') as json_file:
                 json.dump(data, json_file, indent=4)
             messagebox.showinfo("Success", "Results have been downloaded successfully!")

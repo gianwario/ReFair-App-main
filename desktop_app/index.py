@@ -285,20 +285,21 @@ class RefairDesktopApp:
             predicted_domain = getDomain(user_story)
             predicted_task = getMLTask(user_story, predicted_domain)
             results = feature_extraction(predicted_domain, predicted_task)
-            
-            # Organizza i dati per ogni User Story
+
+            # Organizza i dati per ogni User Story nello schema del primo JSON
             data = {
-                "user_story": user_story,
-                "story_domain": predicted_domain,
-                "sensitive_features": results
+                "story": user_story,  # Cambiato da "user_story" a "story"
+                "domain": predicted_domain,  # Cambiato da "story_domain" a "domain"
+                "tasks": [predicted_task],  # Aggiunto campo "tasks" come lista
+                "features": results  # Cambiato da "sensitive_features" a "features"
             }
             all_data.append(data)
 
         # Permette di salvare il file JSON con un nome specifico
         file_path = filedialog.asksaveasfilename(defaultextension=".json",
                                                 filetypes=[("JSON files", "*.json"),
-                                                        ("All files", "*.*")])
-        
+                                                            ("All files", ".")])
+
         if file_path:
             # Salva tutti i dati in un file JSON
             with open(file_path, 'w') as json_file:
