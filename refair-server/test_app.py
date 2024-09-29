@@ -95,8 +95,8 @@ class TestAnalysis:
         assert response.data.decode() == 'Not Allowed'
 
     def test_analysis_with_no_tasks_and_no_features(self, client, mocker):
-        mocker.patch('app.getDomain', return_value='ExampleDomain')
-        mocker.patch('app.getMLTask', return_value=[])
+        mocker.patch('app.get_domain', return_value='ExampleDomain')
+        mocker.patch('app.get_ml_task', return_value=[])
         mocker.patch('app.feature_extraction', return_value={})
 
         response = client.post(
@@ -125,8 +125,8 @@ class TestAnalysis:
                 'Feature_2'
             ]
         }
-        mocker.patch('app.getDomain', return_value=return_domain)
-        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.get_domain', return_value=return_domain)
+        mocker.patch('app.get_ml_task', return_value=return_ml_tasks)
         mocker.patch('app.feature_extraction', return_value=return_features)
 
         response = client.post(
@@ -159,8 +159,8 @@ class TestAnalysis:
                 'Feature_2'
             ]
         }
-        mocker.patch('app.getDomain', return_value=return_domain)
-        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.get_domain', return_value=return_domain)
+        mocker.patch('app.get_ml_task', return_value=return_ml_tasks)
         mocker.patch('app.feature_extraction', return_value=return_features)
 
         response = client.post(
@@ -209,8 +209,8 @@ class TestReportStories:
                 'Feature_2'
             ]
         }
-        mocker.patch('app.getDomain', return_value=return_domain)
-        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.get_domain', return_value=return_domain)
+        mocker.patch('app.get_ml_task', return_value=return_ml_tasks)
         mocker.patch('app.feature_extraction', return_value=return_features)
 
         response = client.post(
@@ -259,8 +259,8 @@ class TestReportStories:
                 ]
             }
         ]
-        mocker.patch('app.getDomain', side_effect=return_domain)
-        mocker.patch('app.getMLTask', side_effect=return_ml_tasks)
+        mocker.patch('app.get_domain', side_effect=return_domain)
+        mocker.patch('app.get_ml_task', side_effect=return_ml_tasks)
         mocker.patch('app.feature_extraction', side_effect=return_features)
 
         response = client.post(
@@ -318,8 +318,8 @@ class TestReportStory:
                 'Feature_2'
             ]
         }
-        mocker.patch('app.getDomain', return_value=return_domain)
-        mocker.patch('app.getMLTask', return_value=return_ml_tasks)
+        mocker.patch('app.get_domain', return_value=return_domain)
+        mocker.patch('app.get_ml_task', return_value=return_ml_tasks)
         mocker.patch('app.feature_extraction', return_value=return_features)
 
         response = client.post(

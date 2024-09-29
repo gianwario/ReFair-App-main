@@ -4,7 +4,7 @@
       <div>
         <h1>ReFair App</h1>
 
-        <!-- Contenuto Capitolo 1 -->
+        <!-- Chapter 1 content -->
         <div id="chapter1">
           <ChapterTitle chapterTitle="ReFair framework" />
 
@@ -31,12 +31,6 @@
                 labelText="Select file"
               />
 
-              <!--<button type="button" class="button select">
-                  <span class="button__icon"
-                    ><label for="file" class="button__text"> Select file </label><ion-icon name="document-attach-outline"></ion-icon
-                  ></span>
-                </button>-->
-              <!---->
               <span id="file-name" class="file-name">No file selected</span>
             </div>
 
@@ -112,7 +106,7 @@
             </tbody>
           </table>
 
-          <!-- Controlli di Paginazione -->
+          <!-- Pagination checks -->
           <div v-if="fileLoaded" class="pagination">
             <!-- Previous Button-->
             <ButtonComponent
@@ -125,7 +119,7 @@
               labelText="Previous"
             />
 
-            <!-- Input per inserire il numero di pagina -->
+            <!-- Input needed to insert a page number -->
             <input
               type="number"
               v-model.number="currentPageInput"
@@ -135,7 +129,7 @@
               class="input_number"
             />
 
-            <!-- Mostra le pagine -->
+            <!-- Shows the pages -->
             <span v-if="currentPage > 2">
               <label class="button_text page"> 1 </label>
             </span>
@@ -150,7 +144,6 @@
             <span
               ><label class="button_text current page">
                 {{ currentPage }}
-                <!-- Se modifico questo c'è un'indicazione visiva della pagina in cui sono -->
               </label></span
             >
             <span v-if="currentPage < totalPages"
@@ -182,10 +175,8 @@
 
         <br />
         <br />
-        <!-- Contenuto Capitolo 2 -->
+        <!-- Chapter 2 content -->
         <div class="content">
-          <!-- Il contenuto principale rimane lo stesso -->
-
           <div id="chapter2">
             <ChapterTitle chapterTitle="ReFair in a nutshell" />
 
@@ -245,7 +236,7 @@
           </div>
 
           <br /><br />
-          <!-- Contenuto Capitolo 3 -->
+          <!-- Chapter 3 content -->
           <div id="chapter3">
             <ChapterTitle chapterTitle="How to use ReFair" />
 
@@ -306,7 +297,7 @@
       </div>
     </div>
 
-    <!-- Capitoli di navigazione -->
+    <!-- Navigation chapter -->
 
     <div class="sidebar">
       <p class="title_sidebar">ON THIS PAGE</p>
@@ -506,12 +497,12 @@ export default {
           data: [],
         },
       ],
-      activeButton: null, // Nuova proprietà per tracciare il pulsante attivo
-      indicatorPosition: 0, // Posizione della linea
-      currentPage: 1, // Pagina corrente
-      storiesPerPage: 30, // Numero di user stories per pagina
-      fileLoaded: false, // Variabile per tracciare se un file è stato caricato
-      currentPageInput: 1, // Variabile per tracciare l'input dell'utente per il numero di pagina
+      activeButton: null, // New property to track the active button
+      indicatorPosition: 0, // Position of the line
+      currentPage: 1,
+      storiesPerPage: 30, // Number of user stories per page
+      fileLoaded: false, // Variable to track if a file has been loaded
+      currentPageInput: 1, // Variable to track the user's input for the page number
     };
   },
   methods: {
@@ -581,18 +572,18 @@ export default {
           if (typeof res.data.stories === "undefined") {
             alert(res.data.motivation);
             this.stories = [];
-            this.fileLoaded = false; // Imposta false se il caricamento fallisce
+            this.fileLoaded = false; // Set to false if the upload fails
           } else {
             const reportBtn = document.querySelector("#report");
             reportBtn.classList.remove("disabled");
             this.stories = res.data.stories;
-            this.currentPage = 1; // Resetta la pagina corrente dopo il caricamento
-            this.fileLoaded = true; // Imposta true se il caricamento ha successo
+            this.currentPage = 1; // Reset the current page after loading
+            this.fileLoaded = true; // Set to true if the upload succeeds
           }
         })
         .catch(() => {
           this.stories = [];
-          this.fileLoaded = false; // Imposta false se il caricamento fallisce
+          this.fileLoaded = false; // Set to false if the upload fails
         });
     },
 
@@ -654,15 +645,15 @@ export default {
     changePage(page) {
       if (page > 0 && page <= this.totalPages) {
         this.currentPage = page;
-        this.currentPageInput = page; // Aggiorna l'input della pagina corrente
+        this.currentPageInput = page; // Updates the input of the current page
       }
     },
 
-    // Capitoli
+    // Chapters
     scrollToChapter(chapterId) {
       const button = this.$el.querySelector(`[data-chapter="${chapterId}"]`);
-      this.activeButton = button; // Aggiorna il pulsante attivo
-      this.updateIndicator(); // Aggiorna la posizione dell'indicatore
+      this.activeButton = button; // Update the active button
+      this.updateIndicator(); // Update the position of the indicator
 
       document.getElementById(chapterId).scrollIntoView({ behavior: "smooth" });
     },
@@ -675,7 +666,7 @@ export default {
         .getBoundingClientRect();
       const indicatorY = buttonRect.top - sidebarRect.top;
 
-      this.indicatorPosition = indicatorY; // Aggiorna la posizione della linea
+      this.indicatorPosition = indicatorY; // Update the position of the line
     },
 
     closeAnalyzeStoryModal() {
@@ -696,8 +687,8 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.activeButton = this.$el.querySelector(".btn_chapter"); // Inizializza il primo pulsante come attivo
-      this.updateIndicator(); // Imposta la posizione iniziale dell'indicatore
+      this.activeButton = this.$el.querySelector(".btn_chapter"); // Initialize the first button as active
+      this.updateIndicator(); // Set the initial position of the indicator
     });
   },
 };

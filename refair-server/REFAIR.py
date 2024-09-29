@@ -26,7 +26,15 @@ with open('./models/multilabel.pkl', 'rb') as f:
 with open('./models/LinearSVC_LabelPowerset.pkl', 'rb') as f:
     lsvc = pickle.load(f)
 
-def getDomain(user_story):
+def get_domain(user_story):
+    """
+    Tokenizes the user story and predicts the domain using a pre-trained classifier.
+    
+    Keyword arguments:
+    user_story -- the input user story (string)
+    
+    Return: the predicted domain (string)
+    """
     tokenized_data = domain_tokenizer([user_story], padding='max_length', max_length=100, truncation=True)
     traindata = []
     for msg in tokenized_data['input_ids']:
@@ -37,7 +45,17 @@ def getDomain(user_story):
     
     return dataset["Domain"].unique()[predict[0]]
 
-def getMLTask(user_story, domain):
+def get_ml_task(user_story, domain):
+    """
+    Predicts machine learning tasks from the user story using GloVe vectors and an SVC model. 
+    Filters the tasks to ensure they are relevant to the specified domain.
+    
+    Keyword arguments:
+    user_story -- the input user story (string)
+    domain -- the predicted domain for the user story (string)
+    
+    Return: a list of predicted machine learning tasks (list of strings)
+    """
     traindata = []
     for msg in [user_story]:
         words = msg.split()
@@ -67,12 +85,30 @@ def getMLTask(user_story, domain):
 
 
 def intersection(lst1, lst2):
+    """
+    Returns the intersection of two lists.
+    
+    Keyword arguments:
+    lst1 -- first list of elements (list)
+    lst2 -- second list of elements (list)
+    
+    Return: a list containing the common elements (list)
+    """
     lst3 = [value for value in lst1 if value in lst2]
     return lst3
 
 
 
 def feature_extraction(domain, mltasks):
+    """
+    Extracts sensitive features relevant to the domain and machine learning tasks.
+    
+    Keyword arguments:
+    domain -- the predicted domain (string)
+    mltasks -- list of machine learning tasks (list of strings)
+    
+    Return: dictionary mapping tasks to relevant sensitive features (dict)
+    """
     
     out_features = {}
 
@@ -94,13 +130,22 @@ def feature_extraction(domain, mltasks):
 
 
 def refair(user_story):
+    """
+    Main function that runs the complete REFAIR process. It identifies the domain, ML tasks, and 
+    sensitive features for a given user story.
+    
+    Keyword arguments:
+    user_story -- the input user story (string)
+    
+    Return: None (prints the output of the REFAIR process)
+    """
     print('*** REFAIR started ***')
 
-    print("Domain identified: " + getDomain(user_story))
-    print("Machine Learning task identified: " + str(getMLTask(user_story, getDomain(user_story))))
+    print("Domain identified: " + get_domain(user_story))
+    print("Machine Learning task identified: " + str(get_ml_task(user_story, get_domain(user_story))))
 
-    output = feature_extraction(getDomain(user_story), getMLTask(user_story, getDomain(user_story)))
-    for task in getMLTask(user_story, getDomain(user_story)):
-        print("Domain: {} - Task: {} - Sensitive Features: {}".format(getDomain(user_story), task, output[task]))
+    output = feature_extraction(get_domain(user_story), get_ml_task(user_story, get_domain(user_story)))
+    for task in get_ml_task(user_story, get_domain(user_story)):
+        print("Domain: {} - Task: {} - Sensitive Features: {}".format(get_domain(user_story), task, output[task]))
 
     print('*** REFAIR ended ***')
