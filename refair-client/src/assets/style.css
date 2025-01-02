@@ -1,0 +1,469 @@
+@import "./base.css";
+
+:root {
+  --vt-c-indigo: #566472;
+  --vt-c-indigo-dark-1: #415161;
+  --vt-c-indigo-dark-2: #2c3e50;
+
+  --vt-c-green: #009578;
+  --vt-c-green-dark-1: #008168;
+  --vt-c-green-dark-2: #006e58;
+
+  --vt-c-red: #db3131;
+  --vt-c-red-dark-1: #d81b1b;
+  --vt-c-red-dark-2: #c21818;
+
+  --vt-c-blue: #5091cb;
+  --vt-c-blue-dark-1: #578cbb;
+  --vt-c-blue-dark-2: #4e7ea8;
+
+  --vt-c-sky: #7cb4d5;
+  --vt-c-sky-dark-1: #8bb4cb;
+  --vt-c-sky-dark-2: #6fa2bf;
+}
+
+.button {
+  display: inline-flex;
+  height: 40px;
+  padding: 0;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.button__text,
+.button__icon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 24px;
+  color: white;
+  height: 100%;
+}
+
+.file-upload {
+  position: relative;
+  display: inline-block;
+}
+
+.form-control {
+  display: none; /* Hides the original input file */
+}
+
+.file-name {
+  margin-left: 10px;
+  font-style: italic;
+}
+
+/******************************** New CSS ***************************************/
+.container {
+  display: grid;
+  grid-template-columns: 1fr 200px; /* Main column and sidebar */
+  width: 100%;
+  height: 100vh; /* Occupies the full height of the viewport */
+}
+
+.content {
+  padding: 20px; /* Inner spacing for the main content */
+  overflow-y: auto; /* Allows scrolling if the content is too long */
+}
+
+.sidebar {
+  position: fixed; /* Keeps the sidebar fixed */
+  top: 0;
+  right: 0; /* Aligns the sidebar to the right */
+  width: 200px;
+  height: 100vh; /* Occupies the full height of the viewport */
+  padding: 20px;
+}
+
+.btn_chapter {
+  border: none;
+  background-color: var(--vt-c-white);
+  margin: 2px;
+  font-weight: 500;
+  position: relative; /* Necessary to position the line next to the button */
+  font-size: 1.1em;
+  color: var(--vt-c-divider-dark-1);
+}
+
+.btn_chapter:hover {
+  color: var(--color-secondary);
+}
+
+.indicator {
+  position: absolute;
+  left: -10px; /* Positions the line to the left of the buttons */
+  width: 5px;
+  height: 20px; /* Height of the line */
+  background-color: var(--color-secondary); /* Color of the line */
+  transition: transform 0.1s ease; /* Animation for the line movement */
+  z-index: 0; /* Ensures the line is underneath the buttons */
+  /* To align button and indicator */
+  margin-left: 25px;
+  border-radius: 2px;
+  margin-top: -42px;
+}
+
+.title_sidebar {
+  color: var(--color-text);
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-left: 8px;
+  margin-bottom: 0px;
+}
+
+.title {
+  margin-left: -22px;
+  overflow: visible;
+  max-width: fit-content;
+}
+
+.title:hover .tag {
+  color: var(--color-secondary);
+  opacity: 1;
+}
+
+.tag {
+  display: inline-block;
+  color: var(--vt-c-white);
+  opacity: 0;
+  transition: opacity 1s ease, color 1s ease;
+}
+
+.chapter {
+  display: inline-block;
+  color: var(--color-text);
+}
+
+.paragraph_content ul {
+  margin: 0px;
+}
+
+.paragraph_content {
+  margin-bottom: 15px;
+  margin-left: 15px;
+}
+
+/*** There we could leave just strong ***/
+.paragraph_content strong {
+  color: var(--color-secondary);
+}
+
+/**************** PAGINATION *************************/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.pagination button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.pagination button:disabled:hover {
+  color: grey;
+  box-shadow: none; /* This avoids the box-shadow if the button is disabled */
+}
+
+.pagination button:disabled:hover label {
+  color: grey;
+}
+
+.pagination .pagination span {
+  font-size: 16px;
+}
+
+.pagination input[type="number"] {
+  width: 50px;
+  text-align: center;
+  margin: 0 10px;
+  padding: 10px 5px;
+  font-size: 16px;
+}
+
+.next {
+  margin-left: 20px;
+}
+
+.previous {
+  margin-right: 10px;
+}
+
+.input_number {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-text);
+  color: var(--color-text);
+}
+
+.input_number:hover {
+  border: 2px solid var(--color-secondary);
+}
+
+.page {
+  font-size: 1.2em;
+  margin-left: 3px;
+  margin-right: 3px;
+  color: var(--color-text);
+}
+
+.current {
+  color: var(--color-secondary);
+  text-shadow: 0 0 30px var(--color-secondary), 0 0 30px var(--color-secondary);
+}
+
+/************** Button UI *************/
+.button {
+  position: relative;
+  background-color: var(--color-text);
+  color: var(--color-text);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding: 5px 15px;
+  transition: 0.5s;
+  border: none;
+  border-radius: 2px;
+  align-items: center;
+}
+
+.button:hover {
+  background: var(--color-secondary);
+  box-shadow: 0 0 35px var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.button:before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background-color: var(--vt-c-white);
+}
+
+.button label {
+  position: relative;
+  z-index: 1;
+  color: var(--color-text);
+}
+
+.button:hover label {
+  color: var(--color-secondary);
+}
+
+.button i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.button i::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 80%;
+  width: 10px;
+  height: 4px;
+  background-color: var(--vt-c-white);
+  transform: translateX(-50%) skewX(325deg);
+  transition: 0.3s;
+}
+
+.button:hover i::before {
+  width: 20px;
+  left: 20%;
+}
+
+.button i::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 10px;
+  height: 4px;
+  background-color: var(--vt-c-white);
+  transform: translateX(-50%) skewX(325deg);
+  transition: 0.3s;
+}
+
+.button:hover i::after {
+  width: 20px;
+  left: 80%;
+}
+
+.button:disabled {
+  background-color: grey;
+  color: grey;
+}
+
+.button:disabled:hover {
+  background-color: grey;
+  color: grey;
+  box-shadow: none;
+}
+
+.button:disabled label {
+  color: grey;
+}
+
+/****************** POP UP ****************************************/
+/****** Pop up titles and style ****/
+
+.pop_up {
+  margin-left: 10px;
+}
+
+strong {
+  color: var(--color-secondary);
+}
+
+/************************************ SIDEBAR **********************/
+/********* Collaborators ***********/
+
+.sidebar_element {
+  display: flex;
+  margin-left: 5px;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.sidebar_element:hover a {
+  color: var(--color-secondary);
+}
+
+.sidebar_element:hover ion-icon {
+  color: var(--color-secondary);
+}
+
+.sidebar_element a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--vt-c-divider-dark-1);
+}
+
+.sidebar_element ion-icon {
+  margin-right: 5px; /* Spacing between icon and text */
+  color: var(--vt-c-divider-dark-1);
+}
+
+/********* US input ************/
+
+.entry_area {
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.entry_area input {
+  position: absolute;
+  width: 79%;
+  outline: none;
+  line-height: 40px;
+  border: 2px solid var(--color-secondary);
+  background-color: transparent;
+  transition: 0.2s ease;
+  color: var(--color-text);
+}
+
+.labelline {
+  position: absolute;
+  font-size: 1.2em;
+  color: var(--color-secondary);
+  padding: 0 25px;
+  margin: 0 20px;
+  background-color: var(--color-background);
+  height: 30px;
+  line-height: 30px;
+  transform: translate(-15px, -16px) scale(0.88);
+}
+
+input:focus {
+  color: var(--color-text);
+}
+
+.entry_area .analyze {
+  margin-left: 82%;
+}
+
+@media (prefers-color-scheme: dark) {
+  /****** Tabella **********/
+  .table td {
+    color: var(--color-text);
+  }
+
+  .table tr:hover td {
+    color: var(--color-text);
+  }
+
+  .table tr:hover td {
+    background-color: var(--color-background-light);
+  }
+
+  /*** Pop up ****/
+  .modal-content {
+    background-color: var(--color-background);
+    color: var(--vt-c-white);
+  }
+
+  /**** Capitolo *****/
+  .btn_chapter {
+    background-color: var(--color-background);
+    color: var(--color-background-mute);
+  }
+
+  .tag {
+    color: var(--color-background);
+  }
+
+  /**** Button UI ****/
+  .button {
+    background-color: var(--color-text);
+    color: var(--color-text);
+  }
+
+  .button:hover {
+    background: var(--color-secondary);
+    box-shadow: 0 0 35px var(--color-secondary);
+    color: var(--color-secondary);
+  }
+
+  .button::before {
+    background-color: var(--color-background);
+  }
+
+  .button label {
+    color: var(--color-text);
+  }
+
+  /*.button:hover label {
+    color: var(--color-secondary);
+  }*/
+
+  .button i::before {
+    background-color: var(--color-background);
+  }
+
+  .button i::after {
+    background-color: var(--color-background);
+  }
+
+  /**************** SIDEBAR ********************/
+
+  /********* Collaborators *********/
+  .sidebar_element a {
+    color: var(--color-background-mute);
+  }
+
+  .sidebar_element ion-icon {
+    color: var(--color-background-mute);
+  }
+}

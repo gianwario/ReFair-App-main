@@ -1,3 +1,6 @@
+pytest
+pytest-mock
+coverage
 flask
 werkzeug
 flask_cors
@@ -7,3 +10,6 @@ scipy
 xgboost
 transformers
 gensim
+openpyxl
+scikit-learn
+scikit-multilearn

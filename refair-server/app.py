@@ -3,8 +3,8 @@ from werkzeug.utils import secure_filename
 from flask_cors import CORS
 
 
-from REFAIR import getDomain
-from REFAIR import getMLTask
+from REFAIR import get_domain
+from REFAIR import get_ml_task
 from REFAIR import feature_extraction
 
 import pandas as pd
@@ -23,6 +23,14 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/storiesload', methods=['POST'])
 def load_stories():
+    """
+    Loads the user stories from an uploaded Excel file and checks for the 'User Story' column.
+    
+    Keyword arguments:
+    None (file provided via POST request)
+    
+    Return: JSON response with status 'success' and loaded stories or 'failure' with error message
+    """
 
     if request.method == 'POST':
         # check if the post request has the file part
@@ -56,11 +64,20 @@ def load_stories():
 
 @app.route('/analyzeStory', methods = ['POST','GET'])
 def analysis():
+    """
+    Analyzes a single user story, predicts its domain, associated machine learning tasks, 
+    and sensitive features, then returns the results as a JSON response.
+    
+    Keyword arguments:
+    None (story provided via POST request form)
+    
+    Return: JSON response with domain, tasks, task features, and number of unique features
+    """
     
     if request.method == 'POST':
         story = request.form['story']  
-        domain = getDomain(story)
-        ml_tasks = getMLTask(story, domain)
+        domain = get_domain(story)
+        ml_tasks = get_ml_task(story, domain)
 
         tasks_features = feature_extraction(domain, ml_tasks)
 
@@ -85,6 +102,15 @@ def analysis():
 
 @app.route('/reportStories', methods = ['POST','GET'])
 def reportStories():
+    """
+    Analyzes multiple user stories, predicts the domain, tasks, and features for each, 
+    then returns the results as a downloadable JSON file.
+    
+    Keyword arguments:
+    None (stories provided via POST request form in JSON format)
+    
+    Return: JSON file with analyzed stories data
+    """
     
     if request.method == 'POST':
         analyzed_stories = []
@@ -93,8 +119,8 @@ def reportStories():
 
         
         for story in stories:
-            domain = getDomain(story)
-            ml_tasks = getMLTask(story, domain)
+            domain = get_domain(story)
+            ml_tasks = get_ml_task(story, domain)
 
             features = feature_extraction(domain, ml_tasks)
 
@@ -111,6 +137,15 @@ def reportStories():
 
 @app.route('/reportStory', methods = ['POST','GET'])
 def reportStory():
+    """
+    Analyzes a single user story, predicts its domain, tasks, and features, 
+    then returns the result as a downloadable JSON file.
+    
+    Keyword arguments:
+    None (story provided via POST request form in JSON format)
+    
+    Return: JSON file with the analyzed story data
+    """
     
     if request.method == 'POST':
         analyzed_stories = []
@@ -118,8 +153,8 @@ def reportStory():
         story = json.loads(request.form['story']) 
 
         
-        domain = getDomain(story)
-        ml_tasks = getMLTask(story, domain)
+        domain = get_domain(story)
+        ml_tasks = get_ml_task(story, domain)
 
         features = feature_extraction(domain, ml_tasks)
 
@@ -136,6 +171,14 @@ def reportStory():
 
 
 def allowed_file(filename):
+    """
+    Checks if the uploaded file is an allowed file type based on its extension.
+    
+    Keyword arguments:
+    filename -- the name of the uploaded file (string)
+    
+    Return: True if file extension is allowed, False otherwise
+    """
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
